@@ -33,5 +33,5 @@ function server_console {
 
 function server_execute {
     local COMMAND=$1
-    echo "ssh -A root@$IP $COMMAND"
+    ssh -A root@$IP $COMMAND
 }
