@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# -*- mode: shell-script; fill-column: 80; -*-
+#
+# Copyright (c) 2013 Joyent Inc., All rights reserved.
+#
+
+source $(dirname $0)/common.sh
+
+usage() { echo "Usage: $0 [server-name] [friend-name]" 1>&2; exit 1; }
+
+if [ "$#" -ne 2 ]; then
+    usage
+fi
+
+SERVER_NAME=$1
+FRIEND=$2
+
+echo "Finding server..."
+find_ip $SERVER_NAME
+
+if [ -z "$IP" ]; then
+    fatal "Unable to find $SERVER_NAME server."
+fi
+
+server_console "whitelist add $FRIEND"
+
+echo "Done!"
