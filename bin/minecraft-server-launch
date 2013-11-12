@@ -1,0 +1,52 @@
+#! /usr/bin/bash
+
+# Assume that SDC environment variables are set:
+# export SDC_URL=https://us-east-1.api.joyentcloud.com
+# export SDC_ACCOUNT=Joyent_Dev
+# export SDC_KEY_ID=3e:37:9b:11:a6:dc:21:be:1a:fd:95:b6:73:ea:42:9e
+
+
+SERVERNAME="coolserver"
+
+IMAGEID=17c98640-1fdb-11e3-bf51-3708ce78e75a
+#	{
+#		"id": "17c98640-1fdb-11e3-bf51-3708ce78e75a",
+#		"name": "base64",
+#		"version": "13.2.1",
+#		"os": "smartos",
+#		"requirements": {},
+#		"type": "smartmachine",
+#		"description": "A 64-bit SmartOS image with just essential packages installed. Ideal for users who are comfortable with setting up their own environment and tools.",
+#		"urn": "sdc:sdc:base64:13.2.1"
+#	}
+
+PACKAGENAME=g3-standard-4-smartos-image-creation
+#	{
+#		"name": "g3-standard-4-smartos-image-creation",
+#		"memory": 4096,
+#		"disk": 134144,
+#		"swap": 8192,
+#		"vcpus": 0,
+#		"default": "false",
+#		"id": "9c1948c0-0c37-11e3-be34-5780f9789210",
+#		"version": "1.0.0",
+#		"description": "4GB RAM, 1 CPUs and bursting, and 131GB Disk. Required for Image Creation.",
+#		"group": "Image Creation"
+#	}
+
+# Check if $SERVERNAME already exists
+# TODO
+
+
+echo "Creating ${SERVERNAME}"
+SERVERID=$(sdc-createmachine	--dataset $IMAGEID \
+								--package $PACKAGENAME \
+								--tag "minecraft=${SERVERNAME}" | json id)
+echo $SERVERID
+while [[ $(sdc-getmachine $SERVERID | json state) ==  "provisioning" ]]
+	do
+		echo "provisioning"
+	done
+
+
+
