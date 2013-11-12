@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# -*- mode: shell-script; fill-column: 80; -*-
+#
+# Copyright (c) 2013 Joyent Inc., All rights reserved.
+#
+
+source $(dirname $0)/common.sh
+
+usage() { echo "Usage: $0 [server-name]" 1>&2; exit 1; }
+
+if [ "$#" -ne 1 ]; then
+    usage
+fi
+
+SERVER_NAME=$1
+
+echo "Finding server..."
+DATA=$(sdc-listmachines --tag minecraft=$SERVER_NAME | json -ga)
+
+if [ -z "$DATA" ]; then
+    fatal "Unable to find $SERVER_NAME server."
+fi
+
+ID=$(echo $DATA | json id)
+NAME=$(echo $DATA | json name)
+IMAGE=$(echo $DATA | json image)
+MEMORY=$(echo $DATA | json memory)
+DISK=$(echo $DATA | json disk)
+DATASET=$(echo $DATA | json dataset)
+IP=$(echo $DATA | json primaryIp)
+
+cat - <<EOF
+id:      $ID
+name:    $NAME
+image:   $IMAGE
+memory:  $MEMORY mb
+disk:    $DISK gb
+dataset: $DATASET
+ip addr: $IP
+EOF
