@@ -1,0 +1,25 @@
+#!/bin/bash
+. /lib/svc/share/smf_include.sh
+
+set -x
+
+. $(dirname $0)/../../bin/minecraft-server-env
+
+case $1 in
+  'start')
+    tmux new -d -s minecraft "java ${JAVA_OPTS//\\} -Xms${MIN_SIZE:-512M} -Xmx${MAX_SIZE:-1024M} -jar ${MC_JARFILE} nogui"
+  ;;
+  'stop')
+    tmux send -t minecraft c-m "stop" c-m
+  ;;
+  'refresh')
+    tmux send -t minecraft c-m "reload" c-m
+  ;;
+  *)
+    echo "Usage: $0 { start | stop | refresh }"
+    exit 1
+  ;;
+esac
+
+exit ${SMF_EXIT_OK}
+

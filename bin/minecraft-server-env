@@ -1,0 +1,40 @@
+#!/usr/bin/bash
+
+getproparg() {
+  val=`svcprop -p ${1} minecraft`
+  [ -n "$val" ] && [ "$val" != "\"\"" ] && echo $val
+}
+
+MC_FLAVOR=`getproparg minecraft/mc_flavor`
+JAVA_OPTS=`getproparg minecraft/java_opts`
+MIN_SIZE=`getproparg minecraft/min_size`
+MAX_SIZE=`getproparg minecraft/max_size`
+
+if [ -z ${MC_FLAVOR} ]; then
+  echo "minecraft/mc_flavor property not set - using minecraft"
+  MC_FLAVOR="minecraft"
+fi
+
+PREFIX=/opt/minecraft
+
+case ${MC_FLAVOR} in
+  minecraft*)
+    : ${MC_VERSION:=1.7.2}
+    MC_SOURCE="https://s3.amazonaws.com/Minecraft.Download/versions/${MC_VERSION}/minecraft_server.${MC_VERSION}.jar"
+    MC_JARFILE=${MC_SOURCE##*/}
+  ;;
+  ftb)
+    : ${MC_VERSION:=1.1.2}
+    MC_SOURCE="http://www.creeperrepo.net/direct/FTB2/387719c04c0475b57ac038546cd8db7c/modpacks%5EUltimate%5E1_1_2%5EUltimate_Server.zip"
+    MC_JARFILE=ftbserver.jar
+  ;;
+  voltz*)
+    : ${MC_VERSION:=2.0.4}
+    MC_SOURCE="http://mirror.technicpack.net/Technic/servers/voltz/Voltz_Server_v${MC_VERSION}.zip"
+    MC_JARFILE=minecraft_server.jar
+  ;;
+  *)
+    echo "Undefined Minecraft server flavor!"
+    exit 1
+  ;;
+esac
