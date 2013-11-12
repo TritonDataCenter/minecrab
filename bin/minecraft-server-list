@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# -*- mode: shell-script; fill-column: 80; -*-
+#
+# Copyright (c) 2013 Joyent Inc., All rights reserved.
+#
+
+source $(dirname $0)/common.sh
+
+usage() { echo "Usage: $0" 1>&2; exit 1; }
+
+PATTERN="%-15s %s"
+printf "$PATTERN" "IP" "NAME"
+echo
+sdc-listmachines --tag minecraft=* | json -ga name primaryIp | while read l; do
+    NAME=$(echo $l | cut -d ' ' -f 1)
+    IP=$(echo $l | cut -d ' ' -f 2)
+    printf "$PATTERN" "$IP" "$NAME"
+    echo
+done
