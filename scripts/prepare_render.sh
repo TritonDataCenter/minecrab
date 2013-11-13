@@ -41,6 +41,7 @@ cd overviewer
 
 # Patch and add sys.exit()
 perl -pi -e 's/Rendering complete!"\)/Rendering complete!!"\); sys.exit(0)/' ./overviewer_core/observer.py
+grep -i 'rendering complete' ./overviewer_core/observer.py
 
 # Python Image Tools
 #
@@ -74,6 +75,8 @@ renders["render1"] = {
 EOCONFIG
 
 cat > ./render.sh <<EOF
+cat ./init.log
+exit
 if [ -z "$MANTA_INPUT_FILE" ]; then
   echo "ERROR: missing MANTA_INPUT_FILE"
   return 1
