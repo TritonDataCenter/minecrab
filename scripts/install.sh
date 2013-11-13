@@ -12,6 +12,8 @@ id -u minecraft >/dev/null || useradd -s /bin/sh -d /opt/minecraft/server -g min
 cp -p $(dirname $0)/../misc/server.properties $(dirname $0)/../server/
 chown -R minecraft:minecraft /opt/minecraft/server
 svccfg import $(dirname $0)/../svc/manifest/minecraft.xml
+grep -q /opt/minecraft/bin /root/.profile || \
+  echo "PATH=$PATH:/opt/minecraft/bin" >> /root/.profile
 
 . $(dirname $0)/../bin/minecraft-server-env
 
