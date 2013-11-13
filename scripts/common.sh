@@ -13,13 +13,11 @@ set -o pipefail
 
 MINECRAFT_LOCATION="/opt/minecraft/server"
 MANTA_PREFIX="/$MANTA_USER/public/minecraft"
+SERVER_NAME=$(mdata-get sdc:tags.minecraft)
+MANTA_LOCATION="$MANTA_PREFIX/$SERVER_NAME"
+REMOTE_FILE="$MANTA_LOCATION/server/world.tar.gz"
 
 function fatal {
     echo "$(basename $0): fatal error: $*" >&2
     exit 1
-}
-
-function manta_location {
-    local SERVER_NAME=$1
-    MANTA_LOCATION="$MANTA_PREFIX/$SERVER_NAME"
 }
