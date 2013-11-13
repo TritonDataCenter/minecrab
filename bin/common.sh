@@ -33,5 +33,5 @@ function server_console {
 
 function server_execute {
     local COMMAND=$1
-    ssh -A root@$IP $COMMAND
+    RESULT=$(ssh -A root@$IP $COMMAND)
 }
