@@ -75,7 +75,7 @@ mkdir -p ./minecraft/worlds/world1
 mkdir -p ./minecraft/render/world1
 tar xzf \$MANTA_INPUT_FILE --directory ./minecraft/worlds/world1
 ls -l ./minecraft/worlds/world1
-./overviewer/overviewer.py --config=./minecraft/cfg.py
+./overviewer/overviewer.py --config=./minecraft/cfg.py --simple-output -v -v
 
 #OUTPUT_PATH="/$MANTA_USER/public/minecraft/filip/map/view"
 OUTPUT_PATH=\$(dirname \$(dirname \$MANTA_INPUT_FILE))/map/view
