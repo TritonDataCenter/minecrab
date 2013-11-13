@@ -1,5 +1,5 @@
 #!/bin/bash
 
-pkgin -y in scmgit-base
+/opt/local/bin/pkgin -y in scmgit-base
 cd /opt
-git clone git@github.com:joyent/minecraft.git
+/opt/local/bin/git clone git@github.com:joyent/minecraft.git
