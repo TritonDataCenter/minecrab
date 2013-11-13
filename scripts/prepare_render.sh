@@ -94,7 +94,18 @@ PUSHD=\$(pwd)
 cd \$SRC
 ln -s \${LEVEL_NAME} world
 cd \$PUSHD
-./overviewer/overviewer.py --config=./minecraft/cfg.py --simple-output -v -v
+./overviewer/overviewer.py --config=./minecraft/cfg.py --simple-output -v -v | tee /overviewer.log &
+overviewer_pid=\$!
+
+trigger="asdxxxxxf"
+while read -r line; do
+  if [[ "\${line}" =~ "\${trigger}" ]]; then
+    echo BOOM
+    kill -9 \$overviewer_pid
+  else
+    #echo \$line
+  fi
+done <(tail -f /overviewer.log)
 
 #OUTPUT_PATH="/\$MANTA_USER/public/minecraft/filip/map/view"
 OUTPUT_PATH=\$(dirname \$(dirname \$MANTA_INPUT_FILE))/map/view
