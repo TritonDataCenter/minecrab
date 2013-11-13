@@ -22,7 +22,7 @@ grep -q /opt/minecraft/bin /root/.profile || \
   cat - >>/root/.profile <<'EOF'
 
 # Add path to minecraft tools
-PATH=$PATH:/opt/minecraft/bin:/opt/local/sdc/bin
+PATH=$PATH:/opt/minecraft/scripts:/opt/local/sdc/bin
 EOF
 . /root/.profile
 
