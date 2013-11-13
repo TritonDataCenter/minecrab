@@ -76,10 +76,8 @@ tar xzf \$MANTA_INPUT_FILE --directory ./minecraft/worlds/world1
 ls -l ./minecraft/worlds/world1
 ./overviewer/overviewer.py --config=./minecraft/cfg.py
 
-# TODO:DM
-# output path could be defined in our metadata inside game data
-# dirname dirname MANTA_INPUT_FILE
-OUTPUT_PATH="/$MANTA_USER/public/minecraft/filip/map/view"
+#OUTPUT_PATH="/$MANTA_USER/public/minecraft/filip/map/view"
+OUTPUT_PATH=\$(dirname \$(dirname \$MANTA_INPUT_FILE))/map/view
 
 ./mputr ./minecraft/render/world1 "\${OUTPUT_PATH}"
 EOF
@@ -104,4 +102,4 @@ mputr () {
   return 0
 }
 EOF
-chmod 755 ./mputer.sh
+chmod 755 ./mputr.sh
