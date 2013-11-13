@@ -6,7 +6,7 @@
 
 source $(dirname $0)/common.sh
 
-usage() { echo "Usage: $0 [server-name] [friend-name] <reason>" 1>&2; exit 1; }
+usage() { echo "Usage: $0 <server-name> <friend-name> [reason]" 1>&2; exit 1; }
 
 if [ "$#" -lt 2 ]; then
     usage

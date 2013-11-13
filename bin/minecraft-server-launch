@@ -8,7 +8,7 @@
 source $(dirname $0)/common.sh
 USER_SCRIPT=$(dirname $0)/../scripts/bootstrap.sh
 
-usage() { echo "Usage: $0 [server-name] <first-player>" 1>&2; exit 1; }
+usage() { echo "Usage: $0 <server-name> [first-player]" 1>&2; exit 1; }
 
 if [ "$#" -ne 1 ]; then
     usage
