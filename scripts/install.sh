@@ -5,12 +5,12 @@ set -e
 . $(dirname $0)/common.sh
 
 echo "Installing dependencies..."
-pkgin -y in openjdk7 tmux
+pkgin -y in openjdk7 tmux >/dev/null
 
 echo "Preparing environment..."
 mkdir -p ${MINECRAFT_LOCATION}
-id -g minecraft >/dev/null || groupadd minecraft
-id -u minecraft >/dev/null || useradd -s /bin/sh -d ${MINECRAFT_LOCATION} -g minecraft minecraft
+id -g minecraft >/dev/null 2>&1 || groupadd minecraft 2>/dev/null
+id -u minecraft >/dev/null 2>&1 || useradd -s /bin/sh -d ${MINECRAFT_LOCATION} -g minecraft minecraft 2>/dev/null
 svccfg import $(dirname $0)/../svc/manifest/minecraft.xml
 grep -q /opt/minecraft/bin /root/.profile || \
   cat - >>/root/.profile <<'EOF'
