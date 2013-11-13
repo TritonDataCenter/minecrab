@@ -13,7 +13,12 @@ cp -p $(dirname $0)/../misc/server.properties $(dirname $0)/../server/
 chown -R minecraft:minecraft /opt/minecraft/server
 svccfg import $(dirname $0)/../svc/manifest/minecraft.xml
 grep -q /opt/minecraft/bin /root/.profile || \
-  echo "PATH=$PATH:/opt/minecraft/bin" >> /root/.profile
+  cat - >>/root/.profile <<'EOF'
+
+# Add path to minecraft tools
+PATH=$PATH:/opt/minecraft/bin
+EOF
+. /root/.profile
 
 . $(dirname $0)/../bin/minecraft-server-env
 
