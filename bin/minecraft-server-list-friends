@@ -6,14 +6,13 @@
 
 source $(dirname $0)/common.sh
 
-usage() { echo "Usage: $0 [server-name] [friend-name]" 1>&2; exit 1; }
+usage() { echo "Usage: $0 [server-name]" 1>&2; exit 1; }
 
-if [ "$#" -ne 2 ]; then
+if [ "$#" -ne 1 ]; then
     usage
 fi
 
 SERVER_NAME=$1
-FRIEND=$2
 
 echo "Finding server..."
 find_server $SERVER_NAME
