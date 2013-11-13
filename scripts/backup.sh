@@ -8,6 +8,14 @@ source $(dirname $0)/common.sh
 
 BACKUP_FILE='/var/tmp/minecraft-backup.tar.gz'
 
-tar -xzf $MINECARFT_LOCATION $BACKUP_FILE
+rm $BACKUP_FILE
+cd $MINECRAFT_LOCATION
+echo "Bundling $SERVER_NAME..."
+tar -czf $BACKUP_FILE . \
+    --exclude=coremods \
+    --exclude=logs \
+    --exclude=mods \
+    --exclude=*.jar
+echo "Putting $BACKUP_FILE to $REMOTE_FILE"
 mmkdir -p $(dirname $REMOTE_FILE)
 mput -f $BACKUP_FILE $REMOTE_FILE
