@@ -11,9 +11,11 @@ usage() { echo "Usage: $0" 1>&2; exit 1; }
 PATTERN="%-15s %s"
 printf "$PATTERN" "IP" "NAME"
 echo
-sdc-listmachines --tag minecraft=* | json -ga name primaryIp | while read l; do
-    NAME=$(echo $l | cut -d ' ' -f 1)
-    IP=$(echo $l | cut -d ' ' -f 2)
-    printf "$PATTERN" "$IP" "$NAME"
-    echo
-done
+sdc-listmachines --tag minecraft=* | \
+    json -ga tags.minecraft primaryIp | \
+    while read l; do
+        NAME=$(echo $l | cut -d ' ' -f 1)
+        IP=$(echo $l | cut -d ' ' -f 2)
+        printf "$PATTERN" "$IP" "$NAME"
+        echo
+    done
