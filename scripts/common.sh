@@ -7,6 +7,8 @@
 #set -o xtrace
 set -o pipefail
 
+PATH=$PATH:/opt/local/sdc/bin
+
 : ${MANTA_USER:?"MANTA_USER environment variable is missing"}
 : ${MANTA_URL:?"MANTA_URL environment variable is missing"}
 : ${MANTA_KEY_ID:?"MANTA_KEY_ID environment variable is missing"}
