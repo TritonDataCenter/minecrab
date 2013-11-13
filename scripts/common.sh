@@ -18,6 +18,7 @@ MANTA_PREFIX="/$MANTA_USER/public/minecraft"
 SERVER_NAME=$(mdata-get sdc:tags.minecraft)
 MANTA_LOCATION="$MANTA_PREFIX/$SERVER_NAME"
 REMOTE_FILE="$MANTA_LOCATION/server/world.tar.gz"
+MAP_BASE="$MANTA_LOCATION/map/view"
 
 function fatal {
     echo "$(basename $0): fatal error: $*" >&2

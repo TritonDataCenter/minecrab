@@ -71,3 +71,4 @@ EOCONFIG
 cat > /render.sh <<EOF
 /overviewer/overviewer.py /minecraft/cfg.py
 EOF
+chmod 755 /render.sh
