@@ -18,7 +18,9 @@ case $(uname -s) in
     ;;
   "SunOS" )
     echo "Solaris";
-    pkgin -y install numpy
+    if [ -z "$MANTA_USER" ]; then
+      pkgin -y install numpy
+    fi
     DEST="./minecraft/versions/${MINECRAFT_VERSION}"
     ;;
   * )
