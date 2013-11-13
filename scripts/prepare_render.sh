@@ -106,6 +106,7 @@ EOF
 chmod 755 ./render.sh
 
 cat > ./mputr <<EOF
+set -o errexit
 mputr () {
   owd=\$(pwd)
   local=\$1
@@ -123,5 +124,6 @@ mputr () {
   cd "\$owd"
   return 0
 }
+mputr \$1 \$2
 EOF
 chmod 755 ./mputr
