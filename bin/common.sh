@@ -30,7 +30,7 @@ function find_server {
 
 function server_console {
     local CONSOLE_CMD=$1
-    server_execute "tmux send -t minecraft c-m \"$CONSOLE_CMD\" c-m"
+    server_execute "sudo -u minecraft tmux send -t minecraft c-m \"$CONSOLE_CMD\" c-m"
 }
 
 function server_execute {
