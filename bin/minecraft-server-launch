@@ -6,6 +6,7 @@
 
 
 source $(dirname $0)/common.sh
+USER_SCRIPT=$(dirname $0)/../scripts/bootstrap.sh
 
 usage() { echo "Usage: $0 [server-name]" 1>&2; exit 1; }
 
@@ -13,7 +14,7 @@ if [ "$#" -ne 1 ]; then
     usage
 fi
 
-SERVERNAME="$1"
+SERVER_NAME="$1"
 
 IMAGEID=17c98640-1fdb-11e3-bf51-3708ce78e75a
 #	{
@@ -41,22 +42,22 @@ PACKAGENAME=g3-standard-4-smartos-image-creation
 #		"group": "Image Creation"
 #	}
 
-# Check if $SERVERNAME already exists
-# TODO
+# Check if $SERVER_NAME already exists
 
-if [[ $(sdc-listmachines --tag "minecraft=${SERVERNAME}") != "[]" ]] ; then
-	fatal "${SERVERNAME} already exists. Choose another name."
+if [[ $(sdc-listmachines --tag "minecraft=${SERVER_NAME}") != "[]" ]] ; then
+	fatal "${SERVER_NAME} already exists. Choose another name."
 fi
 
-echo -n "Creating ${SERVERNAME}"
-SERVERID=$(sdc-createmachine	--dataset $IMAGEID \
+echo -n "Creating ${SERVER_NAME}"
+SERVER_ID=$(sdc-createmachine	--dataset $IMAGEID \
 								--package $PACKAGENAME \
-								--tag "minecraft=${SERVERNAME}" | json id)
-if [ -z $SERVERID ] ; then 
+								--tag "minecraft=${SERVER_NAME}" \
+								--script $USER_SCRIPT | json id)
+if [ -z $SERVER_ID ] ; then
 	fatal "Can't provision."
 fi
 
-while [[ $(sdc-getmachine $SERVERID | json state) ==  "provisioning" ]]
+while [[ $(sdc-getmachine $SERVER_ID | json state) ==  "provisioning" ]]
 	do
 		echo -n "."
 		sleep 1
@@ -64,4 +65,6 @@ while [[ $(sdc-getmachine $SERVERID | json state) ==  "provisioning" ]]
 
 echo "done"
 
+IP_ADDRESS=$(sdc-getmachine $SERVER_ID | json primaryIp)
 
+echo "Server running on ${IP_ADDRESS}"
