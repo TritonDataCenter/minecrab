@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# -*- mode: shell-script; fill-column: 80; -*-
+#
+# Copyright (c) 2013 Joyent Inc., All rights reserved.
+#
+
+source $(dirname $0)/common.sh
+
+usage() { echo "Usage: $0 [server-name]" 1>&2; exit 1; }
+
+if [ "$#" -ne 1 ]; then
+    usage
+fi
+
+SERVER_NAME=$1
+
+echo "Finding server..."
+find_server $SERVER_NAME
+if [ -z "$SERVER_NAME" ]; then
+    fatal "Unable to find $SERVER_NAME server."
+fi
+
+server_execute "svcadm disable -s minecraft; /opt/minecraft/scripts/backup.sh"
+sdc-deletemachine "$ID"

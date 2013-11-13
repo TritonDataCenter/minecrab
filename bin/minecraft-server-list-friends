@@ -16,12 +16,11 @@ SERVER_NAME=$1
 FRIEND=$2
 
 echo "Finding server..."
-find_ip $SERVER_NAME
+find_server $SERVER_NAME
 
 if [ -z "$IP" ]; then
     fatal "Unable to find $SERVER_NAME server."
 fi
 
-server_exec "cat $MINECRAFT_LOCATION/white-list.txt"
-
-echo "Done!"
+server_execute "cat $MINECRAFT_LOCATION/white-list.txt"
+echo $RESULT

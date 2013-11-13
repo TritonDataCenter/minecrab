@@ -15,12 +15,12 @@ fi
 SERVER_NAME=$1
 
 echo "Finding server..."
-find_ip $SERVER_NAME
+find_server $SERVER_NAME
 
 if [ -z "$IP" ]; then
     fatal "Unable to find $SERVER_NAME server."
 fi
 
-server_exec "/opt/minecraft/scripts/map.sh"
+server_execute "/opt/minecraft/scripts/map.sh"
 
 echo "Done!"

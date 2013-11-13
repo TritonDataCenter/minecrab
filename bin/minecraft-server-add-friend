@@ -16,7 +16,7 @@ SERVER_NAME=$1
 FRIEND=$2
 
 echo "Finding server..."
-find_ip $SERVER_NAME
+find_server $SERVER_NAME
 
 if [ -z "$IP" ]; then
     fatal "Unable to find $SERVER_NAME server."

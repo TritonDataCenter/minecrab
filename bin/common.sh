@@ -21,9 +21,11 @@ function fatal {
     exit 1
 }
 
-function find_ip {
+function find_server {
     local NAME=$1
-    IP=$(sdc-listmachines --tag minecraft=$NAME | json -ga primaryIp)
+    SERV_RES=$(sdc-listmachines --tag minecraft=$NAME)
+    IP=$(echo "$SERV_RES" | json -ga primaryIp)
+    ID=$(echo "$SERV_RES" | json -ga id)
 }
 
 function server_console {
