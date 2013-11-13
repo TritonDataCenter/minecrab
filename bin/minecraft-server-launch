@@ -44,8 +44,11 @@ PACKAGENAME=g3-standard-4-smartos-image-creation
 # Check if $SERVERNAME already exists
 # TODO
 
+if [[ $(sdc-listmachines --tag "minecraft=${SERVERNAME}") != "[]" ]] ; then
+	fatal "${SERVERNAME} already exists. Choose another name."
+fi
 
-echo -n "Creating ${SERVERNAME} ."
+echo -n "Creating ${SERVERNAME}"
 SERVERID=$(sdc-createmachine	--dataset $IMAGEID \
 								--package $PACKAGENAME \
 								--tag "minecraft=${SERVERNAME}" | json id)
