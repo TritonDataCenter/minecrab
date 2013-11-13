@@ -16,9 +16,8 @@
         <envvar name="PATH" value="/opt/local/bin:/opt/local/sbin:/usr/bin:/usr/sbin:/usr/local/bin" />
       </method_environment>
     </method_context>
-    <exec_method type="method" name="start" exec="/opt/minecraft/svc/method/minecraft start" timeout_seconds="60" />
-    <exec_method type="method" name="stop" exec="/opt/minecraft/svc/method/minecraft stop" timeout_seconds="60" />
-    <exec_method type="method" name="refresh" exec="/opt/minecraft/svc/method/minecraft refresh" timeout_seconds="60" />
+    <exec_method type="method" name="start" exec="/opt/minecraft/svc/method/minecraft start" timeout_seconds="3600" />
+    <exec_method type="method" name="stop" exec="/opt/minecraft/svc/method/minecraft stop" timeout_seconds="3600" />
     <property_group name="startd" type="framework">
       <propval name="duration" type="astring" value="contract" />
     </property_group>
