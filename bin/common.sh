@@ -15,7 +15,6 @@ set -o pipefail
 : ${SDC_KEY_ID:?"SDC_KEY_ID environment variable is missing"}
 
 MINECRAFT_LOCATION="/opt/minecraft/server"
-MANTA_PREFIX="/$MANTA_USER/public/minecraft"
 
 function fatal {
     echo "$(basename $0): fatal error: $*" >&2
@@ -25,11 +24,6 @@ function fatal {
 function find_ip {
     local NAME=$1
     IP=$(sdc-listmachines --tag minecraft=$NAME | json -ga primaryIp)
-}
-
-function manta_location {
-    local SERVER_NAME=$1
-    MANTA_LOCATION="$MANTA_PREFIX/$SERVER_NAME"
 }
 
 function server_console {
