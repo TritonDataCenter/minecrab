@@ -32,7 +32,7 @@ case $(uname -s) in
 esac
 
 if [ ! -d "$DEST" ]; then
-  wget https://s3.amazonaws.com/Minecraft.Download/versions/${MINECRAFT_VERSION}/${MINECRAFT_VERSION}.jar -P $DEST/{$MINECRAFT_VERSION}.jar
+  wget --no-check-certificate https://s3.amazonaws.com/Minecraft.Download/versions/${MINECRAFT_VERSION}/${MINECRAFT_VERSION}.jar -P $DEST/{$MINECRAFT_VERSION}.jar
 fi
 
 git clone git://github.com/overviewer/Minecraft-Overviewer.git overviewer
