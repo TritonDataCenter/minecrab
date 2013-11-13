@@ -39,6 +39,9 @@ git clone git://github.com/overviewer/Minecraft-Overviewer.git overviewer
 
 cd overviewer
 
+# Patch and add sys.exit()
+perl -pi -e 's/Rendering complete!"\)/Rendering complete!!"\); sys.exit(0)/' ./overviewer_core/observer.py
+
 # Python Image Tools
 #
 # get PIL (may already exist in OS and Manta)
@@ -71,10 +74,25 @@ renders["render1"] = {
 EOCONFIG
 
 cat > ./render.sh <<EOF
-mkdir -p ./minecraft/worlds/world1
-mkdir -p ./minecraft/render/world1
-tar xzf \$MANTA_INPUT_FILE --directory ./minecraft/worlds/world1
-ls -l ./minecraft/worlds/world1
+if [ -z "$MANTA_INPUT_FILE" ]; then
+  echo "ERROR: missing MANTA_INPUT_FILE"
+  return 1
+fi
+SRC=./minecraft/worlds/world1
+DEST=./minecraft/render/world1
+mkdir -p \$SRC
+mkdir -p \$DEST
+tar xzf \$MANTA_INPUT_FILE --directory \$SRC
+ls -l \$SRC
+LEVEL_NAME=\$(cat \$SRC/server.properties | grep level-name | cut -d '=' -f 2)
+if [ -z "\$LEVEL_NAME" ]; then
+  echo "ERROR: missing level-name in server properties"
+  return 1
+fi
+PUSHD=\$(pwd)
+cd \$SRC
+ln -s \${LEVEL_NAME} world
+cd \$PUSHD
 ./overviewer/overviewer.py --config=./minecraft/cfg.py --simple-output -v -v
 
 #OUTPUT_PATH="/$MANTA_USER/public/minecraft/filip/map/view"
