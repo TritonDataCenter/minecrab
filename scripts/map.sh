@@ -10,7 +10,7 @@ REMOTE_FILE="/Joyent_Dev/public/minecraft/filip/server/world.tar.gz"
 
 debug="yes please"
 
-set -x trace
+#set -x trace
 
 function runjob {
   world=$REMOTE_FILE
@@ -23,15 +23,33 @@ function runjob {
     mjob create \
       --init "curl $init_script | sh" \
       -m '/render.sh' \
+      -r 'cat' \
   )
   echo $world | mjob addinputs $manta_req_uuid
+
   job_status=$(mjob watch $manta_req_uuid)
   if [ -n "$debug" ]; then
+    echo "==================================================="
     echo "status:"
     json <<<${job_status}
   fi
+
+  job_outputs=$(mjob outputs $manta_req_uuid)
+  if [ -n "$job_outputs" ]; then
+    echo "==================================================="
+    echo "outputs:"
+    echo $job_outputs
+    mget $job_outputs
+    #json <<<$job_outputs
+    #errobj=$(echo $job_outputs | json stderr)
+    #if [ -n "$stdout_obj" ]; then
+      #mget $stdout_obj
+    #fi
+  fi
+
   job_errors=$(mjob errors $manta_req_uuid)
   if [ -n "$job_errors" ]; then
+    echo "==================================================="
     echo "errors:"
     json <<<$job_errors
     errobj=$(echo $job_errors | json stderr)
