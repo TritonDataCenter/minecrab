@@ -3,11 +3,15 @@
 
 set -x
 
-. $(dirname $0)/../../bin/minecraft-server-env
+. $(dirname $0)/../../server/server.config
+
+MEM_CAP=$(sm-meminfo -p rss|awk -F: '/vm_memcap/ {print $2}')
+MAX_SIZE=$((MEM_CAP/1024/1024/5*4))
+MIN_SIZE=$((MAX_SIZE/2))
 
 case $1 in
   'start')
-    tmux new -d -s minecraft "java ${JAVA_OPTS//\\} -Xms${MIN_SIZE:-512M} -Xmx${MAX_SIZE:-1024M} -jar ${MC_JARFILE} nogui"
+    tmux new -d -s minecraft "java ${JAVA_OPTS//\\} -Xms${MIN_SIZE}M -Xmx${MAX_SIZE}M -jar ${SERVER_JAR} nogui"
   ;;
   'stop')
     tmux send -t minecraft c-m "stop" c-m
@@ -22,4 +26,3 @@ case $1 in
 esac
 
 exit ${SMF_EXIT_OK}
-

@@ -21,12 +21,6 @@
     <property_group name="startd" type="framework">
       <propval name="duration" type="astring" value="contract" />
     </property_group>
-    <property_group name="minecraft" type="application">
-      <propval name="java_opts" type="astring" value="-d64 -Xincgc -Djava.security.egd=/dev/./urandom -XX:-UseVMInterruptibleIO -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalPacing -XX:ParallelGCThreads=4 -XX:+AggressiveOpts" />
-      <propval name="mc_flavor" type="astring" value="minecraft" />
-      <propval name="min_size" type="astring" value="512M" />
-      <propval name="max_size" type="astring" value="1536M" />
-    </property_group>
     <stability value="Evolving" />
     <template>
       <common_name>
