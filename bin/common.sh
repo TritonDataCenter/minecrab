@@ -35,5 +35,8 @@ function server_console {
 
 function server_execute {
     local COMMAND=$1
-    RESULT=$(ssh -A root@$IP $COMMAND)
+    #Since these will start and stop a lot, there's the possibility that we'll
+    # get the same ip address with multiple launches and shutdowns.
+    RESULT=$(ssh -o LogLevel=quiet -o StrictHostKeyChecking=no -o \
+	     UserKnownHostsFile=/dev/null -A root@$IP $COMMAND)
 }

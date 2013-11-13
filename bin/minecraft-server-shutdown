@@ -22,3 +22,5 @@ fi
 
 server_execute "svcadm disable -s minecraft; /opt/minecraft/scripts/backup.sh"
 sdc-deletemachine "$ID"
+
+echo "Done!"

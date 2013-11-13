@@ -8,9 +8,9 @@
 source $(dirname $0)/common.sh
 USER_SCRIPT=$(dirname $0)/../scripts/bootstrap.sh
 
-usage() { echo "Usage: $0 [server-name] [first-player]" 1>&2; exit 1; }
+usage() { echo "Usage: $0 [server-name] <first-player>" 1>&2; exit 1; }
 
-if [ "$#" -ne 2 ]; then
+if [ "$#" -ne 1 ]; then
     usage
 fi
 
@@ -78,4 +78,6 @@ server_execute "cd /opt && git clone git@github.com:joyent/minecraft.git"
 echo "Installing server"
 server_execute "cd /opt && minecraft/scripts/install.sh"
 echo "Connect to server at ${IP}"
-server_console "whitelist add ${ME}"
+if [ ! -z "$ME" ]; then
+	server_console "whitelist add ${ME}"
+fi
