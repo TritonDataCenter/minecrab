@@ -21,7 +21,7 @@ function runjob {
   #   --asset $map \
   manta_req_uuid=$(\
     mjob create \
-      --memory=2048 \
+      --memory=4096 \
       --init "curl $init_script | sh" \
       -m '/render.sh' \
       -r 'cat' \
