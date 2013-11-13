@@ -4,6 +4,7 @@
 
 
 #set -x trace
+set -o errexit
 
 
 OS=$(uname -s)
@@ -83,7 +84,7 @@ OUTPUT_PATH=\$(dirname \$(dirname \$MANTA_INPUT_FILE))/map/view
 EOF
 chmod 755 ./render.sh
 
-cat > ./mputr.sh <<EOF
+cat > ./mputr <<EOF
 mputr () {
   owd=\$(pwd)
   local=\$1
@@ -102,4 +103,4 @@ mputr () {
   return 0
 }
 EOF
-chmod 755 ./mputr.sh
+chmod 755 ./mputr

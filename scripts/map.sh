@@ -10,7 +10,7 @@ REMOTE_FILE="/Joyent_Dev/public/minecraft/filip/server/world.tar.gz"
 
 debug="yes please"
 
-#set -x trace
+set -x trace
 
 function runjob {
   world=$REMOTE_FILE
@@ -21,6 +21,7 @@ function runjob {
   #   --asset $map \
   manta_req_uuid=$(\
     mjob create \
+      --memory=2048 \
       --init "curl $init_script | sh" \
       -m '/render.sh' \
       -r 'cat' \
