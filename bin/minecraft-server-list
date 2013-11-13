@@ -8,17 +8,18 @@ source $(dirname $0)/common.sh
 
 usage() { echo "Usage: $0" 1>&2; exit 1; }
 
-PATTERN="%-15s %s"
+PATTERN="%-15s %-10s %s"
 sdc-listmachines --tag minecraft=* | \
-    json -ga tags.minecraft primaryIp | \
+    json -ga primaryIp state tags.minecraft | \
     while read l; do
         if [ -z $HEADER ]; then
-            printf "$PATTERN" "IP" "NAME"
+            printf "$PATTERN" "IP" "STATE" "NAME"
             echo
 	    HEADER="header"
         fi
-        NAME=$(echo $l | cut -d ' ' -f 1)
-        IP=$(echo $l | cut -d ' ' -f 2)
-        printf "$PATTERN" "$IP" "$NAME"
+        IP=$(echo $l | cut -d ' ' -f 1)
+        STATE=$(echo $l | cut -d ' ' -f 2)
+        NAME=$(echo $l | cut -d ' ' -f 3)
+        printf "$PATTERN" "$IP" "$STATE" "$NAME"
         echo
     done
