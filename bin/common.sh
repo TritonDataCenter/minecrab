@@ -39,4 +39,7 @@ function server_execute {
     # get the same ip address with multiple launches and shutdowns.
     RESULT=$(ssh -o LogLevel=quiet -o StrictHostKeyChecking=no -o \
 	     UserKnownHostsFile=/dev/null -A root@$IP $COMMAND)
+    if [[ $? -ne 0 ]]; then
+        fatal "Failed to execute $COMMAND on $IP"
+    fi
 }

@@ -14,13 +14,37 @@ fi
 
 SERVER_NAME=$1
 
-echo "Finding server..."
+echo -n "Finding server... "
 find_server $SERVER_NAME
 if [ -z "$SERVER_NAME" ]; then
     fatal "Unable to find $SERVER_NAME server."
 fi
+echo "Found $SERVER_NAME ($IP)!"
 
-server_execute "svcadm disable -s minecraft; /opt/minecraft/scripts/backup.sh"
+read -p "Are you sure you want to shut down $SERVER_NAME? " -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    exit 1
+fi
+
+echo -n "Backing up your data... "
+server_execute "/opt/minecraft/scripts/backup.sh"
+if [[ $? -ne 0 ]]; then
+    fatal "Failed to backup your world.  Server is still running."
+fi
+echo "Success!"
+
+echo -n "Disabling the minecraft server... "
+server_execute "svcadm disable -s minecraft"
+if [[ $? -ne 0 ]]; then
+    fatal "Failed to disable minecraft.  Server is still running."
+fi
+echo "Success!"
+
+echo -n "Shutting down your server... "
 sdc-deletemachine "$ID"
+if [[ $? -ne 0 ]]; then
+    fatal "May have failed to shut down your server."
+fi
 
 echo "Done!"
