@@ -78,6 +78,7 @@ ls -l ./minecraft/worlds/world1
 
 # TODO:DM
 # output path could be defined in our metadata inside game data
+# dirname dirname MANTA_INPUT_FILE
 OUTPUT_PATH="/$MANTA_USER/public/minecraft/filip/map/view"
 
 ./mputr ./minecraft/render/world1 "\${OUTPUT_PATH}"
