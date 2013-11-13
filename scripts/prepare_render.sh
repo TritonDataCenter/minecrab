@@ -14,15 +14,14 @@ case $(uname -s) in
   "Darwin" )
     echo "OS X"
     pip install numpy
-    DEST="~/Library/Application Support/minecraft/versions/${MINECRAFT_VERSION}"
+    DEST="./minecraft/versions/${MINECRAFT_VERSION}"
     ;;
   "SunOS" )
     echo "Solaris";
-    DEST="/minecraft/versions/${MINECRAFT_VERSION}"
+    DEST="./minecraft/versions/${MINECRAFT_VERSION}"
     if [ -z "$MANTA_USER" ]; then
       # Not on Manta
       pkgin -y install numpy
-      DEST=".$DEST"
     fi
     ;;
   * )
@@ -32,7 +31,7 @@ case $(uname -s) in
 esac
 
 if [ ! -d "$DEST" ]; then
-  wget --no-check-certificate https://s3.amazonaws.com/Minecraft.Download/versions/${MINECRAFT_VERSION}/${MINECRAFT_VERSION}.jar -P $DEST/{$MINECRAFT_VERSION}.jar
+  wget --no-check-certificate https://s3.amazonaws.com/Minecraft.Download/versions/${MINECRAFT_VERSION}/${MINECRAFT_VERSION}.jar -P $DEST
 fi
 
 git clone git://github.com/overviewer/Minecraft-Overviewer.git overviewer
@@ -55,20 +54,53 @@ python ./setup.py clean > /dev/null
 # build MCO
 python ./setup.py build #> /dev/null
 
+cd ..
+
 # Create config.py
-cat > /minecraft/cfg.py <<EOCONFIG
-worlds['world1'] = '/minecraft/worlds/world1'
-outputdir = "/minecraft/render/world1"
+cat > ./minecraft/cfg.py <<EOCONFIG
+worlds['world1'] = './minecraft/worlds/world1/world'
+outputdir = "./minecraft/render/world1"
 # Try "smooth_lighting" over "lighting" for even better looking maps!
 rendermode = "smooth_lighting"
-texturepath = "/minecraft/versions/${MINECRAFT_VERSION}/${MINECRAFT_VERSION}.jar"
+texturepath = "./minecraft/versions/${MINECRAFT_VERSION}/${MINECRAFT_VERSION}.jar"
 renders["render1"] = {
   'world': 'world1',
   'title': 'The world',
 }
 EOCONFIG
 
-cat > /render.sh <<EOF
-/overviewer/overviewer.py /minecraft/cfg.py
+cat > ./render.sh <<EOF
+mkdir -p ./minecraft/worlds/world1
+mkdir -p ./minecraft/render/world1
+tar xzf \$MANTA_INPUT_FILE --directory ./minecraft/worlds/world1
+ls -l ./minecraft/worlds/world1
+./overviewer/overviewer.py --config=./minecraft/cfg.py
+
+# TODO:DM
+# output path could be defined in our metadata inside game data
+OUTPUT_PATH="/$MANTA_USER/public/minecraft/filip/map/view"
+
+./mputr ./minecraft/render/world1 "\${OUTPUT_PATH}"
 EOF
-chmod 755 /render.sh
+chmod 755 ./render.sh
+
+cat > ./mputr.sh <<EOF
+mputr () {
+  owd=\$(pwd)
+  local=\$1
+  remote=\$2
+  if [ -z "\$remote" ]; then
+    echo "[ERROR] \$0: missing required options"
+    exit 1
+  fi
+  cd "\$local"
+  mmkdir -p "\$remote"
+  # directories
+  find . -type d | sort | xargs -n 1 -I {} mmkdir \$remote/{} || return 1
+  # files
+  find . -type f | xargs -n 1 -I {} mput -q \$remote/{} -f {} || return 1
+  cd "\$owd"
+  return 0
+}
+EOF
+chmod 755 ./mputer.sh
