@@ -22,9 +22,8 @@ function runjob {
   manta_req_uuid=$(\
     mjob create \
       --memory=4096 \
-      --init "curl $init_script | sh" \
-      -m '/render.sh' \
-      -r 'cat' \
+      --init "curl $init_script | sh | tee ./minecraft/init.log" \
+      -m '/render.sh | tee ./minecraft/render.log' \
   )
   echo $world | mjob addinputs $manta_req_uuid
 
