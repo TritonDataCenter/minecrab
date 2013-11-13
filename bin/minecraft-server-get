@@ -14,7 +14,6 @@ fi
 
 SERVER_NAME=$1
 
-echo "Finding server..."
 DATA=$(sdc-listmachines --tag minecraft=$SERVER_NAME | json -ga)
 
 if [ -z "$DATA" ]; then
