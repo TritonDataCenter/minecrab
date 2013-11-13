@@ -8,13 +8,14 @@
 source $(dirname $0)/common.sh
 USER_SCRIPT=$(dirname $0)/../scripts/bootstrap.sh
 
-usage() { echo "Usage: $0 [server-name]" 1>&2; exit 1; }
+usage() { echo "Usage: $0 [server-name] [first-player]" 1>&2; exit 1; }
 
-if [ "$#" -ne 1 ]; then
+if [ "$#" -ne 2 ]; then
     usage
 fi
 
 SERVER_NAME="$1"
+ME="$2"
 
 IMAGEID=17c98640-1fdb-11e3-bf51-3708ce78e75a
 #	{
@@ -67,5 +68,14 @@ echo " done"
 IP=$(sdc-getmachine $SERVER_ID | json primaryIp)
 
 echo "Server ${SERVER_NAME} running on ${IP} id: $SERVER_ID"
-echo "Executing"
-server_execute "pkgin -y in scmgit && cd /opt && git clone git@git.joyent.com:minecraft.git"
+echo "Setting up"
+server_execute 'echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config'
+server_execute "echo -e \"export MANTA_USER=$MANTA_USER\nexport MANTA_KEY_ID=$MANTA_KEY_ID\nexport MANTA_URL=https://us-east.manta.joyent.com\" >> ~/.bashrc"
+echo "Installing git"
+server_execute "pkgin -y in scmgit"
+echo "Cloning repo"
+server_execute "cd /opt && git clone git@github.com:joyent/minecraft.git"
+echo "Installing server"
+server_execute "cd /opt && minecraft/scripts/install.sh"
+echo "Connect to server at ${IP}"
+server_console "whitelist add ${ME}"
