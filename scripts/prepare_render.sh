@@ -75,8 +75,6 @@ renders["render1"] = {
 EOCONFIG
 
 cat > ./render.sh <<EOF
-cat ./init.log
-exit
 if [ -z "\$MANTA_INPUT_FILE" ]; then
   echo "ERROR: missing MANTA_INPUT_FILE"
   return 1
