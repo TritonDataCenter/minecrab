@@ -51,8 +51,7 @@ fi
 echo -n "Creating ${SERVER_NAME}"
 SERVER_ID=$(sdc-createmachine	--dataset $IMAGEID \
 								--package $PACKAGENAME \
-								--tag "minecraft=${SERVER_NAME}" \
-								--script $USER_SCRIPT | json id)
+								--tag "minecraft=${SERVER_NAME}"  | json id)
 if [ -z $SERVER_ID ] ; then
 	fatal "Can't provision."
 fi
@@ -68,3 +67,6 @@ echo "done"
 IP_ADDRESS=$(sdc-getmachine $SERVER_ID | json primaryIp)
 
 echo "Server running on ${IP_ADDRESS}"
+echo "Cloning repo"
+server_execute "pkgin -y in scmgit && cd /opt && git clone git@git.joyent.com:minecraft.git"
+ 
