@@ -24,3 +24,8 @@ function fatal {
     echo "$(basename $0): fatal error: $*" >&2
     exit 1
 }
+
+function console {
+    local CONSOLE_CMD=$1
+    sudo -u minecraft tmux send -t minecraft c-m "$CONSOLE_CMD" c-m
+}
