@@ -77,7 +77,7 @@ EOCONFIG
 cat > ./render.sh <<EOF
 cat ./init.log
 exit
-if [ -z "$MANTA_INPUT_FILE" ]; then
+if [ -z "\$MANTA_INPUT_FILE" ]; then
   echo "ERROR: missing MANTA_INPUT_FILE"
   return 1
 fi
@@ -98,7 +98,7 @@ ln -s \${LEVEL_NAME} world
 cd \$PUSHD
 ./overviewer/overviewer.py --config=./minecraft/cfg.py --simple-output -v -v
 
-#OUTPUT_PATH="/$MANTA_USER/public/minecraft/filip/map/view"
+#OUTPUT_PATH="/\$MANTA_USER/public/minecraft/filip/map/view"
 OUTPUT_PATH=\$(dirname \$(dirname \$MANTA_INPUT_FILE))/map/view
 
 ./mputr ./minecraft/render/world1 "\${OUTPUT_PATH}"
