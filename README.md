@@ -1,6 +1,17 @@
+
 # Hammerhead
 
 Minecraft server on demand.
+
+
+- [What it does](#what-it-does)
+- [Getting started](#getting-started)
+- [Basic Commands](#basic-commands)
+- [Advanced Commands](#advanced-commands)
+- [What it costs](#what-it-costs)
+- [Notes](#notes)
+
+
 
 ## What it does
 
@@ -340,7 +351,7 @@ $0.00016 * number of seconds of wall-clock time.
 For example: <br />
 
 * A 15-minute job costs $0.144.
-* A two-hour job costs $2.304
+* A two-hour job costs $1.152.
 
 
 
