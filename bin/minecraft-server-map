@@ -21,6 +21,8 @@ if [ -z "$IP" ]; then
     fatal "Unable to find $SERVER_NAME server."
 fi
 
+echo "Running map command from $SERVER_NAME..."
 server_execute "/opt/minecraft/scripts/map.sh"
+echo "$RESULT"
 
 echo "Done!"

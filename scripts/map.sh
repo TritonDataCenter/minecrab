@@ -10,7 +10,7 @@ source $(dirname $0)/common.sh
 
 #debug="yes please"
 
-set -x trace
+#set -x trace
 
 function runjob {
   world=$REMOTE_FILE
@@ -19,20 +19,23 @@ function runjob {
   fi
   init_script="https://raw.github.com/joyent/minecraft/master/scripts/prepare_render.sh?token=58699__eyJzY29wZSI6IlJhd0Jsb2I6am95ZW50L21pbmVjcmFmdC9tYXN0ZXIvc2NyaXB0cy9wcmVwYXJlX3JlbmRlci5zaCIsImV4cGlyZXMiOjEzODQ5MDgzODJ9--693c6e94b5c177c6304af5c8d29585a75795c7d1"
   #   --asset $map \
+  echo "Kicking off job..."
   manta_req_uuid=$(\
-    mjob create \
+    echo "$world" | mjob create \
       --memory=4096 \
       --init "curl $init_script | sh | tee /init.log" \
       -m '/render.sh | tee /render.log' \
   )
-  echo $world | mjob addinputs $manta_req_uuid
+
+  echo "Job $manta_req_uuid running!"
+  if [ ! -n "$debug" ]; then
+      exit 0
+  fi
 
   job_status=$(mjob watch $manta_req_uuid)
-  if [ -n "$debug" ]; then
-    echo "==================================================="
-    echo "status:"
-    json <<<${job_status}
-  fi
+  echo "==================================================="
+  echo "status:"
+  json <<<${job_status}
 
   job_outputs=$(mjob outputs $manta_req_uuid)
   if [ -n "$job_outputs" ]; then
