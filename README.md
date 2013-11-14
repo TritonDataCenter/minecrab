@@ -16,6 +16,9 @@ Your world will be there, just as you left it.
 
 1. Get a Minecraft account: [minecraft.net](http://minecraft.net)
 1. Get a Joyent Cloud account: [my.joyentcloud.com](http://my.joyentcloud.com)
+1. Install [Node](http://nodejs.org/).
+1. Install [Manta](http://apidocs.joyent.com/manta/#getting-started)
+1. Install [CloudAPI](http://apidocs.joyent.com/cloudapi/#getting-started)
 
 
 ### Set up your CloudAPI and Manta environment variables:
@@ -148,6 +151,41 @@ minecraft-server-backup <server-name>
 Backs up `server-name`'s world to Manta.
 
 
+### minecraft-server-copy
+
+```
+minecraft-server-copy <server-name> <copy-name>
+```
+
+Copies `server-name` to `copy-name`.
+If `copy-name` exists,
+you'll get a chance to cancel or overwrite the existing server.
+
+
+```
+$ minecraft-server-copy cigar pipe
+Checking if server is up...
+Taking latest backup of cigar...
+tar: ./world/region/r.-1.0.mca: file changed as we read it
+Copying cigar to pipe...
+Done!
+```
+
+Now you can use [minecraft-server-launch](#minecraft-server-launch) to
+launch the new server.
+
+```
+$ minecraft-server-launch pipe
+Launching pipe ................... done
+Server pipe running on 165.225.148.207 id: be9f2f8b-8716-4677-d98b-cf0d93762c18
+Setting up...
+Installing git...
+Cloning repo...
+Warning: Permanently added 'github.com,192.30.252.130' (RSA) to the list of known hosts.
+Installing server...
+Connect to server at 165.225.148.207!
+```
+
 ### minecraft-server-annihilate
 
 ```
@@ -169,16 +207,20 @@ minecraft-server-get <server-name>
 ```
 
 Gets information about `server-name`.
+If a [map](#minecraft-server-map) of the world is available,
+its URL is listed here.
 
 ```
-$ bin/minecraft-server-get joyent
-id:      159be633-edb2-6d31-c65c-8be8ad0b714e
-name:    32a6119
+$ minecraft-server-get cigar
+id:      eee95b34-dc8a-4b6e-cf5e-b1cad46cecdc
+name:    ac9294e
 image:   17c98640-1fdb-11e3-bf51-3708ce78e75a
 memory:  4096 mb
 disk:    134144 gb
 dataset: sdc:sdc:base64:13.2.1
-ip addr: 165.225.149.97
+ip addr: 8.19.32.162
+map:     http://us-east.manta.joyent.com//Joyent_Dev/public/minecraft/cigar/map/view/index.html
+manta:   /Joyent_Dev/public/minecraft/cigar/server/world.tar.gz
 ```
 
 
@@ -187,6 +229,40 @@ ip addr: 165.225.149.97
 ```
 minecraft-server-map <server-name>
 ```
+
+Creates a map of the world in `server-name` and
+makes it available through a URL.
+
+The map is rendered on Manta.
+A small world may take 15 minutes to map.
+Larger worlds take longer to render.
+
+```
+$ minecraft-server-map  cigar
+Finding server...
+Taking latest backup of cigar...
+tar: ./world/region/r.-1.0.mca: file changed as we read it
+Running map command from cigar...
+added 1 input to 14e13f31-ea6d-eab7-f924-ace497431bff
+Kicking off job...
+Job 14e13f31-ea6d-eab7-f924-ace497431bff running!
+Done!
+```
+
+Use `mjob get` to check on the progress of the mapping:
+
+```
+$ mjob get b042006a-bae8-6d77-a061-99f2abe12e37 | json state
+running
+. . .
+$ mjob get b042006a-bae8-6d77-a061-99f2abe12e37 | json state
+done
+```
+
+When the rendering job ends, the state will be done.
+Use [minecraft-server-get](#minecraft-server-get) to get the URL of the map.
+
+
 
 ## Advanced Commands
 
@@ -208,7 +284,7 @@ minecraft-server-console <server-name>
 Logs in to the instance hosting `server-name` and
 connects to the Minecraft server's console.
 
-**WARNING**
+**WARNING** <br />
 DO NOT use `Ctrl-C` to exit from the console,
 or you will shut down your server.
 
@@ -228,4 +304,16 @@ Run a single shell command (as root) on the instance hosting `server-name`.
 minecraft-server-login <server-name>
 ```
 
-Logs in to the instance hosting `server-name` as root.
+Logs in as root to the instance hosting `server-name`.
+
+
+## Notes
+
+* The error `tar: ./world/region/r.-1.0.mca: file changed as we read it`
+is benign. You can ignore it.
+* The warning
+`Warning: Permanently added 'github.com,192.30.252.130' (RSA) to the list of known hosts.`
+is benign.
+* The error `socket hang up` means that
+we were unable to provision an instance for your server.
+Try the command again.
