@@ -131,14 +131,12 @@ $ bin/minecraft-server-list
 IP              STATE      NAME
 165.225.151.29  running    nate
 165.225.149.97  running    joyent
-165.225.151.19  running    absinthe
-n/a             offline    beans
+165.225.148.207 stopping   beans
+8.19.32.162     running    cigar
 n/a             offline    carrot
+n/a             offline    filips
 n/a             offline    darkplace
 n/a             offline    filip
-n/a             offline    filips
-n/a             offline    gin
-n/a             offline    potato
 ```
 
 ### minecraft-server-backup
