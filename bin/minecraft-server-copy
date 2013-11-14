@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# -*- mode: shell-script; fill-column: 80; -*-
+#
+# Copyright (c) 2013 Joyent Inc., All rights reserved.
+#
+
+source $(dirname $0)/common.sh
+
+usage() { echo "Usage: $0 <server-name> <copy-name>" 1>&2; exit 1; }
+
+if [ "$#" -ne 2 ]; then
+    usage
+fi
+
+SERVER_NAME=$1
+NEW_NAME=$2
+
+SERVER_LOCATION="$MANTA_LOCATION/$SERVER_NAME/server/world.tar.gz"
+NEW_LOCATION="$MANTA_LOCATION/$NEW_NAME/server/world.tar.gz"
+
+MLS=$(mls $MANTA_LOCATION)
+
+NEW_FOUND=$(echo "$MLS" | grep "^$NEW_NAME/\$")
+if [[ ! -z "$NEW_FOUND" ]]; then
+    read -p "$NEW_NAME already exists.  Overwrite? " -n 1 -r
+    echo
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        exit 1
+    fi
+fi
+
+OLD_FOUND=$(echo "$MLS" | grep "^$SERVER_NAME/\$")
+if [[ -z "$OLD_FOUND" ]]; then
+    fatal "$SERVER_NAME doesn't exist."
+fi
+
+echo "Checking if server is up..."
+find_server $SERVER_NAME
+
+if [ ! -z "$IP" ]; then
+    echo "Taking latest backup of $SERVER_NAME..."
+    server_execute "/opt/minecraft/scripts/backup.sh"
+    if [[ $? -ne 0 ]]; then
+        fatal "Was unable to backup your running server."
+    fi
+fi
+
+echo "Copying $SERVER_NAME to $NEW_NAME..."
+mmkdir -p $(dirname $NEW_LOCATION)
+mln $SERVER_LOCATION $NEW_LOCATION
+
+echo "Done!"
