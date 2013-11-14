@@ -39,7 +39,7 @@ function server_execute {
     #Since these will start and stop a lot, there's the possibility that we'll
     # get the same ip address with multiple launches and shutdowns.
     RESULT=$(ssh -o LogLevel=quiet -o StrictHostKeyChecking=no -o \
-	     UserKnownHostsFile=/dev/null -A root@$IP $COMMAND)
+       UserKnownHostsFile=/dev/null -A root@$IP $COMMAND)
     if [[ $? -ne 0 ]]; then
         fatal "Failed to execute $COMMAND on $IP"
     fi
@@ -50,10 +50,10 @@ function contains {
     local n=$#
     local value=${!n}
     for ((i=1;i < $#;i++)) {
-	if [ "${!i}" == "${value}" ]; then
-	    echo "y"
-	    return 0
-	fi
+  if [ "${!i}" == "${value}" ]; then
+      echo "y"
+      return 0
+  fi
     }
     echo "n"
     return 1
