@@ -4,9 +4,11 @@
 # Copyright (c) 2013 Joyent Inc., All rights reserved.
 #
 
-source $(dirname $0)/common.sh
+#source $(dirname $0)/common.sh
 
-#REMOTE_FILE="/Joyent_Dev/public/minecraft/nate/server/world.tar.gz"
+#if [ -z "$1" ]; then
+#  REMOTE_FILE="/Joyent_Dev/public/minecraft/$1/server/world.tar.gz"
+#fi
 
 #debug="yes please"
 
