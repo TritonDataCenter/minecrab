@@ -47,8 +47,9 @@
     var template = Handlebars.compile(source);
     worlds.forEach(function(world) {
       console.log('rendering', world);
-      findIp(name, function (ip) {
-          var params = {name: world, ip: ip};
+      findIp(world, function (ip) {
+        var status = ip ? 'Online' : 'Offline';
+          var params = {name: world, ip: ip, status: status};
           console.log(params);
           var html   = template(params);
           $('div.games ul').append(html);
@@ -63,7 +64,7 @@
 <li id="{{name}}" class="glass">
   <div>
     <div class="title">{{name}}</div>
-    <div>Online</div>
+    <div>{{status}}</div>
     <div>{{ip}}</div>
     <a href="https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/{{name}}/map/view/index.html">
       <div class="map"></div>
