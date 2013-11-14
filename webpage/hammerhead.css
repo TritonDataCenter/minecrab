@@ -122,6 +122,30 @@ body {
   top: 0;
   height: 90%;
 }
+.games li#gin div.map {
+  background-image: url("https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/filip/map/view/render1/base.png");
+  left: 50px;
+  top: 0;
+  height: 90%;
+}
+.games li#cigar div.map {
+  background-image: url("https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/filip/map/view/render1/base.png");
+  left: 50px;
+  top: 0;
+  height: 90%;
+}
+.games li#darkplace div.map {
+  background-image: url("https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/filip/map/view/render1/base.png");
+  left: 50px;
+  top: 0;
+  height: 90%;
+}
+.games li#filips div.map {
+  background-image: url("https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/filip/map/view/render1/base.png");
+  left: 50px;
+  top: 0;
+  height: 90%;
+}
 
 .games div.title {
   font-size: 34px;
