@@ -120,14 +120,23 @@ minecraft-server-list
 ```
 
 Lists all the Minecraft servers running in your Joyent account.
+Running servers are listed first.
+You can restart servers that are offline with the
+[`minecraft-server-launch`](#minecraft-server-launch) command.
 
 ```
-$ minecraft-server-list
+$ bin/minecraft-server-list
 IP              STATE      NAME
 165.225.151.29  running    nate
 165.225.149.97  running    joyent
 165.225.151.19  running    absinthe
-```
+n/a             offline    beans
+n/a             offline    carrot
+n/a             offline    darkplace
+n/a             offline    filip
+n/a             offline    filips
+n/a             offline    gin
+n/a             offline    potato```
 
 ### minecraft-server-backup
 
@@ -136,6 +145,20 @@ minecraft-server-backup <server-name>
 ```
 
 Backs up `server-name`'s world to Manta.
+
+
+### minecraft-server-annihilate
+
+```
+minecraft-server-annihilate <server-name>
+```
+
+Utterly and completely annihilates `server-name`.
+If `server-name` is running,
+you must [shut it down](#minecraft-server-shutdown) first.
+
+This command removes the saved world from Manta.
+Once the world is annihilated, you can never get it back.
 
 
 ### minecraft-server-get
