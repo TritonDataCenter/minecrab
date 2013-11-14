@@ -4,32 +4,55 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.1.2/handlebars.min.js"></script>
 <script>
-var worlds = [];
-$.ajax({
-  url: "http://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/",
-  cache: false,
-  dataType: "text"
-})
-.error(function(jqXHR, textStatus, errorThrown) {
-  console.log(textStatus, errorThrown);
-})
-.done(function(data, status) {
-  console.log(data);
-  console.log(status);
-  if (status !== "success") {
-    console.log(status, 'failed retrieving machines');
-    return;
-  }
-  data.split("\n").forEach(function(line) {
-    if (line.length > 0) {
-      console.log("line", line)
-      var server = JSON.parse(line);
-      if (server.type === "directory") {
-        worlds.push(server.name);
-      }
+  var worlds = [];
+  $.ajax({
+    url: "http://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/",
+    cache: false,
+    dataType: "text"
+  })
+  .error(function(jqXHR, textStatus, errorThrown) {
+    console.log(textStatus, errorThrown);
+  })
+  .done(function(data, status) {
+    console.log(data);
+    console.log(status);
+    if (status !== "success") {
+      console.log(status, 'failed retrieving machines');
+      return;
     }
+    data.split("\n").forEach(function(line) {
+      if (line.length > 0) {
+        console.log("line", line)
+        var server = JSON.parse(line);
+        if (server.type === "directory") {
+          worlds.push(server.name);
+        }
+      }
+    });
+    var source   = $("#world-template").html();
+    var template = Handlebars.compile(source);
+    worlds.forEach(function(world) {
+      console.log('rendering', world);
+      var params = {name: world};
+      var html   = template(params);
+      $('div.games ul').append(html);
+    });
   });
-});
+  $(function() {
+    console.log('dom ready');
+  });
+</script>
+<script id="world-template" type="text/x-handlebars-template">
+<li id="{{name}}" class="glass">
+  <div>
+    <div class="title">{{name}}</div>
+    <div>Online</div>
+    <div>10.10.10.10</div>
+    <a href="https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/{{name}}/map/view/index.html">
+      <div class="map"></div>
+    </a>
+  </div>
+</li>
 </script>
 </head>
 <body>
@@ -42,40 +65,6 @@ $.ajax({
 
 <div class="games">
   <ul>
-    <li id="joyent" class="glass">
-      <div>
-        <div class="title">Joyent</div>
-        <div>Online</div>
-        <div>10.10.10.10</div>
-        <a href="https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/joyent/map/view/index.html">
-          <div class="map"></div>
-        </a>
-      </div>
-    </li>
-  </ul>
-  <ul>
-    <li id="nate" class="glass">
-      <div>
-        <div class="title">Nate</div>
-        <div>Online</div>
-        <div>10.10.10.10</div>
-        <a href="https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/nate/map/view/index.html">
-          <div class="map"></div>
-        </a>
-      </div>
-    </li>
-  </ul>
-  <ul>
-    <li id="filip" class="glass">
-      <div>
-        <div class="title">Filip</div>
-        <div>Online</div>
-        <div>10.10.10.10</div>
-        <a href="https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/filip/map/view/index.html">
-          <div class="map"></div>
-        </a>
-      </div>
-    </li>
   </ul>
 </div>
 
