@@ -123,25 +123,25 @@ body {
   height: 90%;
 }
 .games li#gin div.map {
-  background-image: url("https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/filip/map/view/render1/base.png");
+  background-image: url("https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/gin/map/view/render1/base.png");
   left: 50px;
   top: 0;
   height: 90%;
 }
 .games li#cigar div.map {
-  background-image: url("https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/filip/map/view/render1/base.png");
+  background-image: url("https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/cigar/map/view/render1/base.png");
   left: 50px;
   top: 0;
   height: 90%;
 }
 .games li#darkplace div.map {
-  background-image: url("https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/filip/map/view/render1/base.png");
+  background-image: url("https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/darkplace/map/view/render1/base.png");
   left: 50px;
   top: 0;
   height: 90%;
 }
 .games li#filips div.map {
-  background-image: url("https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/filip/map/view/render1/base.png");
+  background-image: url("https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/filips/map/view/render1/base.png");
   left: 50px;
   top: 0;
   height: 90%;
