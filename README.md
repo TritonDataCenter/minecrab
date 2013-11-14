@@ -6,8 +6,8 @@ Minecraft server on demand.
 
 - [What it does](#what-it-does)
 - [Getting started](#getting-started)
-- [Basic Commands](#basic-commands)
-- [Advanced Commands](#advanced-commands)
+- [Basic commands](#basic-commands)
+- [Advanced commands](#advanced-commands)
 - [What it costs](#what-it-costs)
 - [Notes](#notes)
 
@@ -89,7 +89,9 @@ bin/minecraft-server-shutdown <server name>
 bin/minecraft-launch-server <server name>
 ```
 
-## Basic Commands
+## Basic commands
+
+These are command-line commands you use to manage your server.
 
 
 ### minecraft-server-launch
@@ -284,7 +286,13 @@ Use [minecraft-server-get](#minecraft-server-get) to get the URL of the map.
 
 
 
-## Advanced Commands
+## Advanced commands
+
+These commands let you work directly
+with your Minecraft server
+and with the instance that your server is on.
+
+Be careful.
 
 ### minecraft-server-command
 
