@@ -18,7 +18,13 @@ echo "Finding server..."
 find_server $SERVER_NAME
 
 if [ -z "$IP" ]; then
-    fatal "Unable to find $SERVER_NAME server."
+    fatal "Unable to find running $SERVER_NAME server."
+fi
+
+echo "Taking latest backup of $SERVER_NAME..."
+server_execute "/opt/minecraft/scripts/backup.sh"
+if [[ $? -ne 0 ]]; then
+    fatal "Was unable to backup your running server."
 fi
 
 echo "Running map command from $SERVER_NAME..."
