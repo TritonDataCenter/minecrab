@@ -123,6 +123,8 @@ Lists all the Minecraft servers running in your Joyent account.
 Running servers are listed first.
 You can restart servers that are offline with the
 [`minecraft-server-launch`](#minecraft-server-launch) command.
+Use [`minecraft-server-annihilate`](#minecraft-server-annihilate) to
+destroy a server forever.
 
 ```
 $ bin/minecraft-server-list
@@ -136,7 +138,8 @@ n/a             offline    darkplace
 n/a             offline    filip
 n/a             offline    filips
 n/a             offline    gin
-n/a             offline    potato```
+n/a             offline    potato
+```
 
 ### minecraft-server-backup
 
