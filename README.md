@@ -1,5 +1,5 @@
 
-# Hammerhead
+# Hammerhead (aka Miner)
 
 Minecraft server on demand.
 
