@@ -6,7 +6,11 @@
 
 source $(dirname $0)/common.sh
 
-usage() { echo "Usage: $0 <server-name>" 1>&2; exit 1; }
+usage() {
+    echo "Usage: $0 <server-name>" 1>&2
+    echo "See http://minecraft.gamepedia.com/Commands" 1>&2
+    exit 1
+}
 
 if [ "$#" -ne 1 ]; then
     usage
