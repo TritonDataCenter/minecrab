@@ -81,4 +81,5 @@ if [ ! -z "$ME" ]; then
 	echo "Adding $ME to whitelist..."
 	server_console "whitelist add ${ME}"
 fi
+echo $IP | mput $MANTA_LOCATION/$SERVER_NAME/ip
 echo "Connect to server at ${IP}!"

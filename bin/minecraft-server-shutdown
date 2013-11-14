@@ -41,6 +41,13 @@ if [[ $? -ne 0 ]]; then
 fi
 echo "Success!"
 
+echo -n "Removing ip address from Manta... "
+mrm $MANTA_LOCATION/$SERVER_NAME/ip
+if [[ $? -ne 0 ]]; then
+    fatal "Failed to remove ip address.  Server is still running."
+fi
+echo "Success!"
+
 echo -n "Shutting down your server... "
 sdc-deletemachine "$ID"
 if [[ $? -ne 0 ]]; then
