@@ -40,8 +40,8 @@ git clone git://github.com/overviewer/Minecraft-Overviewer.git overviewer
 cd overviewer
 
 # Patch and add sys.exit()
-perl -pi -e 's/Rendering complete!"\)/Rendering complete!!"\); sys.exit(0)/' ./overviewer_core/observer.py
-grep -i 'rendering complete' ./overviewer_core/observer.py
+#perl -pi -e 's/Rendering complete!"\)/Rendering complete!!"\); sys.exit(0)/' ./overviewer_core/observer.py
+#grep -i 'rendering complete' ./overviewer_core/observer.py
 
 # Python Image Tools
 #

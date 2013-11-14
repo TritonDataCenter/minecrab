@@ -4,9 +4,9 @@
 # Copyright (c) 2013 Joyent Inc., All rights reserved.
 #
 
-#source $(dirname $0)/common.sh
+source $(dirname $0)/common.sh
 
-REMOTE_FILE="/Joyent_Dev/public/minecraft/filip/server/world.tar.gz"
+#REMOTE_FILE="/Joyent_Dev/public/minecraft/filip/server/world.tar.gz"
 
 debug="yes please"
 
