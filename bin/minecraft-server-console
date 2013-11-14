@@ -21,4 +21,12 @@ if [ -z "$IP" ]; then
     fatal "Unable to find $SERVER_NAME server."
 fi
 
+echo
+echo 'WARNING: Do not ctrl-c or you will shut down your minecraft server.'
+echo 'Use ctrl-b d to exit (let go of ctrl-b before hitting d).'
+echo
+echo -n 'Press any key to continue'
+read -n 1 -r
+
+
 ssh -A root@$IP -t "sudo -u minecraft tmux attach -t minecraft"
