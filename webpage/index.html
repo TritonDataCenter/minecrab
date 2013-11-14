@@ -5,6 +5,20 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.1.2/handlebars.min.js"></script>
 <script>
   var worlds = [];
+  var page = '/Joyent_Dev/public/minecraft/index.html';
+  var manta = 'http://us-east.manta.joyent.com';
+  var user = page.split('/')[1];
+  function findIp(name, cb) {
+      var user = page.split('/')[1];
+      var url = manta + '/' + user + '/public/minecraft/' + name + '/ip';
+      $.ajax({
+          'url': url,
+          'success': cb,
+          'error': function () {
+              cb(null);
+          }
+      });
+  }
   $.ajax({
     url: "http://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/",
     cache: false,
@@ -33,9 +47,12 @@
     var template = Handlebars.compile(source);
     worlds.forEach(function(world) {
       console.log('rendering', world);
-      var params = {name: world};
-      var html   = template(params);
-      $('div.games ul').append(html);
+      findIp(name, function (ip) {
+          var params = {name: world, ip: ip};
+          console.log(params);
+          var html   = template(params);
+          $('div.games ul').append(html);
+      });
     });
   });
   $(function() {
@@ -47,7 +64,7 @@
   <div>
     <div class="title">{{name}}</div>
     <div>Online</div>
-    <div>10.10.10.10</div>
+    <div>{{ip}}</div>
     <a href="https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/{{name}}/map/view/index.html">
       <div class="map"></div>
     </a>
