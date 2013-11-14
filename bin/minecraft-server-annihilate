@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# -*- mode: shell-script; fill-column: 80; -*-
+#
+# Copyright (c) 2013 Joyent Inc., All rights reserved.
+#
+
+source $(dirname $0)/common.sh
+
+usage() { echo "Usage: $0 <server-name>" 1>&2; exit 1; }
+
+if [ "$#" -ne 1 ]; then
+    usage
+fi
+
+SERVER_NAME=$1
+
+echo "Checking to see if server is still running..."
+find_server $SERVER_NAME
+if [[ $? -ne 0 ]]; then
+    fatal "Failed to check if the server is running.  Try again later :("
+fi
+if [ ! -z "$IP" ]; then
+    fatal "Seems $SERVER_NAME is still running.  Please shut it down first."
+fi
+
+echo
+echo "WARNING: It *really* will become lost forever..."
+read -p "Are you sure you want to annihilate $SERVER_NAME? " -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        exit 1
+fi
+mrm -r $MANTA_LOCATION/$SERVER_NAME
+
+echo "Done!"
