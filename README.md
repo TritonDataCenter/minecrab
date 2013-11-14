@@ -12,6 +12,15 @@ Hammerhead saves your world to [Manta](http://www.joyent.com/products/manta).
 Next time you want to play, just have Hammerhead provision your server again.
 Your world will be there, just as you left it.
 
+From the time that you [launch](#minecraft-server-launch) a server
+to the time that you [shut it down](#minecraft-server-shutdown),
+your account will be charged $0.128 per hour.
+Learn more about [what it costs](#what-it-costs) to run a Minecraft server
+this way.
+
+
+
+
 ## Getting started
 
 1. Get a Minecraft account: [minecraft.net](http://minecraft.net)
@@ -305,6 +314,34 @@ minecraft-server-login <server-name>
 ```
 
 Logs in as root to the instance hosting `server-name`.
+
+
+## What it costs
+
+When you [launch](#minecraft-server-launch) a server
+Hammerhead provisions a SmartOS instance
+using the [base64 13.2.1](http://wiki.joyent.com/wiki/display/jpc2/SmartMachine+Base#SmartMachineBase-13.2.1)
+image
+with 4 GB of RAM and 131 GB of disk space.
+
+This instance size is [billed](http://www.joyent.com/products/compute-service/pricing)
+at $0.128 per hour.
+
+When you [shut down](#minecraft-server-shutdown) the server,
+billing for the instance ends.
+
+Storage for the servers on Manta is [billed at $0.086 per GB per month](http://www.joyent.com/products/manta/pricing).
+Most servers are less than 100 MB.
+
+Map rendering takes place on Manta using a 4 GB job.
+This job is [billed](http://www.joyent.com/products/manta/pricing) at
+$0.00016 * number of seconds of wall-clock time.
+
+For example: <br />
+
+* A 15-minute job costs $0.144.
+* A two-hour job costs $2.304
+
 
 
 ## Notes
