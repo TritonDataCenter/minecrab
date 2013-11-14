@@ -34,6 +34,13 @@ if [[ $? -ne 0 ]]; then
 fi
 echo "Success!"
 
+echo -n "Kicking off map generation... "
+server_execute "/opt/minecraft/scripts/map.sh"
+if [[ $? -ne 0 ]]; then
+    fatal "Failed to kick off map generation.  Server is still running."
+fi
+echo "$RESULT"
+
 echo -n "Disabling the minecraft server... "
 server_execute "svcadm disable -s minecraft"
 if [[ $? -ne 0 ]]; then
@@ -53,5 +60,6 @@ sdc-deletemachine "$ID"
 if [[ $? -ne 0 ]]; then
     fatal "May have failed to shut down your server."
 fi
+echo "Success!"
 
 echo "Done!"
