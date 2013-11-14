@@ -65,3 +65,143 @@ bin/minecraft-server-shutdown <server name>
 ```
 bin/minecraft-launch-server <server name>
 ```
+
+## Basic Commands
+
+
+### minecraft-server-launch
+
+```
+minecraft-server-launch <server-name> [player-name]
+```
+
+Create or restore the server named `server-name`.
+If provided `player-name` is added to the white list.
+This is useful when launching a server for this first time.
+
+### minecraft-server-shutdown
+
+```
+minecraft-server-shutdown <server-name>
+```
+Saves the world to Manta and tears down the Minecraft server.
+
+
+### minecraft-server-add-friend
+
+```
+minecraft-server-add-friend <server-name> <player-name>
+```
+
+Adds `player-name` to `server-name`'s white list.
+
+### minecraft-server-kick-friend
+
+```
+minecraft-server-kick-friend <server-name> <friend-name> [reason]
+```
+
+Removes `friend-name` from `server-name`'s white  list and
+kicks them off the server. You can provide a `reason`.
+
+### minecraft-server-list-friends
+
+```
+minecraft-server-list-friends <server-name>
+```
+
+Lists the players in `server-name`'s white list.
+
+
+### minecraft-server-list
+
+```
+minecraft-server-list
+```
+
+Lists all the Minecraft servers running in your Joyent account.
+
+```
+$ minecraft-server-list
+IP              STATE      NAME
+165.225.151.29  running    nate
+165.225.149.97  running    joyent
+165.225.151.19  running    absinthe
+```
+
+### minecraft-server-backup
+
+```
+minecraft-server-backup <server-name>
+```
+
+Backs up `server-name`'s world to Manta.
+
+
+### minecraft-server-get
+
+```
+minecraft-server-get <server-name>
+```
+
+Gets information about `server-name`.
+
+```
+$ bin/minecraft-server-get joyent
+id:      159be633-edb2-6d31-c65c-8be8ad0b714e
+name:    32a6119
+image:   17c98640-1fdb-11e3-bf51-3708ce78e75a
+memory:  4096 mb
+disk:    134144 gb
+dataset: sdc:sdc:base64:13.2.1
+ip addr: 165.225.149.97
+```
+
+
+### minecraft-server-map
+
+```
+minecraft-server-map <server-name>
+```
+
+## Advanced Commands
+
+### minecraft-server-command
+
+```
+minecraft-server-command <server-name> <minecraft-command>
+```
+
+Runs a single Minecraft command as if you were at the console.
+
+
+### minecraft-server-console
+
+```
+minecraft-server-console <server-name>
+```
+
+Logs in to the instance hosting `server-name` and
+connects to the Minecraft server's console.
+
+**WARNING**
+DO NOT use `Ctrl-C` to exit from the console,
+or you will shut down your server.
+
+Use `Ctrl-B d` instead.
+
+###  minecraft-server-exec
+
+```
+minecraft-server-exec <server-name> <shell-command>
+```
+
+Run a single shell command (as root) on the instance hosting `server-name`.
+
+### minecraft-server-login
+
+```
+minecraft-server-login <server-name>
+```
+
+Logs in to the instance hosting `server-name` as root.
