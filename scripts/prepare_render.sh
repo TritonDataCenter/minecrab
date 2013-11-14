@@ -75,6 +75,8 @@ renders["render1"] = {
 EOCONFIG
 
 cat > ./render.sh <<EOF
+#!/usr/bin/env bash
+
 if [ -z "\$MANTA_INPUT_FILE" ]; then
   echo "ERROR: missing MANTA_INPUT_FILE"
   return 1
@@ -94,23 +96,16 @@ PUSHD=\$(pwd)
 cd \$SRC
 ln -s \${LEVEL_NAME} world
 cd \$PUSHD
-./overviewer/overviewer.py --config=./minecraft/cfg.py --simple-output -v -v | tee /overviewer.log &
-overviewer_pid=\$!
 
-trigger="asdxxxxxf"
-while read -r line; do
-  if [[ "\${line}" =~ "\${trigger}" ]]; then
-    echo BOOM
-    kill -9 \$overviewer_pid
-  else
-    #echo \$line
-  fi
-done <(tail -f /overviewer.log)
+./overviewer/overviewer.py -p1 --config=./minecraft/cfg.py --simple-output
+echo finished rendering
 
-#OUTPUT_PATH="/\$MANTA_USER/public/minecraft/filip/map/view"
-OUTPUT_PATH=\$(dirname \$(dirname \$MANTA_INPUT_FILE))/map/view
+USER=\$(echo \$MANTA_INPUT_FILE | cut -f 3 -d/)
+WORLD=\$(echo \$MANTA_INPUT_FILE | cut -f 6 -d/)
+UPLOAD_PATH="/\$USER/public/minecraft/\$WORLD/map/view"
 
-./mputr ./minecraft/render/world1 "\${OUTPUT_PATH}"
+echo starting upload to \$UPLOAD_PATH
+./mputr ./minecraft/render/world1 "\${UPLOAD_PATH}"
 EOF
 chmod 755 ./render.sh
 
