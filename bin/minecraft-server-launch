@@ -49,7 +49,7 @@ if [[ $(sdc-listmachines --tag "minecraft=${SERVER_NAME}") != "[]" ]] ; then
 	fatal "${SERVER_NAME} already exists. Choose another name."
 fi
 
-echo -n "Creating ${SERVER_NAME} "
+echo -n "Launching ${SERVER_NAME} "
 SERVER_ID=$(sdc-createmachine	--dataset $IMAGEID \
 								--package $PACKAGENAME \
 								--tag "minecraft=${SERVER_NAME}"  | json id)
@@ -68,16 +68,17 @@ echo " done"
 IP=$(sdc-getmachine $SERVER_ID | json primaryIp)
 
 echo "Server ${SERVER_NAME} running on ${IP} id: $SERVER_ID"
-echo "Setting up"
+echo "Setting up..."
 server_execute 'echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config'
 server_execute "echo -e \"export MANTA_USER=$MANTA_USER\nexport MANTA_KEY_ID=$MANTA_KEY_ID\nexport MANTA_URL=https://us-east.manta.joyent.com\" >> ~/.bashrc"
-echo "Installing git"
+echo "Installing git..."
 server_execute "pkgin -y in scmgit"
-echo "Cloning repo"
+echo "Cloning repo..."
 server_execute "cd /opt && git clone git@github.com:joyent/minecraft.git"
-echo "Installing server"
+echo "Installing server..."
 server_execute "cd /opt && minecraft/scripts/install.sh"
-echo "Connect to server at ${IP}"
 if [ ! -z "$ME" ]; then
+	echo "Adding $ME to whitelist..."
 	server_console "whitelist add ${ME}"
 fi
+echo "Connect to server at ${IP}!"
