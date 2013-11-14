@@ -1,6 +1,36 @@
 <html>
 <head>
 <link href='hammerhead.css' rel='stylesheet' type='text/css'>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.1.2/handlebars.min.js"></script>
+<script>
+var worlds = [];
+$.ajax({
+  url: "http://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/",
+  cache: false,
+  dataType: "text"
+})
+.error(function(jqXHR, textStatus, errorThrown) {
+  console.log(textStatus, errorThrown);
+})
+.done(function(data, status) {
+  console.log(data);
+  console.log(status);
+  if (status !== "success") {
+    console.log(status, 'failed retrieving machines');
+    return;
+  }
+  data.split("\n").forEach(function(line) {
+    if (line.length > 0) {
+      console.log("line", line)
+      var server = JSON.parse(line);
+      if (server.type === "directory") {
+        worlds.push(server.name);
+      }
+    }
+  });
+});
+</script>
 </head>
 <body>
 <div class="header glass">
