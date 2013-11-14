@@ -6,9 +6,9 @@
 
 source $(dirname $0)/common.sh
 
-#REMOTE_FILE="/Joyent_Dev/public/minecraft/filip/server/world.tar.gz"
+#REMOTE_FILE="/Joyent_Dev/public/minecraft/nate/server/world.tar.gz"
 
-debug="yes please"
+#debug="yes please"
 
 set -x trace
 
