@@ -15,6 +15,7 @@ set -o pipefail
 : ${SDC_KEY_ID:?"SDC_KEY_ID environment variable is missing"}
 
 MINECRAFT_LOCATION="/opt/minecraft/server"
+MANTA_LOCATION="/$MANTA_USER/public/minecraft"
 
 function fatal {
     echo "$(basename $0): fatal error: $*" >&2
@@ -42,4 +43,18 @@ function server_execute {
     if [[ $? -ne 0 ]]; then
         fatal "Failed to execute $COMMAND on $IP"
     fi
+}
+
+#http://stackoverflow.com/questions/3685970/bash-check-if-an-array-contains-a-value
+function contains {
+    local n=$#
+    local value=${!n}
+    for ((i=1;i < $#;i++)) {
+	if [ "${!i}" == "${value}" ]; then
+	    echo "y"
+	    return 0
+	fi
+    }
+    echo "n"
+    return 1
 }

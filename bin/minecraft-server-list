@@ -4,22 +4,30 @@
 # Copyright (c) 2013 Joyent Inc., All rights reserved.
 #
 
+#set -o xtrace
 source $(dirname $0)/common.sh
 
 usage() { echo "Usage: $0" 1>&2; exit 1; }
 
 PATTERN="%-15s %-10s %s"
-sdc-listmachines --tag minecraft=* | \
-    json -ga primaryIp state tags.minecraft | \
-    while read l; do
-        if [ -z $HEADER ]; then
-            printf "$PATTERN" "IP" "STATE" "NAME"
-            echo
-	    HEADER="header"
-        fi
-        IP=$(echo $l | cut -d ' ' -f 1)
-        STATE=$(echo $l | cut -d ' ' -f 2)
-        NAME=$(echo $l | cut -d ' ' -f 3)
-        printf "$PATTERN" "$IP" "$STATE" "$NAME"
-        echo
-    done
+NAMES=()
+
+RUNNING=$(sdc-listmachines --tag minecraft=* | \
+    json -ga primaryIp state tags.minecraft)
+
+MANTA=$(mls $MANTA_LOCATION | tr -d '/' | xargs -n 1 echo "n/a offline")
+
+ALL=$(echo -n "$RUNNING\n$MANTA")
+
+printf "$PATTERN" "IP" "STATE" "NAME"
+echo
+echo "$ALL" | while read l; do
+    IP=$(echo $l | cut -d ' ' -f 1)
+    STATE=$(echo $l | cut -d ' ' -f 2)
+    NAME=$(echo $l | cut -d ' ' -f 3)
+    if [ $(contains "${NAMES[@]}" "$NAME") == "n" ]; then
+	printf "$PATTERN" "$IP" "$STATE" "$NAME"
+	echo
+    fi
+    NAMES+=("$NAME")
+done
