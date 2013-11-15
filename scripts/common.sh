@@ -14,11 +14,12 @@ PATH=$PATH:/opt/local/sdc/bin
 : ${MANTA_KEY_ID:?"MANTA_KEY_ID environment variable is missing"}
 
 MINECRAFT_LOCATION="/opt/minecraft/server"
-MANTA_PREFIX="/$MANTA_USER/public/minecraft"
 SERVER_NAME=$(mdata-get sdc:tags.minecraft)
-MANTA_LOCATION="$MANTA_PREFIX/$SERVER_NAME"
-REMOTE_FILE="$MANTA_LOCATION/server/world.tar.gz"
-MAP_BASE="$MANTA_LOCATION/map/view"
+MANTA_LOCATION="/$MANTA_USER/public/minecraft"
+SERVERS_LOCATION="$MANTA_LOCATION/servers"
+SERVER_LOCATION="$SERVERS_LOCATION/$SERVER_NAME"
+REMOTE_FILE="$SERVER_LOCATION/server/world.tar.gz"
+MAP_BASE="$SERVER_LOCATION/map/view"
 SERVER_FLAVOR=${SERVER_PREFERRED:-minecraft}
 : ${JAVA_OPTS:=-d64 -Xincgc -Djava.security.egd=/dev/./urandom -XX:-UseVMInterruptibleIO -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalPacing -XX:ParallelGCThreads=4 -XX:+AggressiveOpts}
 

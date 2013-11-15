@@ -27,13 +27,13 @@ MEMORY=$(echo $DATA | json memory)
 DISK=$(echo $DATA | json disk)
 DATASET=$(echo $DATA | json dataset)
 IP=$(echo $DATA | json primaryIp)
-MAP_IN_MANTA="$MANTA_LOCATION/$SERVER_NAME/map/view/index.html"
-MAP="http://us-east.manta.joyent.com/$MANTA_LOCATION/$SERVER_NAME/map/view/index.html"
+MAP_IN_MANTA="$SERVERS_LOCATION/$SERVER_NAME/map/view/index.html"
+MAP="http://us-east.manta.joyent.com/$SERVERS_LOCATION/$SERVER_NAME/map/view/index.html"
 MAP_FOUND=$(mls $MAP_IN_MANTA 2>/dev/null)
 if [ -z "$MAP_FOUND" ]; then
     MAP="(not generated)"
 fi
-MANTA="$MANTA_LOCATION/$SERVER_NAME/server/world.tar.gz"
+MANTA="$SERVERS_LOCATION/$SERVER_NAME/server/world.tar.gz"
 
 cat - <<EOF
 id:      $ID

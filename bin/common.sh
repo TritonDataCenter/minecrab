@@ -16,6 +16,7 @@ set -o pipefail
 
 MINECRAFT_LOCATION="/opt/minecraft/server"
 MANTA_LOCATION="/$MANTA_USER/public/minecraft"
+SERVERS_LOCATION="$MANTA_LOCATION/servers"
 
 function fatal {
     echo "$(basename $0): fatal error: $*" >&2
@@ -50,10 +51,10 @@ function contains {
     local n=$#
     local value=${!n}
     for ((i=1;i < $#;i++)) {
-  if [ "${!i}" == "${value}" ]; then
-      echo "y"
-      return 0
-  fi
+        if [ "${!i}" == "${value}" ]; then
+            echo "y"
+            return 0
+        fi
     }
     echo "n"
     return 1

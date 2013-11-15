@@ -18,7 +18,7 @@ if [[ $? -ne 0 ]]; then
     fatal "Unable to find running servers."
 fi
 
-MANTA=$(mls $MANTA_LOCATION | tr -d '/' | xargs -n 1 echo "n/a offline")
+MANTA=$(mls $SERVERS_LOCATION | tr -d '/' | xargs -n 1 echo "n/a offline")
 if [[ $? -ne 0 ]]; then
         fatal "Unable to find offline servers."
 fi

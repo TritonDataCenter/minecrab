@@ -241,8 +241,8 @@ memory:  4096 mb
 disk:    134144 gb
 dataset: sdc:sdc:base64:13.2.1
 ip addr: 8.19.32.162
-map:     http://us-east.manta.joyent.com//Joyent_Dev/public/minecraft/cigar/map/view/index.html
-manta:   /Joyent_Dev/public/minecraft/cigar/server/world.tar.gz
+map:     http://us-east.manta.joyent.com//Joyent_Dev/public/minecraft/servers/cigar/map/view/index.html
+manta:   /Joyent_Dev/public/minecraft/servers/cigar/server/world.tar.gz
 ```
 
 

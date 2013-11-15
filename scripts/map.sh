@@ -7,7 +7,7 @@
 source $(dirname $0)/common.sh
 
 #if [ -z "$1" ]; then
-#  REMOTE_FILE="/Joyent_Dev/public/minecraft/$1/server/world.tar.gz"
+#  REMOTE_FILE="/Joyent_Dev/public/minecraft/servers/$1/server/world.tar.gz"
 #fi
 
 #debug="yes please"

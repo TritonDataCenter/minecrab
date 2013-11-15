@@ -30,6 +30,9 @@ echo
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then
         exit 1
 fi
-mrm -r $MANTA_LOCATION/$SERVER_NAME
+
+echo
+echo -n "Annihilating world (please be patient)... "
+mrm -r $SERVERS_LOCATION/$SERVER_NAME
 
 echo "Done!"

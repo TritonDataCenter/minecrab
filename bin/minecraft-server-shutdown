@@ -49,7 +49,7 @@ fi
 echo "Success!"
 
 echo -n "Removing ip address from Manta... "
-mrm $MANTA_LOCATION/$SERVER_NAME/ip
+mrm $SERVERS_LOCATION/$SERVER_NAME/ip
 if [[ $? -ne 0 ]]; then
     fatal "Failed to remove ip address.  Server is still running."
 fi

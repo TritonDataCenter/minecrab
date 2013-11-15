@@ -15,10 +15,10 @@ fi
 SERVER_NAME=$1
 NEW_NAME=$2
 
-SERVER_LOCATION="$MANTA_LOCATION/$SERVER_NAME/server/world.tar.gz"
-NEW_LOCATION="$MANTA_LOCATION/$NEW_NAME/server/world.tar.gz"
+SERVER_LOCATION="$SERVERS_LOCATION/$SERVER_NAME/server/world.tar.gz"
+NEW_LOCATION="$SERVERS_LOCATION/$NEW_NAME/server/world.tar.gz"
 
-MLS=$(mls $MANTA_LOCATION)
+MLS=$(mls $SERVERS_LOCATION)
 
 NEW_FOUND=$(echo "$MLS" | grep "^$NEW_NAME/\$")
 if [[ ! -z "$NEW_FOUND" ]]; then
