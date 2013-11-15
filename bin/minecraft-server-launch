@@ -81,5 +81,6 @@ if [ ! -z "$ME" ]; then
 	echo "Adding $ME to whitelist..."
 	server_console "whitelist add ${ME}"
 fi
+mmkdir -p $SERVERS_LOCATION/$SERVER_NAME
 echo $IP | mput $SERVERS_LOCATION/$SERVER_NAME/ip
 echo "Connect to server at ${IP}!"

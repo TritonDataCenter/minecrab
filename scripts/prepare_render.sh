@@ -101,7 +101,7 @@ cd \$PUSHD
 echo finished rendering
 
 USER=\$(echo \$MANTA_INPUT_FILE | cut -f 3 -d/)
-WORLD=\$(echo \$MANTA_INPUT_FILE | cut -f 6 -d/)
+WORLD=\$(echo \$MANTA_INPUT_FILE | cut -f 7 -d/)
 UPLOAD_PATH="/\$USER/public/minecraft/servers/\$WORLD/map/view"
 
 echo starting upload to \$UPLOAD_PATH
