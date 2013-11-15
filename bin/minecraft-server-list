@@ -23,9 +23,15 @@ if [[ $? -ne 0 ]]; then
         fatal "Unable to find offline servers."
 fi
 
+LIST="$RUNNING"
+if [ ! -z "$RUNNING" ] && [ ! -z "$MANTA" ]; then
+    LIST="$LIST\n"
+fi
+LIST="$LIST$MANTA"
+
 printf "$PATTERN" "IP" "STATE" "NAME"
 echo
-echo -e "$RUNNING\n$MANTA" | while read l; do
+echo -e "$LIST" | while read l; do
     IP=$(echo $l | cut -d ' ' -f 1)
     STATE=$(echo $l | cut -d ' ' -f 2)
     NAME=$(echo $l | cut -d ' ' -f 3)
