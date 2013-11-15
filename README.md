@@ -363,6 +363,14 @@ For example: <br />
 
 
 
+## Credits
+
+* [Minecraft Overviewer](https://github.com/overviewer/Minecraft-Overviewer) - The renderer we use.
+* [aboron/minecraft-smartos-smf](https://github.com/aboron/minecraft-smartos-smf) - Used as the basis for running
+  the minecraft server.
+
+
+
 ## Notes
 
 * The error `tar: ./world/region/r.-1.0.mca: file changed as we read it`
