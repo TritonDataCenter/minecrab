@@ -1,4 +1,3 @@
-
 # Hammerhead (aka Miner)
 
 Minecraft server on demand.
@@ -346,8 +345,10 @@ with 4 GB of RAM and 131 GB of disk space.
 This instance size is [billed](http://www.joyent.com/products/compute-service/pricing)
 at $0.128 per hour.
 
-When you [shut down](#minecraft-server-shutdown) the server,
-billing for the instance ends.
+When you run [minecraft-server-shutdown](#minecraft-server-shutdown),
+the Minecraft server stops,
+the instance that is hosting the Minecraft server is deleted,
+and billing for the instance ends.
 
 Storage for the servers on Manta is [billed at $0.086 per GB per month](http://www.joyent.com/products/manta/pricing).
 Most servers are less than 100 MB.
