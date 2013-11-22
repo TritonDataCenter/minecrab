@@ -71,14 +71,18 @@
 </script>
 <script id="world-template" type="text/x-handlebars-template">
 <li id="{{name}}" class="glass">
-  <div>
-    <div class="title">{{name}}</div>
-    <div>{{status}}</div>
-    <div>{{ip}}</div>
-    <a href="{{map_index}}">
-      <div class="map" style="background-image: url('{{thumbnail}}')"></div>
-    </a>
-  </div>
+  <table border=0 width=70% align=center>
+    <tr>
+      <td width=60% valign=top>
+	<div class="title">{{name}}</div>
+	<div>{{status}}</div>
+	<div>{{ip}}</div>
+      </td>
+      <td><a href="{{map_index}}">
+	  <img width="200" height="200" src="{{thumbnail}}"
+	       onerror="this.style.display='none';"></a></td>
+    </tr>
+  </table>
 </li>
 </script>
 </head>

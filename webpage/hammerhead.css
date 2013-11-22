@@ -33,14 +33,10 @@ body {
   z-index: -1;
   width: 100%;
   height: 100%;
-  background-image: url("data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20version%3D%221.1%22%20width%3D%221920%22%20height%3D%221120%22%3E%3Cdefs%3E%3Cfilter%20id%3D%22blur%22%3E%3CfeGaussianBlur%20stdDeviation%3D%225%22%2F%3E%3C%2Ffilter%3E%3C%2Fdefs%3E%3Cimage%20xlink%3Ahref%3D%22http%3A%2F%2Fimages4.fanpop.com%2Fimage%2Fphotos%2F19600000%2FMinecraft-minecraft-19670270-1600-1000.png%22%20width%3D%221920%22%20height%3D%221120%22%20filter%3D%22url%28%23blur%29%22%2F%3E%3C%2Fsvg%3E"), url("http://images4.fanpop.com/image/photos/19600000/Minecraft-minecraft-19670270-1600-1000.png");
   background-position: center bottom;
   background-attachment: fixed;
   background-size: cover;
   content: "";
-  filter: url("data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20version%3D%221.1%22%3E%3Cdefs%3E%3Cfilter%20id%3D%22blur%22%3E%3CfeGaussianBlur%20stdDeviation%3D%225%22%2F%3E%3C%2Ffilter%3E%3C%2Fdefs%3E%3C%2Fsvg%3E#blur");
-  -webkit-filter: blur(5px);
-  filter: blur(5px);
 }
 
 .glass .legacy-ie-fix {
@@ -68,8 +64,6 @@ body {
 
 .games {
   position: relative;
-  margin-top: 30px;
-  padding: 10px 0;
 }
 .games ul {
   margin: 0px;
