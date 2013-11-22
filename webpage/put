@@ -1,3 +1,0 @@
-LOCATION=/Joyent_Dev/public/minecraft
-mmkdir -p $LOCATION
-ls | xargs -n 1 -I {}  mput $LOCATION/{} -f {}

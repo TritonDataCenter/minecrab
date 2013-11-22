@@ -18,50 +18,49 @@ SERVER_NAME="$1"
 ME="$2"
 
 IMAGEID=17c98640-1fdb-11e3-bf51-3708ce78e75a
-#	{
-#		"id": "17c98640-1fdb-11e3-bf51-3708ce78e75a",
-#		"name": "base64",
-#		"version": "13.2.1",
-#		"os": "smartos",
-#		"requirements": {},
-#		"type": "smartmachine",
-#		"description": "A 64-bit SmartOS image with just essential packages installed. Ideal for users who are comfortable with setting up their own environment and tools.",
-#		"urn": "sdc:sdc:base64:13.2.1"
-#	}
+#    {
+#        "id": "17c98640-1fdb-11e3-bf51-3708ce78e75a",
+#        "name": "base64",
+#        "version": "13.2.1",
+#        "os": "smartos",
+#        "requirements": {},
+#        "type": "smartmachine",
+#        "description": "A 64-bit SmartOS image with just essential packages installed. Ideal for users who are comfortable with setting up their own environment and tools.",
+#        "urn": "sdc:sdc:base64:13.2.1"
+#    }
 
 PACKAGENAME=g3-standard-4-smartos-image-creation
-#	{
-#		"name": "g3-standard-4-smartos-image-creation",
-#		"memory": 4096,
-#		"disk": 134144,
-#		"swap": 8192,
-#		"vcpus": 0,
-#		"default": "false",
-#		"id": "9c1948c0-0c37-11e3-be34-5780f9789210",
-#		"version": "1.0.0",
-#		"description": "4GB RAM, 1 CPUs and bursting, and 131GB Disk. Required for Image Creation.",
-#		"group": "Image Creation"
-#	}
+#    {
+#        "name": "g3-standard-4-smartos-image-creation",
+#        "memory": 4096,
+#        "disk": 134144,
+#        "swap": 8192,
+#        "vcpus": 0,
+#        "default": "false",
+#        "id": "9c1948c0-0c37-11e3-be34-5780f9789210",
+#        "version": "1.0.0",
+#        "description": "4GB RAM, 1 CPUs and bursting, and 131GB Disk. Required for Image Creation.",
+#        "group": "Image Creation"
+#    }
 
 # Check if $SERVER_NAME already exists
 
-if [[ $(sdc-listmachines --tag "minecraft=${SERVER_NAME}") != "[]" ]] ; then
-	fatal "${SERVER_NAME} already exists. Choose another name."
+if [[ $(sdc-listmachines --tag "minecraft=${SERVER_NAME}") != "[]" ]]; then
+    fatal "${SERVER_NAME} already exists. Choose another name."
 fi
 
 echo -n "Launching ${SERVER_NAME} "
-SERVER_ID=$(sdc-createmachine	--dataset $IMAGEID \
-								--package $PACKAGENAME \
-								--tag "minecraft=${SERVER_NAME}"  | json id)
+SERVER_ID=$(sdc-createmachine --dataset $IMAGEID \
+                              --package $PACKAGENAME \
+                              --tag "minecraft=${SERVER_NAME}" | json id)
 if [ -z $SERVER_ID ] ; then
-	fatal "Can't provision."
+    fatal "Can't provision."
 fi
 
-while [[ $(sdc-getmachine $SERVER_ID | json state) ==  "provisioning" ]]
-	do
-		echo -n "."
-		sleep 1
-	done
+while [[ $(sdc-getmachine $SERVER_ID | json state) == "provisioning" ]]; do
+    echo -n "."
+    sleep 1
+done
 
 echo " done"
 
@@ -78,9 +77,14 @@ server_execute "cd /opt && git clone git@github.com:joyent/minecraft.git"
 echo "Installing server..."
 server_execute "cd /opt && minecraft/scripts/install.sh"
 if [ ! -z "$ME" ]; then
-	echo "Adding $ME to whitelist..."
-	server_console "whitelist add ${ME}"
+    echo "Adding $ME to whitelist..."
+    server_console "whitelist add ${ME}"
 fi
+
+echo "Uploading website to $MANTA_LOCATION..."
+upload_website
+
+echo "Uploading server information..."
 mmkdir -p $SERVERS_LOCATION/$SERVER_NAME
 echo $IP | mput $SERVERS_LOCATION/$SERVER_NAME/ip
 echo "Connect to server at ${IP}!"

@@ -17,10 +17,17 @@ set -o pipefail
 MINECRAFT_LOCATION="/opt/minecraft/server"
 MANTA_LOCATION="/$MANTA_USER/public/minecraft"
 SERVERS_LOCATION="$MANTA_LOCATION/servers"
+ME_LOCATION=$(dirname $(dirname ${BASH_SOURCE[0]}))
 
 function fatal {
     echo "$(basename $0): fatal error: $*" >&2
     exit 1
+}
+
+function upload_website {
+    mmkdir -p $MANTA_LOCATION
+    ls $ME_LOCATION/webpage | \
+        xargs -n 1 -I {} mput $MANTA_LOCATION/{} -f $ME_LOCATION/webpage/{}
 }
 
 function find_server {
