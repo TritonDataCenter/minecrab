@@ -96,63 +96,16 @@ body {
   font-family: "Antic Slab", sans-serif;
   line-height: 1;
   text-align: center;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=50)"; 
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=50)";
 }
 .games div.map {
   position: relative;
   background-repeat: no-repeat;
-  height: 100%;
   background-position: center bottom;
-}
-.games li#joyent div.map {
-  background-image: url("https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/joyent/map/view/render1/base.png");
-  left: -70px;
-  top: 0;
-  height: 100%;
-}
-.games li#nate div.map {
-  background-image: url("https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/nate/map/view/render1/base.png");
-  left: -20px;
-  top: 0px;
-  height: 100%;
-}
-.games li#filip div.map {
-  background-image: url("https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/filip/map/view/render1/base.png");
-  left: 50px;
+  left: -60px;
   top: 0;
   height: 90%;
 }
-.games li#gin div.map {
-  background-image: url("https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/gin/map/view/render1/base.png");
-  left: 50px;
-  top: 0;
-  height: 90%;
-}
-.games li#cigar div.map {
-  background-image: url("https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/cigar/map/view/render1/base.png");
-  left: 50px;
-  top: 0;
-  height: 90%;
-}
-.games li#darkplace div.map {
-  background-image: url("https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/darkplace/map/view/render1/base.png");
-  left: 50px;
-  top: 0;
-  height: 90%;
-}
-.games li#filips div.map {
-  background-image: url("https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/filips/map/view/render1/base.png");
-  left: 50px;
-  top: 0;
-  height: 90%;
-}
-.games li#pipe div.map {
-  background-image: url("https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/pipe/map/view/render1/base.png");
-  left: 50px;
-  top: 0;
-  height: 90%;
-}
-
 .games div.title {
   font-size: 34px;
 }

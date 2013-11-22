@@ -5,12 +5,14 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.1.2/handlebars.min.js"></script>
 <script type="text/javascript">
   var worlds = [];
-  var page = '/Joyent_Dev/public/minecraft/index.html';
-  var manta = 'http://us-east.manta.joyent.com';
+  var manta = document.location.protocol + '//' + document.location.hostname;
+  var page = document.location.pathname;
   var user = page.split('/')[1];
+  var servers_loc = manta + '/' + user + '/public/minecraft/servers/';
+
   function findIp(name, cb) {
       var user = page.split('/')[1];
-      var url = manta + '/' + user + '/public/minecraft/servers/' + name + '/ip';
+      var url = servers_loc + name + '/ip';
       $.ajax({
           'url': url,
           'success': cb,
@@ -19,8 +21,11 @@
           }
       });
   }
+
+  console.log(servers_loc);
+
   $.ajax({
-    url: "http://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/servers/",
+    url: servers_loc,
     cache: false,
     dataType: "text"
   })
@@ -46,11 +51,15 @@
     var source   = $("#world-template").html();
     var template = Handlebars.compile(source);
     worlds.forEach(function(world) {
-      console.log('rendering', world);
       findIp(world, function (ip) {
         var status = ip ? 'Online' : 'Offline';
-          var params = {name: world, ip: ip, status: status};
-          console.log(params);
+          var params = {
+              name: world,
+              ip: ip,
+              status: status,
+              map_index: servers_loc + world + '/map/view/index.html',
+              thumbnail: servers_loc + world + '/map/view/render1/base.png'
+          };
           var html   = template(params);
           $('div.games ul').append(html);
       });
@@ -66,8 +75,8 @@
     <div class="title">{{name}}</div>
     <div>{{status}}</div>
     <div>{{ip}}</div>
-    <a href="https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft/servers/{{name}}/map/view/index.html">
-      <div class="map"></div>
+    <a href="{{map_index}}">
+      <div class="map" style="background-image: url('{{thumbnail}}')"></div>
     </a>
   </div>
 </li>
