@@ -7,15 +7,42 @@
 
 source $(dirname $0)/common.sh
 USER_SCRIPT=$(dirname $0)/../scripts/bootstrap.sh
+FLAVORS=("minecraft" "craftbukkit" "ftb-ultimate" "voltz")
 
-usage() { echo "Usage: $0 <server-name> [first-player]" 1>&2; exit 1; }
+usage() {
+    echo "Usage: $0 [-p first-player] [-f flavor] <server-name>" 1>&2;
+    echo "Valid flavors: ${FLAVORS[@]}" 1>&2
+    exit 1;
+}
 
-if [ "$#" -eq 0 ]; then
+while getopts ":f:p:" o; do
+    case "${o}" in
+        f)
+            FLAVOR=${OPTARG}
+            ;;
+        p)
+            ME=${OPTARG}
+            ;;
+        *)
+            usage
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+SERVER=$1
+
+if [ -z $SERVER ]; then
     usage
 fi
 
-SERVER_NAME="$1"
-ME="$2"
+#Check for valid flavors...
+if [ ! -z $FLAVOR ]; then
+    if [ $(contains "${FLAVORS[@]}" "$FLAVOR") == "n" ]; then
+	echo "$FLAVOR is not a valid minecraft flavor."
+	usage
+    fi
+fi
 
 IMAGEID=17c98640-1fdb-11e3-bf51-3708ce78e75a
 #    {
@@ -75,7 +102,7 @@ server_execute "pkgin -y in scmgit"
 echo "Cloning repo..."
 server_execute "cd /opt && git clone git@github.com:joyent/minecraft.git"
 echo "Installing server..."
-server_execute "cd /opt && minecraft/scripts/install.sh"
+server_execute "cd /opt && minecraft/scripts/install.sh $FLAVOR"
 
 echo "Uploading website to $MANTA_LOCATION..."
 upload_website
