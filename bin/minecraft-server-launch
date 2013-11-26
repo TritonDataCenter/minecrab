@@ -76,10 +76,6 @@ echo "Cloning repo..."
 server_execute "cd /opt && git clone git@github.com:joyent/minecraft.git"
 echo "Installing server..."
 server_execute "cd /opt && minecraft/scripts/install.sh"
-if [ ! -z "$ME" ]; then
-    echo "Adding $ME to whitelist..."
-    server_console "whitelist add ${ME}"
-fi
 
 echo "Uploading website to $MANTA_LOCATION..."
 upload_website
@@ -87,4 +83,12 @@ upload_website
 echo "Uploading server information..."
 mmkdir -p $SERVERS_LOCATION/$SERVER_NAME
 echo $IP | mput $SERVERS_LOCATION/$SERVER_NAME/ip
+
+#We keep this towards the end so that the minecraft server has some time
+# to start up before giving it commands.
+if [ ! -z "$ME" ]; then
+    echo "Adding $ME to whitelist..."
+    server_console "whitelist add ${ME}"
+fi
+
 echo "Connect to server at ${IP}!"
