@@ -29,6 +29,12 @@ if [ ! -z "$RUNNING" ] && [ ! -z "$MANTA" ]; then
 fi
 LIST="$LIST$MANTA"
 
+if [ -z "$LIST" ]; then
+    echo "No servers found running or backed up."
+    echo "Launch a new server using the minecraft-server-launch command!"
+    exit 1
+fi
+
 printf "$PATTERN" "IP" "STATE" "NAME"
 echo
 echo -e "$LIST" | while read l; do
