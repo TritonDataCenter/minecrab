@@ -58,9 +58,9 @@ case ${SERVER_FLAVOR} in
     fi
     SERVER_URL="http://repo.bukkit.org/content/groups/public/org/bukkit/craftbukkit/${SERVER_VERSION}/craftbukkit-${SERVER_VERSION}.jar"
   ;;
-  ftb-ultimate*)
+  ftb_ultimate*)
     : ${SERVER_VERSION:=1.1.2}
-    SERVER_URL="http://www.creeperrepo.net/direct/FTB2/387719c04c0475b57ac038546cd8db7c/modpacks%5EUltimate%5E${SERVER_VERSION//\./_}%5EUltimate_Server.zip"
+    SERVER_URL="http://www.creeperrepo.net/direct/FTB2/6b87107415174d7b47c0ca1a1d198061/modpacks%5EUltimate%5E${SERVER_VERSION//\./_}%5EUltimate_Server.zip"
   ;;
   voltz*)
     : ${SERVER_VERSION:=2.0.4}

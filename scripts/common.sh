@@ -31,7 +31,7 @@ case ${SERVER_FLAVOR} in
   craftbukkit*)
     SERVER_JAR="craftbukkit.jar"
   ;;
-  ftb-ultimate*)
+  ftb_ultimate*)
     SERVER_JAR="ftbserver.jar"
   ;;
   voltz*)

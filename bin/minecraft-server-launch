@@ -7,7 +7,7 @@
 
 source $(dirname $0)/common.sh
 USER_SCRIPT=$(dirname $0)/../scripts/bootstrap.sh
-FLAVORS=("minecraft" "craftbukkit" "ftb-ultimate" "voltz")
+FLAVORS=("minecraft" "craftbukkit" "ftb_ultimate" "voltz")
 
 usage() {
     echo "Usage: $0 [-p first-player] [-f flavor] <server-name>" 1>&2;
