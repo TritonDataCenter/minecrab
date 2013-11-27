@@ -90,6 +90,13 @@ cd ${OLDPWD}
 
 chown -R minecraft:minecraft ${MINECRAFT_LOCATION}
 
+echo "Writing out the server.config..."
+cat - >${MINECRAFT_LOCATION}/server.config <<EOF
+SERVER_PREFERRED="${SERVER_FLAVOR}"
+SERVER_JAR="${SERVER_JAR}"
+JAVA_OPTS="${JAVA_OPTS}"
+EOF
+
 echo "Starting server for the first time..."
 svcadm enable -s minecraft
 
@@ -111,10 +118,7 @@ if [ -z "$MINECRAFT_VERSION" ]; then
     MINECRAFT_VERSION="unknown"
 fi
 
-echo "Writing out the server.config..."
-cat - >${MINECRAFT_LOCATION}/server.config <<EOF
-SERVER_PREFERRED="${SERVER_FLAVOR}"
-SERVER_JAR="${SERVER_JAR}"
-JAVA_OPTS="${JAVA_OPTS}"
+echo "Appending ${MINECRAFT_VERSION} to the server.config..."
+cat - >>${MINECRAFT_LOCATION}/server.config <<EOF
 MINECRAFT_VERSION="${MINECRAFT_VERSION}"
 EOF

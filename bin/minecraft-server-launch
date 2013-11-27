@@ -76,7 +76,7 @@ if [[ $(sdc-listmachines --tag "minecraft=${SERVER_NAME}") != "[]" ]]; then
     fatal "${SERVER_NAME} already exists. Choose another name."
 fi
 
-echo -n "Launching ${SERVER_NAME} "
+echo -n "Launching ${SERVER_NAME}..."
 SERVER_ID=$(sdc-createmachine --dataset $IMAGEID \
                               --package $PACKAGENAME \
                               --tag "minecraft=${SERVER_NAME}" | json id)
@@ -89,7 +89,7 @@ while [[ $(sdc-getmachine $SERVER_ID | json state) == "provisioning" ]]; do
     sleep 1
 done
 
-echo " done"
+echo " Done!"
 
 IP=$(sdc-getmachine $SERVER_ID | json primaryIp)
 
