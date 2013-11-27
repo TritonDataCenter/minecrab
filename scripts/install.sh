@@ -88,13 +88,33 @@ case ${SERVER_URL} in
 esac
 cd ${OLDPWD}
 
-cat - >${MINECRAFT_LOCATION}/server.config <<EOF
-SERVER_PREFERRED="${SERVER_FLAVOR}"
-SERVER_JAR="${SERVER_JAR}"
-JAVA_OPTS="${JAVA_OPTS}"
-EOF
-
 chown -R minecraft:minecraft ${MINECRAFT_LOCATION}
 
 echo "Starting server for the first time..."
 svcadm enable -s minecraft
+
+echo -n "Polling for minecraft version..."
+for i in `seq 1 60`; do
+    MINECRAFT_VERSION=$(find ${MINECRAFT_LOCATION} -name "*.log" | \
+	xargs grep 'minecraft server version' | head -1 | \
+	sed 's/.*version \(.*\)/\1/')
+    if [ ! -z "$MINECRAFT_VERSION" ]; then
+	break;
+    fi
+    sleep 1;
+    echo -n "."
+done
+echo " Done!"
+
+if [ -z "$MINECRAFT_VERSION" ]; then
+    echo "Unable to find minecraft version.  Sorry :/"
+    MINECRAFT_VERSION="unknown"
+fi
+
+echo "Writing out the server.config..."
+cat - >${MINECRAFT_LOCATION}/server.config <<EOF
+SERVER_PREFERRED="${SERVER_FLAVOR}"
+SERVER_JAR="${SERVER_JAR}"
+JAVA_OPTS="${JAVA_OPTS}"
+MINECRAFT_VERSION="${MINECRAFT_VERSION}"
+EOF
