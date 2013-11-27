@@ -19,7 +19,9 @@ function runjob {
   if [ -z "$world" ]; then
     fatal "Missing server name (REMOTE_FILE)"
   fi
-  init_script="https://raw.github.com/joyent/minecraft/master/scripts/prepare_render.sh?token=58699__eyJzY29wZSI6IlJhd0Jsb2I6am95ZW50L21pbmVjcmFmdC9tYXN0ZXIvc2NyaXB0cy9wcmVwYXJlX3JlbmRlci5zaCIsImV4cGlyZXMiOjEzODQ5MDgzODJ9--693c6e94b5c177c6304af5c8d29585a75795c7d1"
+  #TODO: Change back once the repo is public...
+  #init_script="https://raw.github.com/joyent/minecraft/master/scripts/prepare_render.sh"
+  init_script="https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft_scripts/prepare_render.sh"
   #   --asset $map \
   echo "Kicking off job..."
   manta_req_uuid=$(\
