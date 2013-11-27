@@ -100,6 +100,7 @@ EOF
 echo "Starting server for the first time..."
 svcadm enable -s minecraft
 
+set +o pipefail
 echo -n "Polling for minecraft version..."
 for i in `seq 1 60`; do
     MINECRAFT_VERSION=$(find ${MINECRAFT_LOCATION} -name "*.log" | \
@@ -112,6 +113,7 @@ for i in `seq 1 60`; do
     echo -n "."
 done
 echo " Done!"
+set -o pipefail
 
 if [ -z "$MINECRAFT_VERSION" ]; then
     echo "Unable to find minecraft version.  Sorry :/"
