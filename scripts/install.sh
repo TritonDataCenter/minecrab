@@ -124,3 +124,8 @@ echo "Appending ${MINECRAFT_VERSION} to the server.config..."
 cat - >>${MINECRAFT_LOCATION}/server.config <<EOF
 MINECRAFT_VERSION="${MINECRAFT_VERSION}"
 EOF
+
+echo "Backing up server properties to manta..."
+mmkdir -p $REMOTE_LOCATION
+mput -f $MINECRAFT_LOCATION/server.properties $REMOTE_LOCATION/server.properties
+mput -f $MINECRAFT_LOCATION/server.config $REMOTE_LOCATION/server.config

@@ -9,17 +9,91 @@
   var page = document.location.pathname;
   var user = page.split('/')[1];
   var servers_loc = manta + '/' + user + '/public/minecraft/servers/';
+  var difficulty = ['Peaceful', 'Easy', 'Normal', 'Hard']
+  var gamemode = ['Survival', 'Creative', 'Adventure']
 
   function findIp(name, cb) {
-      var user = page.split('/')[1];
-      var url = servers_loc + name + '/ip';
-      $.ajax({
-          'url': url,
-          'success': cb,
-          'error': function () {
-              cb(null);
-          }
+    var user = page.split('/')[1];
+    var url = servers_loc + name + '/ip';
+    $.ajax({
+      'url': url,
+      'success': cb,
+      'error': function () {
+        cb(null);
+      }
+    });
+  }
+
+  function parseProperties(propData) {
+    var props = {};
+    if (propData === null) {
+      return (props);
+    }
+    var propLines = propData.split('\n');
+    propData.split('\n').forEach(function (dl) {
+      if (dl === null || dl === '' || dl.slice(0, 1) === '#') {
+        return;
+      }
+      var parts = dl.split('=');
+      parts[1] = parts[1].replace(/"/g, '');  //" Fixes syntax highlighting
+      props[parts[0]] = parts[1];
+    });
+    return (props);
+  }
+
+  function findConfig(name, cb) {
+    var user = page.split('/')[1];
+    var url = servers_loc + name + '/server/server.config';
+    function onSuccess(data) {
+      cb(parseProperties(data));
+    }
+    $.ajax({
+      'url': url,
+      'success': onSuccess,
+      'error': function () {
+        cb(null);
+      }
+    });
+  }
+
+  function findProperties(name, cb) {
+    var user = page.split('/')[1];
+    var url = servers_loc + name + '/server/server.properties';
+    function onSuccess(data) {
+      cb(parseProperties(data));
+    }
+    $.ajax({
+      'url': url,
+      'success': onSuccess,
+      'error': function () {
+        cb(null);
+      }
+    });
+  }
+
+  function worldDetails(name, cb) {
+    var res = {};
+    findIp(name, function (ip) {
+      findConfig(name, function (cfg) {
+        findProperties(name, function (props) {
+          var status = ip ? 'Online' : 'Offline';
+          var params = {
+            name: name,
+            ip: ip,
+            status: status,
+            map_index: servers_loc + name + '/map/view/index.html',
+            thumbnail: servers_loc + name + '/map/view/render1/base.png',
+            version: cfg === null ? 'unknown' : cfg['MINECRAFT_VERSION'],
+            type: cfg === null ? 'unknown' : cfg['SERVER_PREFERRED'],
+            difficulty: props === null ?
+              'unknown' : difficulty[props.difficulty],
+            gamemode: props === null ?
+              'unknown' : gamemode[props.gamemode]
+          };
+          cb(params);
+        });
       });
+    });
   }
 
   console.log(servers_loc);
@@ -51,17 +125,9 @@
     var source   = $("#world-template").html();
     var template = Handlebars.compile(source);
     worlds.forEach(function(world) {
-      findIp(world, function (ip) {
-        var status = ip ? 'Online' : 'Offline';
-          var params = {
-              name: world,
-              ip: ip,
-              status: status,
-              map_index: servers_loc + world + '/map/view/index.html',
-              thumbnail: servers_loc + world + '/map/view/render1/base.png'
-          };
-          var html   = template(params);
-          $('div.games ul').append(html);
+      worldDetails(world, function (params) {
+        var html = template(params);
+        $('div.games ul').append(html);
       });
     });
   });
@@ -75,8 +141,9 @@
     <tr>
       <td width=60% valign=top>
 	<div class="title">{{name}}</div>
-	<div>{{status}}</div>
-	<div>{{ip}}</div>
+	<div>{{status}} {{#if ip}}at {{ip}}{{/if}}</div>
+	<div>{{gamemode}}, {{difficulty}}</div>
+	<div>{{type}} {{version}}</div>
       </td>
       <td><a href="{{map_index}}">
 	  <img width="200" height="200" src="{{thumbnail}}"
