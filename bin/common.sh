@@ -48,6 +48,7 @@ function find_server {
         MAP_URL="(not generated)"
     fi
     MANTA_OBJECT="$SERVERS_LOCATION/$SERVER_NAME/server/world.tar.gz"
+    WHITELIST_OBJECT="$SERVERS_LOCATION/$SERVER_NAME/server/white-list.txt"
 
     #Now see if the server is running...
     SERVER_RES=$(sdc-listmachines --tag minecraft=$SERVER_NAME | json -ga)

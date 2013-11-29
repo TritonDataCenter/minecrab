@@ -17,9 +17,15 @@ SERVER_NAME=$1
 echo "Finding server..."
 find_server $SERVER_NAME
 
-if [ -z "$IP" ]; then
+if [ "$STATUS" == "notfound" ]; then
     fatal "Unable to find $SERVER_NAME server."
+elif [ "$STATUS" == "online" ]; then
+    server_execute "cat $MINECRAFT_LOCATION/white-list.txt"
+    echo "$RESULT"
+else
+    LIST_FOUND=$(mls "$WHITELIST_OBJECT")
+    if [ -z "$WHITELIST_OBJECT" ]; then
+	fatal "$WHITELIST_OBJECT not found."
+    fi
+    mget -q "$WHITELIST_OBJECT"
 fi
-
-server_execute "cat $MINECRAFT_LOCATION/white-list.txt"
-echo $RESULT

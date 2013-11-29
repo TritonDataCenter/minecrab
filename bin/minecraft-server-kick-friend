@@ -22,14 +22,21 @@ fi
 echo "Finding server..."
 find_server $SERVER_NAME
 
-if [ -z "$IP" ]; then
+if [ "$STATUS" == "notfound" ]; then
     fatal "Unable to find $SERVER_NAME server."
+elif [ "$STATUS" == "online" ]; then
+    echo "Removing $FRIEND from whitelist."
+    server_console "whitelist remove $FRIEND"
+
+    echo "Kicking $FRIEND."
+    server_console "kick $FRIEND \"$REASON\""
+else
+    LIST_FOUND=$(mls "$WHITELIST_OBJECT")
+    if [ -z "$WHITELIST_OBJECT" ]; then
+        fatal "$WHITELIST_OBJECT not found."
+    fi
+    mget "$WHITELIST_OBJECT" 2>/dev/null | grep -v "$FRIEND" | \
+        mput "$WHITELIST_OBJECT"
 fi
-
-echo "Removing $FRIEND from whitelist."
-server_console "whitelist remove $FRIEND"
-
-echo "Kicking $FRIEND."
-server_console "kick $FRIEND \"$REASON\""
 
 echo "Done!"
