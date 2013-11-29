@@ -21,6 +21,7 @@ if [ -z "$IP" ]; then
     fatal "Unable to find running $SERVER_NAME server (may be shut down?)."
 fi
 
+echo "Backing up server.  Please be patient..."
 server_execute "/opt/minecraft/scripts/backup.sh"
 
 echo "Done!"

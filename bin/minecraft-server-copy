@@ -15,8 +15,8 @@ fi
 SERVER_NAME=$1
 NEW_NAME=$2
 
-SERVER_LOCATION="$SERVERS_LOCATION/$SERVER_NAME/server/world.tar.gz"
-NEW_LOCATION="$SERVERS_LOCATION/$NEW_NAME/server/world.tar.gz"
+SERVER_LOCATION="$SERVERS_LOCATION/$SERVER_NAME/server/"
+NEW_LOCATION="$SERVERS_LOCATION/$NEW_NAME/server/"
 
 MLS=$(mls $SERVERS_LOCATION)
 
@@ -24,7 +24,7 @@ NEW_FOUND=$(echo "$MLS" | grep "^$NEW_NAME/\$")
 if [[ ! -z "$NEW_FOUND" ]]; then
     read -p "$NEW_NAME already exists.  Overwrite? " -n 1 -r
     echo
-    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    if [[ ! "$REPLY" =~ ^[Yy]$ ]]; then
         exit 1
     fi
 fi
@@ -37,7 +37,7 @@ fi
 echo "Checking if server is up..."
 find_server $SERVER_NAME
 
-if [ ! -z "$IP" ]; then
+if [ "$STATUS" == "online" ]; then
     echo "Taking latest backup of $SERVER_NAME..."
     server_execute "/opt/minecraft/scripts/backup.sh"
     if [[ $? -ne 0 ]]; then
@@ -46,7 +46,8 @@ if [ ! -z "$IP" ]; then
 fi
 
 echo "Copying $SERVER_NAME to $NEW_NAME..."
-mmkdir -p $(dirname $NEW_LOCATION)
-mln $SERVER_LOCATION $NEW_LOCATION
+mrm -r $NEW_LOCATION 2>/dev/null
+mmkdir -p $NEW_LOCATION
+mls $SERVER_LOCATION | xargs -I{} mln $SERVER_LOCATION/{} $NEW_LOCATION/{}
 
 echo "Done!"
