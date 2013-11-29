@@ -14,28 +14,13 @@ fi
 
 SERVER_NAME=$1
 
-DATA=$(sdc-listmachines --tag minecraft=$SERVER_NAME | json -ga)
+find_server $SERVER_NAME
 
-if [ -z "$DATA" ]; then
-    fatal "Unable to find running $SERVER_NAME server."
-fi
-
-ID=$(echo $DATA | json id)
-NAME=$(echo $DATA | json name)
-IMAGE=$(echo $DATA | json image)
-MEMORY=$(echo $DATA | json memory)
-DISK=$(echo $DATA | json disk)
-DATASET=$(echo $DATA | json dataset)
-IP=$(echo $DATA | json primaryIp)
-MAP_IN_MANTA="$SERVERS_LOCATION/$SERVER_NAME/map/view/index.html"
-MAP="http://us-east.manta.joyent.com/$SERVERS_LOCATION/$SERVER_NAME/map/view/index.html"
-MAP_FOUND=$(mls $MAP_IN_MANTA 2>/dev/null)
-if [ -z "$MAP_FOUND" ]; then
-    MAP="(not generated)"
-fi
-MANTA="$SERVERS_LOCATION/$SERVER_NAME/server/world.tar.gz"
-
-cat - <<EOF
+if [ "$STATUS" == "notfound" ]; then
+    fatal "$SERVER_NAME not found..."
+elif [ "$STATUS" == "online" ]; then
+    cat - <<EOF
+status:  $STATUS
 id:      $ID
 name:    $NAME
 image:   $IMAGE
@@ -43,6 +28,13 @@ memory:  $MEMORY mb
 disk:    $DISK gb
 dataset: $DATASET
 ip addr: $IP
-map:     $MAP
-manta:   $MANTA
+map:     $MAP_URL
+manta:   $MANTA_OBJECT
 EOF
+else
+    cat - <<EOF
+status:  $STATUS
+map:     $MAP_URL
+manta:   $MANTA_OBJECT
+EOF
+fi

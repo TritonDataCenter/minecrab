@@ -31,10 +31,38 @@ function upload_website {
 }
 
 function find_server {
-    local NAME=$1
-    SERV_RES=$(sdc-listmachines --tag minecraft=$NAME)
-    IP=$(echo "$SERV_RES" | json -ga primaryIp)
-    ID=$(echo "$SERV_RES" | json -ga id)
+    local SERVER_NAME=$1
+
+    #First figure out if it exists
+    IN_MANTA=$(mls "$SERVERS_LOCATION/$SERVER_NAME" 2>/dev/null)
+    if [ -z "$IN_MANTA" ]; then
+	STATUS="notfound"
+	return
+    fi
+
+    #First what's in manta...
+    MAP_IN_MANTA="$SERVERS_LOCATION/$SERVER_NAME/map/view/index.html"
+    MAP_URL="http://us-east.manta.joyent.com$SERVERS_LOCATION/$SERVER_NAME/map/view/index.html"
+    MAP_FOUND=$(mls $MAP_IN_MANTA 2>/dev/null)
+    if [ -z "$MAP_FOUND" ]; then
+        MAP_URL="(not generated)"
+    fi
+    MANTA_OBJECT="$SERVERS_LOCATION/$SERVER_NAME/server/world.tar.gz"
+
+    #Now see if the server is running...
+    SERVER_RES=$(sdc-listmachines --tag minecraft=$SERVER_NAME | json -ga)
+    if [ ! -z "$SERVER_RES" ]; then
+	STATUS="online"
+	IP=$(echo "$SERVER_RES" | json primaryIp)
+	ID=$(echo "$SERVER_RES" | json id)
+	NAME=$(echo "$SERVER_RES" | json name)
+	IMAGE=$(echo "$SERVER_RES" | json image)
+	MEMORY=$(echo "$SERVER_RES" | json memory)
+	DISK=$(echo "$SERVER_RES" | json disk)
+	DATASET=$(echo "$SERVER_RES" | json dataset)
+    else
+	STATUS="offline"
+    fi
 }
 
 function server_console {
@@ -44,6 +72,9 @@ function server_console {
 
 function server_execute {
     local COMMAND=$1
+    if [ -z "$IP" ]; then
+	fatal "No ip address.  Did you find_server?"
+    fi
     #Since these will start and stop a lot, there's the possibility that we'll
     # get the same ip address with multiple launches and shutdowns.
     RESULT=$(ssh -o LogLevel=quiet -o StrictHostKeyChecking=no -o \
