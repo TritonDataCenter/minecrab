@@ -6,6 +6,8 @@
 
 source $(dirname $0)/common.sh
 
+JOB_NAME="minecraft-map-$SERVER_NAME"
+
 #if [ -z "$1" ]; then
 #  REMOTE_FILE="/$MANTA_USER/public/minecraft/servers/$1/server/world.tar.gz"
 #fi
@@ -13,6 +15,13 @@ source $(dirname $0)/common.sh
 #debug="yes please"
 
 #set -x trace
+
+function checkjob {
+  JOB_ID=$(mjob list -s running -n "$JOB_NAME" | tr -d "/")
+  if [ ! -z "$JOB_ID" ]; then
+    fatal "Job already running with id $JOB_ID..."
+  fi
+}
 
 function runjob {
   world=$REMOTE_FILE
@@ -28,6 +37,7 @@ function runjob {
     echo "$world" | mjob create \
       --memory=4096 \
       --init "curl $init_script | sh | tee /init.log" \
+      --name "$JOB_NAME" \
       -m '/render.sh | tee /render.log' \
   )
 
@@ -66,4 +76,5 @@ function runjob {
   fi
 }
 
+checkjob
 runjob
