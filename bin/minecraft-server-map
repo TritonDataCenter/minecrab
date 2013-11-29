@@ -4,6 +4,9 @@
 # Copyright (c) 2013 Joyent Inc., All rights reserved.
 #
 
+#set -x trace
+#DEBUG="yes please"
+
 source $(dirname $0)/common.sh
 
 usage() { echo "Usage: $0 <server-name>" 1>&2; exit 1; }
@@ -14,21 +17,52 @@ fi
 
 SERVER_NAME=$1
 
+JOB_NAME="minecraft-map-$SERVER_NAME"
+
 echo "Finding server..."
 find_server $SERVER_NAME
 
-if [ -z "$IP" ]; then
-    fatal "Unable to find running $SERVER_NAME server."
+if [ "$STATUS" == "notfound" ]; then
+    fatal "Unable to find $SERVER_NAME server."
 fi
 
-echo "Taking latest backup of $SERVER_NAME..."
-server_execute "/opt/minecraft/scripts/backup.sh"
-if [[ $? -ne 0 ]]; then
-    fatal "Was unable to backup your running server."
+if [ "$STATUS" == "online" ]; then
+    echo "Taking latest backup of $SERVER_NAME..."
+    server_execute "/opt/minecraft/scripts/backup.sh"
+    if [[ $? -ne 0 ]]; then
+	fatal "Was unable to backup your running server."
+    fi
+    echo "Running map command from $SERVER_NAME..."
+    server_execute "/opt/minecraft/scripts/map.sh"
+    echo "$RESULT"
+    exit 0
 fi
 
-echo "Running map command from $SERVER_NAME..."
-server_execute "/opt/minecraft/scripts/map.sh"
-echo "$RESULT"
+#TODO: Unfortunately, this is duplicated  We'll have to refactor it into
+# some common thing at some point.
+echo "Checking if a job is already running..."
+JOB_ID=$(mjob list -s running -n "$JOB_NAME" | tr -d "/")
+if [ ! -z "$JOB_ID" ]; then
+    fatal "Job already running with id $JOB_ID..."
+fi
 
-echo "Done!"
+echo "Looking for $MANTA_OBJECT..."
+WORLD_FOUND=$(mls $MANTA_OBJECT 2>/dev/null)
+if [ -z "$WORLD_FOUND" ]; then
+    fatal "Didn't find the latest backup for $SERVER_NAME."
+fi
+
+#TODO: Change back once the repo is public...
+#INIT_SCRIPT="https://raw.github.com/joyent/minecraft/master/scripts/prepare_render.sh"
+INIT_SCRIPT="https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft_scripts/prepare_render.sh"
+
+echo "Kicking off job..."
+MANTA_REQ_UUID=$(\
+    echo "$MANTA_OBJECT" | mjob create \
+    --memory=4096 \
+    --init "curl $INIT_SCRIPT | sh | tee /init.log" \
+    --name "$JOB_NAME" \
+    -m '/render.sh | tee /render.log' \
+    )
+
+echo "Job $MANTA_REQ_UUID running!"
