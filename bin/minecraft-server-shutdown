@@ -28,14 +28,14 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]; then
 fi
 
 echo -n "Backing up your data... "
-server_execute "/opt/minecraft/scripts/backup.sh"
+server_execute "/opt/minecrab/scripts/backup.sh"
 if [[ $? -ne 0 ]]; then
     fatal "Failed to backup your world.  Server is still running."
 fi
 echo "Success!"
 
 echo -n "Kicking off map generation... "
-server_execute "/opt/minecraft/scripts/map.sh"
+server_execute "/opt/minecrab/scripts/map.sh"
 if [[ $? -ne 0 ]]; then
     fatal "Failed to kick off map generation.  Server is still running."
 fi

@@ -39,7 +39,7 @@ find_server $SERVER_NAME
 
 if [ "$STATUS" == "online" ]; then
     echo "Taking latest backup of $SERVER_NAME..."
-    server_execute "/opt/minecraft/scripts/backup.sh"
+    server_execute "/opt/minecrab/scripts/backup.sh"
     if [[ $? -ne 0 ]]; then
         fatal "Was unable to backup your running server."
     fi

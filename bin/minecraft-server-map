@@ -28,12 +28,12 @@ fi
 
 if [ "$STATUS" == "online" ]; then
     echo "Taking latest backup of $SERVER_NAME..."
-    server_execute "/opt/minecraft/scripts/backup.sh"
+    server_execute "/opt/minecrab/scripts/backup.sh"
     if [[ $? -ne 0 ]]; then
 	fatal "Was unable to backup your running server."
     fi
     echo "Running map command from $SERVER_NAME..."
-    server_execute "/opt/minecraft/scripts/map.sh"
+    server_execute "/opt/minecrab/scripts/map.sh"
     echo "$RESULT"
     exit 0
 fi

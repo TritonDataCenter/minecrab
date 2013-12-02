@@ -102,7 +102,7 @@ server_execute "pkgin -y in scmgit"
 echo "Cloning repo..."
 server_execute "cd /opt && git clone git@github.com:joyent/minecrab.git"
 echo "Installing server..."
-server_execute "cd /opt && minecraft/scripts/install.sh $FLAVOR"
+server_execute "cd /opt && minecrab/scripts/install.sh $FLAVOR"
 
 echo "Uploading website to $MANTA_LOCATION..."
 upload_website

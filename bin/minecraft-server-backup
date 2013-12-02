@@ -22,6 +22,6 @@ if [ -z "$IP" ]; then
 fi
 
 echo "Backing up server.  Please be patient..."
-server_execute "/opt/minecraft/scripts/backup.sh"
+server_execute "/opt/minecrab/scripts/backup.sh"
 
 echo "Done!"

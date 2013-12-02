@@ -18,11 +18,11 @@ mkdir -p ${MINECRAFT_LOCATION}
 id -g minecraft >/dev/null 2>&1 || groupadd minecraft 2>/dev/null
 id -u minecraft >/dev/null 2>&1 || useradd -s /bin/sh -d ${MINECRAFT_LOCATION} -g minecraft minecraft 2>/dev/null
 svccfg import $(dirname $0)/../svc/manifest/minecraft.xml
-grep -q /opt/minecraft/bin /root/.profile || \
+grep -q ${MINECRAFT_BIN} /root/.profile || \
   cat - >>/root/.profile <<'EOF'
 
 # Add path to minecraft tools
-PATH=$PATH:/opt/minecraft/scripts:/opt/local/sdc/bin
+PATH=$PATH:${MINECRAFT_SCRIPTS}:/opt/local/sdc/bin
 EOF
 . /root/.profile
 

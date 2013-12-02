@@ -13,7 +13,9 @@ PATH=$PATH:/opt/local/sdc/bin
 : ${MANTA_URL:?"MANTA_URL environment variable is missing"}
 : ${MANTA_KEY_ID:?"MANTA_KEY_ID environment variable is missing"}
 
-MINECRAFT_LOCATION="/opt/minecraft/server"
+MINECRAFT_SCRIPTS="/opt/minecrab/scripts"
+MINECRAFT_BIN="/opt/minecrab/bin"
+MINECRAFT_LOCATION="/opt/minecrab/server"
 SERVER_NAME=$(mdata-get sdc:tags.minecraft)
 MANTA_LOCATION="/$MANTA_USER/public/minecraft"
 SERVERS_LOCATION="$MANTA_LOCATION/servers"

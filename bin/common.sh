@@ -14,7 +14,7 @@ set -o pipefail
 : ${SDC_ACCOUNT:?"SDC_ACCOUNT environment variable is missing"}
 : ${SDC_KEY_ID:?"SDC_KEY_ID environment variable is missing"}
 
-MINECRAFT_LOCATION="/opt/minecraft/server"
+MINECRAFT_LOCATION="/opt/minecrab/server"
 MANTA_LOCATION="/$MANTA_USER/public/minecraft"
 SERVERS_LOCATION="$MANTA_LOCATION/servers"
 ME_LOCATION=$(dirname $(dirname ${BASH_SOURCE[0]}))
