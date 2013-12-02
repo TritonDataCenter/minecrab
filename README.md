@@ -1,4 +1,4 @@
-# Hammerhead (aka Miner)
+# Minecrab
 
 Minecraft server on demand.
 
@@ -14,12 +14,12 @@ Minecraft server on demand.
 
 ## What it does
 
-Hammerhead provisions a fully configured Minecraft server
+Minecrab provisions a fully configured Minecraft server
 on a Joyent SmartOS instance. You can play on the server, invite friends,
 build stuff, and so on. When you're finished playing and shut down the server,
-Hammerhead saves your world to [Manta](http://www.joyent.com/products/manta).
+Minecrab saves your world to [Manta](http://www.joyent.com/products/manta).
 
-Next time you want to play, just have Hammerhead provision your server again.
+Next time you want to play, just have Minecrab provision your server again.
 Your world will be there, just as you left it.
 
 From the time that you [launch](#minecraft-server-launch) a server
@@ -337,7 +337,7 @@ Logs in as root to the instance hosting `server-name`.
 ## What it costs
 
 When you [launch](#minecraft-server-launch) a server
-Hammerhead provisions a SmartOS instance
+Minecrab provisions a SmartOS instance
 using the [base64 13.2.1](http://wiki.joyent.com/wiki/display/jpc2/SmartMachine+Base#SmartMachineBase-13.2.1)
 image
 with 4 GB of RAM and 131 GB of disk space.
