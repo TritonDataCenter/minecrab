@@ -100,7 +100,7 @@ server_execute "echo -e \"export MANTA_USER=$MANTA_USER\nexport MANTA_KEY_ID=$MA
 echo "Installing git..."
 server_execute "pkgin -y in scmgit"
 echo "Cloning repo..."
-server_execute "cd /opt && git clone git@github.com:joyent/minecraft.git"
+server_execute "cd /opt && git clone git@github.com:joyent/minecrab.git"
 echo "Installing server..."
 server_execute "cd /opt && minecraft/scripts/install.sh $FLAVOR"
 

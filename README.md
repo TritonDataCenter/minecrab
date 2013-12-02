@@ -64,7 +64,7 @@ https://eu-ams-1.api.joyentcloud.com
 ### Clone this repo
 
 ```
-git clone git@github.com:joyent/minecraft.git
+git clone git@github.com:joyent/minecrab.git
 ```
 
 ### Create your first server
