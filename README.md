@@ -415,6 +415,7 @@ You'll need to start `ssh-agent` with something like this:
 $ eval $(ssh-agent -s)  # if you are using bash and related shells
 ... or ...
 $ eval `ssh-agent -c`   # if you are using csh and related shells
+```
 
 ### Killing minecrab servers that failed to start
 
