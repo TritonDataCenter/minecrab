@@ -7,7 +7,9 @@ Minecraft server on demand.
 - [Getting started](#getting-started)
 - [Basic commands](#basic-commands)
 - [Advanced commands](#advanced-commands)
+- [How it works](#how-it-works)
 - [What it costs](#what-it-costs)
+- [Troubleshooting](#troubleshooting)
 - [Notes](#notes)
 
 
@@ -70,7 +72,7 @@ git clone git@github.com:joyent/minecrab.git
 ### Create your first server
 
 ```
-cd minecraft
+cd minecrab
 bin/minecraft-server-launch <server name> <minecraft name>
 ```
 
@@ -334,6 +336,25 @@ minecraft-server-login <server-name>
 Logs in as root to the instance hosting `server-name`.
 
 
+## How it works
+
+Minecraft uses SSH agent forwarding to give the instances it creates
+access to your authorization.
+If you look at the code in the `bin` directory,
+you'll see that all calls to `ssh` use the `-A` switch.
+
+In order for all this to work,
+you must be using `ssh-agent`.
+On OS X, SSH is set up to use agents by default.
+
+If you're having trouble with `ssh-agent`,
+see [Problems with SSH agent](#problems-with-ssh-agent)
+in the Troubleshooting section.
+
+To learn more about agent forwarding,
+see Steve Freidl's
+[An Illustrated Guide to SSH Agent Forwarding](http://www.unixwiz.net/techtips/ssh-agent-forwarding.html). 	
+
 ## What it costs
 
 When you [launch](#minecraft-server-launch) a server
@@ -362,6 +383,81 @@ For example: <br />
 * A 15-minute job costs $0.144.
 * A two-hour job costs $1.152.
 
+
+## Troubleshooting
+
+### Problems with SSH agent
+
+To see if `ssh-agent` is running properly,
+use `ssh-add`:
+
+```
+$ ssh-add -L
+ssh-rsa AAAAB3N ... so much text ... PQ== /Users/yourname/.ssh/id_rsa
+```
+If you don't see your key,
+you may need to add it like this:
+
+```
+$ ssh-add ~/.ssh/id_rsa
+```
+
+If you see something like:
+
+```
+$ ssh-add -L
+Could not open a connection to your authentication agent.
+```
+
+You'll need to start `ssh-agent` with something like this:
+
+```
+$ eval $(ssh-agent -s)  # if you are using bash and related shells
+... or ...
+$ eval `ssh-agent -c`   # if you are using csh and related shells
+
+### Killing minecrab servers that failed to start
+
+There may be times when a minecrab server fails to come up.
+Here's an example:
+
+```
+$ bin/minecraft-server-launch -p user persephone
+Launching persephone.............................. Done!
+Server persephone running on 72.2.119.193 id: 058b1756-ba7c-40a9-ef9c-a9e26019a64a
+Setting up...
+minecraft-server-launch: fatal error: Failed to execute echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config on 72.2.119.193
+```
+
+There's a good chance that the instance was created.
+If you just leave it running, you'll get charged for it.
+
+Find the machine you want to kill.
+Use its tags to find the instances ID:
+
+```
+$ sdc-listmachines --tag "minecraft=*" | json -a id tags
+17e4ab29-85d5-46a6-b246-f81c80e1c4c7 {
+  "minecraft": "alcyone"
+}
+058b1756-ba7c-40a9-ef9c-a9e26019a64a {
+  "minecraft": "persephone"
+}
+```
+
+In this case we have two minecrab servers.
+"Persephone" is the one that failed to launch, 
+so lets kill it.
+Use `sdc-deletemachine` to delete the instance.
+Then use `sdc-getmachine` to monitor its death.:
+
+```
+$ sdc-deletemachine 058b1756-ba7c-40a9-ef9c-a9e26019a64a
+$ sdc-getmachine 058b1756-ba7c-40a9-ef9c-a9e26019a64a | json state
+Running
+$ sdc-getmachine 058b1756-ba7c-40a9-ef9c-a9e26019a64a | json state
+Object is Gone (410)
+```
 
 
 ## Credits
