@@ -13,11 +13,11 @@ PATH=$PATH:/opt/local/sdc/bin
 : ${MANTA_URL:?"MANTA_URL environment variable is missing"}
 : ${MANTA_KEY_ID:?"MANTA_KEY_ID environment variable is missing"}
 
-MINECRAFT_SCRIPTS="/opt/minecrab/scripts"
-MINECRAFT_BIN="/opt/minecrab/bin"
-MINECRAFT_LOCATION="/opt/minecrab/server"
-SERVER_NAME=$(mdata-get sdc:tags.minecraft)
-MANTA_LOCATION="/$MANTA_USER/public/minecraft"
+MINECRAB_SCRIPTS="/opt/minecrab/scripts"
+MINECRAB_BIN="/opt/minecrab/bin"
+MINECRAB_LOCATION="/opt/minecrab/server"
+SERVER_NAME=$(mdata-get sdc:tags.minecrab)
+MANTA_LOCATION="/$MANTA_USER/public/minecrab"
 SERVERS_LOCATION="$MANTA_LOCATION/servers"
 SERVER_LOCATION="$SERVERS_LOCATION/$SERVER_NAME"
 REMOTE_LOCATION="$SERVER_LOCATION/server"

@@ -14,15 +14,15 @@ echo "Installing dependencies..."
 pkgin -y in openjdk7 tmux >/dev/null
 
 echo "Preparing environment..."
-mkdir -p ${MINECRAFT_LOCATION}
+mkdir -p ${MINECRAB_LOCATION}
 id -g minecraft >/dev/null 2>&1 || groupadd minecraft 2>/dev/null
-id -u minecraft >/dev/null 2>&1 || useradd -s /bin/sh -d ${MINECRAFT_LOCATION} -g minecraft minecraft 2>/dev/null
+id -u minecraft >/dev/null 2>&1 || useradd -s /bin/sh -d ${MINECRAB_LOCATION} -g minecraft minecraft 2>/dev/null
 svccfg import $(dirname $0)/../svc/manifest/minecraft.xml
-grep -q ${MINECRAFT_BIN} /root/.profile || \
+grep -q ${MINECRAB_BIN} /root/.profile || \
   cat - >>/root/.profile <<'EOF'
 
 # Add path to minecraft tools
-PATH=$PATH:/opt/minecrab/scripts:/opt/local/sdc/bin
+PATH=\$PATH:${MINECRAB_SCRIPTS}:/opt/local/sdc/bin
 EOF
 . /root/.profile
 
@@ -73,7 +73,7 @@ case ${SERVER_FLAVOR} in
 esac
 
 echo "Downloading the Minecraft server..."
-cd ${MINECRAFT_LOCATION}
+cd ${MINECRAB_LOCATION}
 case ${SERVER_URL} in
   *.jar)
     curl -k -o ${SERVER_JAR} ${SERVER_URL} 2>/dev/null
@@ -88,10 +88,10 @@ case ${SERVER_URL} in
 esac
 cd ${OLDPWD}
 
-chown -R minecraft:minecraft ${MINECRAFT_LOCATION}
+chown -R minecraft:minecraft ${MINECRAB_LOCATION}
 
 echo "Writing out the server.config..."
-cat - >${MINECRAFT_LOCATION}/server.config <<EOF
+cat - >${MINECRAB_LOCATION}/server.config <<EOF
 SERVER_PREFERRED="${SERVER_FLAVOR}"
 SERVER_JAR="${SERVER_JAR}"
 JAVA_OPTS="${JAVA_OPTS}"
@@ -103,7 +103,7 @@ svcadm enable -s minecraft
 set +o pipefail
 echo -n "Polling for minecraft version..."
 for i in `seq 1 60`; do
-    MINECRAFT_VERSION=$(find ${MINECRAFT_LOCATION} -name "*.log" | \
+    MINECRAFT_VERSION=$(find ${MINECRAB_LOCATION} -name "*.log" | \
 	xargs grep 'minecraft server version' | head -1 | \
 	sed 's/.*version \(.*\)/\1/')
     if [ ! -z "$MINECRAFT_VERSION" ]; then
@@ -121,11 +121,11 @@ if [ -z "$MINECRAFT_VERSION" ]; then
 fi
 
 echo "Appending ${MINECRAFT_VERSION} to the server.config..."
-cat - >>${MINECRAFT_LOCATION}/server.config <<EOF
+cat - >>${MINECRAB_LOCATION}/server.config <<EOF
 MINECRAFT_VERSION="${MINECRAFT_VERSION}"
 EOF
 
 echo "Backing up server properties to manta..."
 mmkdir -p $REMOTE_LOCATION
-mput -f $MINECRAFT_LOCATION/server.properties $REMOTE_LOCATION/server.properties
-mput -f $MINECRAFT_LOCATION/server.config $REMOTE_LOCATION/server.config
+mput -f $MINECRAB_LOCATION/server.properties $REMOTE_LOCATION/server.properties
+mput -f $MINECRAB_LOCATION/server.config $REMOTE_LOCATION/server.config

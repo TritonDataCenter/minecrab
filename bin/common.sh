@@ -14,8 +14,8 @@ set -o pipefail
 : ${SDC_ACCOUNT:?"SDC_ACCOUNT environment variable is missing"}
 : ${SDC_KEY_ID:?"SDC_KEY_ID environment variable is missing"}
 
-MINECRAFT_LOCATION="/opt/minecrab/server"
-MANTA_LOCATION="/$MANTA_USER/public/minecraft"
+MINECRAB_LOCATION="/opt/minecrab/server"
+MANTA_LOCATION="/$MANTA_USER/public/minecrab"
 SERVERS_LOCATION="$MANTA_LOCATION/servers"
 ME_LOCATION=$(dirname $(dirname ${BASH_SOURCE[0]}))
 
@@ -51,7 +51,7 @@ function find_server {
     WHITELIST_OBJECT="$SERVERS_LOCATION/$SERVER_NAME/server/white-list.txt"
 
     #Now see if the server is running...
-    SERVER_RES=$(sdc-listmachines --tag minecraft=$SERVER_NAME | json -ga)
+    SERVER_RES=$(sdc-listmachines --tag minecrab=$SERVER_NAME | json -ga)
     if [ ! -z "$SERVER_RES" ]; then
 	STATUS="online"
 	IP=$(echo "$SERVER_RES" | json primaryIp)

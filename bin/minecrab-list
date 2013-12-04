@@ -12,8 +12,8 @@ usage() { echo "Usage: $0" 1>&2; exit 1; }
 PATTERN="%-15s %-10s %s"
 NAMES=()
 
-RUNNING=$(sdc-listmachines --tag minecraft=* | \
-    json -ga primaryIp state tags.minecraft)
+RUNNING=$(sdc-listmachines --tag minecrab=* | \
+    json -ga primaryIp state tags.minecrab)
 if [[ $? -ne 0 ]]; then
     fatal "Unable to find running servers."
 fi
@@ -31,7 +31,7 @@ LIST="$LIST$MANTA"
 
 if [ -z "$LIST" ]; then
     echo "No servers found running or backed up."
-    echo "Launch a new server using the minecraft-server-launch command!"
+    echo "Launch a new server using the minecrab-launch command!"
     exit 1
 fi
 

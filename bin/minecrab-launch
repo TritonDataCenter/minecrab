@@ -72,14 +72,14 @@ PACKAGENAME=g3-standard-4-smartos-image-creation
 
 # Check if $SERVER_NAME already exists
 
-if [[ $(sdc-listmachines --tag "minecraft=${SERVER_NAME}") != "[]" ]]; then
+if [[ $(sdc-listmachines --tag "minecrab=${SERVER_NAME}") != "[]" ]]; then
     fatal "${SERVER_NAME} already exists. Choose another name."
 fi
 
 echo -n "Launching ${SERVER_NAME}..."
 SERVER_ID=$(sdc-createmachine --dataset $IMAGEID \
                               --package $PACKAGENAME \
-                              --tag "minecraft=${SERVER_NAME}" | json id)
+                              --tag "minecrab=${SERVER_NAME}" | json id)
 if [ -z $SERVER_ID ] ; then
     fatal "Can't provision."
 fi

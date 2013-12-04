@@ -6,10 +6,10 @@
 
 source $(dirname $0)/common.sh
 
-JOB_NAME="minecraft-map-$SERVER_NAME"
+JOB_NAME="minecrab-map-$SERVER_NAME"
 
 #if [ -z "$1" ]; then
-#  REMOTE_FILE="/$MANTA_USER/public/minecraft/servers/$1/server/world.tar.gz"
+#  REMOTE_FILE="/$MANTA_USER/public/minecrab/servers/$1/server/world.tar.gz"
 #fi
 
 #debug="yes please"
