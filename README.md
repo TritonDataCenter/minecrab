@@ -24,8 +24,8 @@ Minecrab saves your world to [Manta](http://www.joyent.com/products/manta).
 Next time you want to play, just have Minecrab provision your server again.
 Your world will be there, just as you left it.
 
-From the time that you [launch](#minecraft-server-launch) a server
-to the time that you [shut it down](#minecraft-server-shutdown),
+From the time that you [launch](#minecrab-launch) a server
+to the time that you [shut it down](#minecrab-shutdown),
 your account will be charged $0.128 per hour.
 Learn more about [what it costs](#what-it-costs) to run a Minecraft server
 this way.
@@ -73,21 +73,21 @@ git clone git@github.com:joyent/minecrab.git
 
 ```
 cd minecrab
-bin/minecraft-server-launch <server name> <minecraft name>
+bin/minecrab-launch <server name> <minecrab name>
 ```
 
 Play minecraft.
 
-### Put your minecraft server away
+### Put your minecrab server away
 
 ```
-bin/minecraft-server-shutdown <server name>
+bin/minecrab-shutdown <server name>
 ```
 
-### Restore your minecraft server to play again
+### Restore your minecrab server to play again
 
 ```
-bin/minecraft-launch-server <server name>
+bin/minecrab-launch <server name>
 ```
 
 ## Basic commands
@@ -95,65 +95,65 @@ bin/minecraft-launch-server <server name>
 These are command-line commands you use to manage your server.
 
 
-### minecraft-server-launch
+### minecrab-launch
 
 ```
-minecraft-server-launch <server-name> [player-name]
+minecrab-launch <server-name> [player-name]
 ```
 
 Create or restore the server named `server-name`.
 If provided `player-name` is added to the white list.
 This is useful when launching a server for this first time.
 
-### minecraft-server-shutdown
+### minecrab-shutdown
 
 ```
-minecraft-server-shutdown <server-name>
+minecrab-shutdown <server-name>
 ```
 Saves the world to Manta and tears down the Minecraft server.
 
 
-### minecraft-server-add-friend
+### minecrab-add-friend
 
 ```
-minecraft-server-add-friend <server-name> <player-name>
+minecrab-add-friend <server-name> <player-name>
 ```
 
 Adds `player-name` to `server-name`'s white list.
 
-### minecraft-server-kick-friend
+### minecrab-kick-friend
 
 ```
-minecraft-server-kick-friend <server-name> <friend-name> [reason]
+minecrab-kick-friend <server-name> <friend-name> [reason]
 ```
 
 Removes `friend-name` from `server-name`'s white  list and
 kicks them off the server. You can provide a `reason`.
 
-### minecraft-server-list-friends
+### minecrab-list-friends
 
 ```
-minecraft-server-list-friends <server-name>
+minecrab-list-friends <server-name>
 ```
 
 Lists the players in `server-name`'s white list.
 
 
-### minecraft-server-list
+### minecrab-list
 
 ```
-minecraft-server-list
+minecrab-list
 ```
 
-Lists all the Minecraft servers running in your Joyent account.
+Lists all the minecrab servers running in your Joyent account.
 Running servers are listed first.
 You can restart servers that are offline with the
-[`minecraft-server-launch`](#minecraft-server-launch) command.
-Use [`minecraft-server-annihilate`](#minecraft-server-annihilate) to
+[`minecrab-launch`](#minecrab-launch) command.
+Use [`minecrab-annihilate`](#minecrab-annihilate) to
 destroy a server forever.
 
 ```
-$ bin/minecraft-server-list
+$ bin/minecrab-list
 IP              STATE      NAME
 165.225.151.29  running    nate
 165.225.149.97  running    joyent
@@ -165,19 +165,19 @@ n/a             offline    darkplace
 n/a             offline    filip
 ```
 
-### minecraft-server-backup
+### minecrab-backup
 
 ```
-minecraft-server-backup <server-name>
+minecrab-backup <server-name>
 ```
 
 Backs up `server-name`'s world to Manta.
 
 
-### minecraft-server-copy
+### minecrab-copy
 
 ```
-minecraft-server-copy <server-name> <copy-name>
+minecrab-copy <server-name> <copy-name>
 ```
 
 Copies `server-name` to `copy-name`.
@@ -186,7 +186,7 @@ you'll get a chance to cancel or overwrite the existing server.
 
 
 ```
-$ minecraft-server-copy cigar pipe
+$ minecrab-copy cigar pipe
 Checking if server is up...
 Taking latest backup of cigar...
 tar: ./world/region/r.-1.0.mca: file changed as we read it
@@ -194,11 +194,11 @@ Copying cigar to pipe...
 Done!
 ```
 
-Now you can use [minecraft-server-launch](#minecraft-server-launch) to
+Now you can use [minecrab-launch](#minecrab-launch) to
 launch the new server.
 
 ```
-$ minecraft-server-launch pipe
+$ minecrab-launch pipe
 Launching pipe ................... done
 Server pipe running on 165.225.148.207 id: be9f2f8b-8716-4677-d98b-cf0d93762c18
 Setting up...
@@ -209,32 +209,32 @@ Installing server...
 Connect to server at 165.225.148.207!
 ```
 
-### minecraft-server-annihilate
+### minecrab-annihilate
 
 ```
-minecraft-server-annihilate <server-name>
+minecrab-annihilate <server-name>
 ```
 
 Utterly and completely annihilates `server-name`.
 If `server-name` is running,
-you must [shut it down](#minecraft-server-shutdown) first.
+you must [shut it down](#minecrab-shutdown) first.
 
 This command removes the saved world from Manta.
 Once the world is annihilated, you can never get it back.
 
 
-### minecraft-server-get
+### minecrab-get
 
 ```
-minecraft-server-get <server-name>
+minecrab-get <server-name>
 ```
 
 Gets information about `server-name`.
-If a [map](#minecraft-server-map) of the world is available,
+If a [map](#minecrab-map) of the world is available,
 its URL is listed here.
 
 ```
-$ minecraft-server-get cigar
+$ minecrab-get cigar
 id:      eee95b34-dc8a-4b6e-cf5e-b1cad46cecdc
 name:    ac9294e
 image:   17c98640-1fdb-11e3-bf51-3708ce78e75a
@@ -242,15 +242,15 @@ memory:  4096 mb
 disk:    134144 gb
 dataset: sdc:sdc:base64:13.2.1
 ip addr: 8.19.32.162
-map:     http://us-east.manta.joyent.com//Joyent_Dev/public/minecraft/servers/cigar/map/view/index.html
-manta:   /Joyent_Dev/public/minecraft/servers/cigar/server/world.tar.gz
+map:     http://us-east.manta.joyent.com/Joyent_Dev/public/minecrab/servers/cigar/map/view/index.html
+manta:   /Joyent_Dev/public/minecrab/servers/cigar/server/world.tar.gz
 ```
 
 
-### minecraft-server-map
+### minecrab-map
 
 ```
-minecraft-server-map <server-name>
+minecrab-map <server-name>
 ```
 
 Creates a map of the world in `server-name` and
@@ -261,7 +261,7 @@ A small world may take 15 minutes to map.
 Larger worlds take longer to render.
 
 ```
-$ minecraft-server-map  cigar
+$ minecrab-map  cigar
 Finding server...
 Taking latest backup of cigar...
 tar: ./world/region/r.-1.0.mca: file changed as we read it
@@ -283,7 +283,7 @@ done
 ```
 
 When the rendering job ends, the state will be done.
-Use [minecraft-server-get](#minecraft-server-get) to get the URL of the map.
+Use [minecrab-get](#minecrab-get) to get the URL of the map.
 
 
 
@@ -295,19 +295,19 @@ and with the instance that your server is on.
 
 Be careful.
 
-### minecraft-server-command
+### minecrab-command
 
 ```
-minecraft-server-command <server-name> <minecraft-command>
+minecrab-command <server-name> <minecraft-command>
 ```
 
 Runs a single Minecraft command as if you were at the console.
 
 
-### minecraft-server-console
+### minecrab-console
 
 ```
-minecraft-server-console <server-name>
+minecrab-console <server-name>
 ```
 
 Logs in to the instance hosting `server-name` and
@@ -319,18 +319,18 @@ or you will shut down your server.
 
 Use `Ctrl-B d` instead.
 
-###  minecraft-server-exec
+###  minecrab-exec
 
 ```
-minecraft-server-exec <server-name> <shell-command>
+minecrab-exec <server-name> <shell-command>
 ```
 
 Run a single shell command (as root) on the instance hosting `server-name`.
 
-### minecraft-server-login
+### minecrab-login
 
 ```
-minecraft-server-login <server-name>
+minecrab-login <server-name>
 ```
 
 Logs in as root to the instance hosting `server-name`.
@@ -353,11 +353,11 @@ in the Troubleshooting section.
 
 To learn more about agent forwarding,
 see Steve Freidl's
-[An Illustrated Guide to SSH Agent Forwarding](http://www.unixwiz.net/techtips/ssh-agent-forwarding.html). 	
+[An Illustrated Guide to SSH Agent Forwarding](http://www.unixwiz.net/techtips/ssh-agent-forwarding.html).
 
 ## What it costs
 
-When you [launch](#minecraft-server-launch) a server
+When you [launch](#minecrab-launch) a server
 Minecrab provisions a SmartOS instance
 using the [base64 13.2.1](http://wiki.joyent.com/wiki/display/jpc2/SmartMachine+Base#SmartMachineBase-13.2.1)
 image
@@ -366,7 +366,7 @@ with 4 GB of RAM and 131 GB of disk space.
 This instance size is [billed](http://www.joyent.com/products/compute-service/pricing)
 at $0.128 per hour.
 
-When you run [minecraft-server-shutdown](#minecraft-server-shutdown),
+When you run [minecrab-shutdown](#minecrab-shutdown),
 the Minecraft server stops,
 the instance that is hosting the Minecraft server is deleted,
 and billing for the instance ends.
@@ -423,11 +423,11 @@ There may be times when a minecrab server fails to come up.
 Here's an example:
 
 ```
-$ bin/minecraft-server-launch -p user persephone
+$ bin/minecrab-launch -p user persephone
 Launching persephone.............................. Done!
 Server persephone running on 72.2.119.193 id: 058b1756-ba7c-40a9-ef9c-a9e26019a64a
 Setting up...
-minecraft-server-launch: fatal error: Failed to execute echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config on 72.2.119.193
+minecrab-launch: fatal error: Failed to execute echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config on 72.2.119.193
 ```
 
 There's a good chance that the instance was created.
@@ -437,17 +437,17 @@ Find the machine you want to kill.
 Use its tags to find the instances ID:
 
 ```
-$ sdc-listmachines --tag "minecraft=*" | json -a id tags
+$ sdc-listmachines --tag "minecrab=*" | json -a id tags
 17e4ab29-85d5-46a6-b246-f81c80e1c4c7 {
-  "minecraft": "alcyone"
+  "minecrab": "alcyone"
 }
 058b1756-ba7c-40a9-ef9c-a9e26019a64a {
-  "minecraft": "persephone"
+  "minecrab": "persephone"
 }
 ```
 
 In this case we have two minecrab servers.
-"Persephone" is the one that failed to launch, 
+"Persephone" is the one that failed to launch,
 so lets kill it.
 Use `sdc-deletemachine` to delete the instance.
 Then use `sdc-getmachine` to monitor its death.:
@@ -466,7 +466,8 @@ Object is Gone (410)
 * [Minecraft Overviewer](https://github.com/overviewer/Minecraft-Overviewer) - The renderer we use.
 * [aboron/minecraft-smartos-smf](https://github.com/aboron/minecraft-smartos-smf) - Used as the basis for running
   the minecraft server.
-
+* To the unknown creator of the creeper background:  If you self-identify, we're
+  happy to give you credit here, or remove it entirely.
 
 
 ## Notes
