@@ -37,7 +37,7 @@ this way.
 
 1. Get a Minecraft account: [minecraft.net](http://minecraft.net)
 1. Get a Joyent Cloud account: [my.joyentcloud.com](http://my.joyentcloud.com)
-1. Install [Node](http://nodejs.org/).
+1. Install [Node](http://nodejs.org/)
 1. Install [Manta](http://apidocs.joyent.com/manta/#getting-started)
 1. Install [CloudAPI](http://apidocs.joyent.com/cloudapi/#getting-started)
 
