@@ -33,22 +33,18 @@ function upload_website {
 function find_server {
     local SERVER_NAME=$1
 
-    #First figure out if it exists
-    IN_MANTA=$(mls "$SERVERS_LOCATION/$SERVER_NAME" 2>/dev/null)
-    if [ -z "$IN_MANTA" ]; then
-	STATUS="notfound"
-	return
-    fi
-
     #First what's in manta...
-    MAP_IN_MANTA="$SERVERS_LOCATION/$SERVER_NAME/map/view/index.html"
-    MAP_URL="http://us-east.manta.joyent.com$SERVERS_LOCATION/$SERVER_NAME/map/view/index.html"
-    MAP_FOUND=$(mls $MAP_IN_MANTA 2>/dev/null)
-    if [ -z "$MAP_FOUND" ]; then
-        MAP_URL="(not generated)"
+    IN_MANTA=$(mls "$SERVERS_LOCATION/$SERVER_NAME" 2>/dev/null)
+    if [ ! -z "$IN_MANTA" ]; then
+	MAP_IN_MANTA="$SERVERS_LOCATION/$SERVER_NAME/map/view/index.html"
+	MAP_URL="http://us-east.manta.joyent.com$SERVERS_LOCATION/$SERVER_NAME/map/view/index.html"
+	MAP_FOUND=$(mls $MAP_IN_MANTA 2>/dev/null)
+	if [ -z "$MAP_FOUND" ]; then
+            MAP_URL="(not generated)"
+	fi
+	MANTA_OBJECT="$SERVERS_LOCATION/$SERVER_NAME/server/world.tar.gz"
+	WHITELIST_OBJECT="$SERVERS_LOCATION/$SERVER_NAME/server/white-list.txt"
     fi
-    MANTA_OBJECT="$SERVERS_LOCATION/$SERVER_NAME/server/world.tar.gz"
-    WHITELIST_OBJECT="$SERVERS_LOCATION/$SERVER_NAME/server/white-list.txt"
 
     #Now see if the server is running...
     SERVER_RES=$(sdc-listmachines --tag minecrab=$SERVER_NAME | json -ga)
@@ -61,8 +57,10 @@ function find_server {
 	MEMORY=$(echo "$SERVER_RES" | json memory)
 	DISK=$(echo "$SERVER_RES" | json disk)
 	DATASET=$(echo "$SERVER_RES" | json dataset)
-    else
+    elif [ ! -z "$IN_MANTA" ]; then
 	STATUS="offline"
+    else
+	STATUS="notfound"
     fi
 }
 

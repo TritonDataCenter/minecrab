@@ -14,14 +14,8 @@ NAMES=()
 
 RUNNING=$(sdc-listmachines --tag minecrab=* | \
     json -ga primaryIp state tags.minecrab)
-if [[ $? -ne 0 ]]; then
-    fatal "Unable to find running servers."
-fi
-
-MANTA=$(mls $SERVERS_LOCATION | tr -d '/' | xargs -n 1 echo "n/a offline")
-if [[ $? -ne 0 ]]; then
-        fatal "Unable to find offline servers."
-fi
+MANTA=$(mls $SERVERS_LOCATION 2>/dev/null | \
+    tr -d '/' | xargs -n 1 echo "n/a offline")
 
 LIST="$RUNNING"
 if [ ! -z "$RUNNING" ] && [ ! -z "$MANTA" ]; then

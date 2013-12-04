@@ -18,9 +18,14 @@ find_server $SERVER_NAME
 
 if [ "$STATUS" == "notfound" ]; then
     fatal "$SERVER_NAME not found..."
-elif [ "$STATUS" == "online" ]; then
-    cat - <<EOF
+fi
+
+cat - <<EOF
 status:  $STATUS
+EOF
+
+if [ "$STATUS" == "online" ]; then
+    cat - <<EOF
 id:      $ID
 name:    $NAME
 image:   $IMAGE
@@ -28,12 +33,11 @@ memory:  $MEMORY mb
 disk:    $DISK gb
 dataset: $DATASET
 ip addr: $IP
-map:     $MAP_URL
-manta:   $MANTA_OBJECT
 EOF
-else
+fi
+
+if [ ! -z "$IN_MANTA" ]; then
     cat - <<EOF
-status:  $STATUS
 map:     $MAP_URL
 manta:   $MANTA_OBJECT
 EOF
