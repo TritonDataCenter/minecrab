@@ -54,7 +54,7 @@ fi
 
 #TODO: Change back once the repo is public...
 #INIT_SCRIPT="https://raw.github.com/joyent/minecrab/master/scripts/prepare_render.sh"
-INIT_SCRIPT="https://us-east.manta.joyent.com/Joyent_Dev/public/minecraft_scripts/prepare_render.sh"
+INIT_SCRIPT="https://us-east.manta.joyent.com/Joyent_Dev/public/minecrab_scripts/prepare_render.sh"
 
 echo "Kicking off job..."
 MANTA_REQ_UUID=$(\
