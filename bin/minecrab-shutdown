@@ -7,17 +7,22 @@
 source $(dirname $0)/common.sh
 
 usage() {
-    echo "Usage: $0 [-M] <server-name>" 1>&2;
+    echo "Usage: $0 [-M] [-W] <server-name>" 1>&2;
     echo "   -M  do not generate map" 1>&2;
+    echo "   -W  do not save world" 1>&2;
     exit 1;
 }
 
 RENDER_MAP=1
+BACKUP_WORLD=1
 
-while getopts ":M" o; do
+while getopts ":MW" o; do
     case "${o}" in
         M)
             RENDER_MAP=0
+            ;;
+        W)
+            BACKUP_WORLD=0
             ;;
         *)
             usage
@@ -39,18 +44,27 @@ if [ -z "$SERVER_NAME" ]; then
 fi
 echo "Found $SERVER_NAME ($IP)!"
 
+if [[ $BACKUP_WORLD -ne 1 ]] ; then
+	echo -e  "\nThe world on ${SERVER_NAME} will not be saved."
+	echo -e  "   All changes you made since launch will be lost."
+fi
+if [[ RENDER_MAP -ne 1 ]] ; then
+	echo -e "\nA map will NOT be rendered"
+fi
 read -p "Are you sure you want to shut down $SERVER_NAME? " -n 1 -r
 echo
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then
     exit 1
 fi
 
-echo -n "Backing up your data... "
-server_execute "/opt/minecrab/scripts/backup.sh"
-if [[ $? -ne 0 ]]; then
-    fatal "Failed to backup your world.  Server is still running."
+if [[ $BACKUP_WORLD -ne 0 ]] ; then
+	echo -n "Saving the world... "
+	server_execute "/opt/minecrab/scripts/backup.sh"
+	if [[ $? -ne 0 ]]; then
+		fatal "Failed to save your world.  Server is still running."
+	fi
+	echo "Success!"
 fi
-echo "Success!"
 
 if [[ $RENDER_MAP -ne 0 ]] ; then
 	echo -n "Kicking off map generation... "
