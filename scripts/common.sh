@@ -54,6 +54,6 @@ function console {
     local CONSOLE_CMD=$1
     sudo -u minecraft tmux send -t minecraft c-m "$CONSOLE_CMD" c-m
     if [[ $? -ne 0 ]]; then
-	fatal "Failed to execute $CONSOLE_CMD"
+        fatal "Failed to execute $CONSOLE_CMD"
     fi
 }

@@ -36,8 +36,8 @@ echo -e "$LIST" | while read l; do
     STATE=$(echo $l | cut -d ' ' -f 2)
     NAME=$(echo $l | cut -d ' ' -f 3)
     if [ $(contains "${NAMES[@]}" "$NAME") == "n" ]; then
-	printf "$PATTERN" "$IP" "$STATE" "$NAME"
-	echo
+        printf "$PATTERN" "$IP" "$STATE" "$NAME"
+        echo
     fi
     NAMES+=("$NAME")
 done

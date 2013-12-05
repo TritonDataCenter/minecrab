@@ -25,7 +25,7 @@ elif [ "$STATUS" == "online" ]; then
 else
     LIST_FOUND=$(mls "$WHITELIST_OBJECT")
     if [ -z "$WHITELIST_OBJECT" ]; then
-	fatal "$WHITELIST_OBJECT not found."
+        fatal "$WHITELIST_OBJECT not found."
     fi
     mget -q "$WHITELIST_OBJECT"
 fi

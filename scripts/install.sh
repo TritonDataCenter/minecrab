@@ -104,10 +104,10 @@ set +o pipefail
 echo -n "Polling for minecraft version..."
 for i in `seq 1 60`; do
     MINECRAFT_VERSION=$(find ${MINECRAB_LOCATION} -name "*.log" | \
-	xargs grep 'minecraft server version' | head -1 | \
-	sed 's/.*version \(.*\)/\1/')
+        xargs grep 'minecraft server version' | head -1 | \
+        sed 's/.*version \(.*\)/\1/')
     if [ ! -z "$MINECRAFT_VERSION" ]; then
-	break;
+        break;
     fi
     sleep 1;
     echo -n "."
