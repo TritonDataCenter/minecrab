@@ -95,7 +95,14 @@ IP=$(sdc-getmachine $SERVER_ID | json primaryIp)
 
 echo "Server ${SERVER_NAME} running on ${IP} id: $SERVER_ID"
 echo "Setting up..."
-server_execute 'echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config'
+# If we can't SSH in right away, destroy the instance
+server_execute_nofatal 'echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config'
+if [[ $? -ne 0 ]]; then
+	echo -e "\nFailed to reach ${IP}.\nDestroying instance so you don't get billed."
+	sdc-deletemachine ${SERVER_ID}
+	fatal "Destroyed ${SERVER_ID}.\nTry again later or in a different datacenter."
+fi
+# If we've SSH in once, assume we can do it again.
 server_execute "echo -e \"export MANTA_USER=$MANTA_USER\nexport MANTA_KEY_ID=$MANTA_KEY_ID\nexport MANTA_URL=https://us-east.manta.joyent.com\" >> ~/.bashrc"
 echo "Installing git..."
 server_execute "pkgin -y in scmgit"
