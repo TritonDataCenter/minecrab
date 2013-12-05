@@ -480,3 +480,8 @@ is benign.
 * The error `socket hang up` means that
 we were unable to provision an instance for your server.
 Try the command again.
+
+
+## License
+
+MIT, see LICENSE.

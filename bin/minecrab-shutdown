@@ -45,11 +45,11 @@ fi
 echo "Found $SERVER_NAME ($IP)!"
 
 if [[ $BACKUP_WORLD -ne 1 ]] ; then
-	echo -e  "\nThe world on ${SERVER_NAME} will not be saved."
-	echo -e  "   All changes you made since launch will be lost."
+    echo -e  "\nThe world on ${SERVER_NAME} will not be saved."
+    echo -e  "   All changes you made since launch will be lost."
 fi
 if [[ RENDER_MAP -ne 1 ]] ; then
-	echo -e "\nA map will NOT be rendered"
+    echo -e "\nA map will NOT be rendered"
 fi
 read -p "Are you sure you want to shut down $SERVER_NAME? " -n 1 -r
 echo
@@ -58,21 +58,21 @@ if [[ ! $REPLY =~ ^[Yy]$ ]]; then
 fi
 
 if [[ $BACKUP_WORLD -ne 0 ]] ; then
-	echo -n "Saving the world... "
-	server_execute "/opt/minecrab/scripts/backup.sh"
-	if [[ $? -ne 0 ]]; then
-		fatal "Failed to save your world.  Server is still running."
-	fi
-	echo "Success!"
+    echo -n "Saving the world... "
+    server_execute "/opt/minecrab/scripts/backup.sh"
+    if [[ $? -ne 0 ]]; then
+        fatal "Failed to save your world.  Server is still running."
+    fi
+    echo "Success!"
 fi
 
 if [[ $RENDER_MAP -ne 0 ]] ; then
-	echo -n "Kicking off map generation... "
-	server_execute "/opt/minecrab/scripts/map.sh"
-	if [[ $? -ne 0 ]]; then
-		fatal "Failed to kick off map generation.  Server is still running."
-	fi
-	echo "$RESULT"
+    echo -n "Kicking off map generation... "
+    server_execute "/opt/minecrab/scripts/map.sh"
+    if [[ $? -ne 0 ]]; then
+        fatal "Failed to kick off map generation.  Server is still running."
+    fi
+    echo "$RESULT"
 fi
 
 echo -n "Disabling the minecraft server... "
