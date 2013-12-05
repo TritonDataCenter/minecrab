@@ -6,13 +6,31 @@
 
 source $(dirname $0)/common.sh
 
-usage() { echo "Usage: $0 <server-name>" 1>&2; exit 1; }
+usage() {
+    echo "Usage: $0 [-M] <server-name>" 1>&2;
+    echo "   -M  do not generate map" 1>&2;
+    exit 1;
+}
 
-if [ "$#" -ne 1 ]; then
-    usage
-fi
+RENDER_MAP=1
+
+while getopts ":M" o; do
+    case "${o}" in
+        M)
+            RENDER_MAP=0
+            ;;
+        *)
+            usage
+            ;;
+    esac
+done
+shift $((OPTIND-1))
 
 SERVER_NAME=$1
+
+if [ -z $SERVER_NAME ]; then
+    usage
+fi
 
 echo -n "Finding server... "
 find_server $SERVER_NAME
@@ -34,12 +52,14 @@ if [[ $? -ne 0 ]]; then
 fi
 echo "Success!"
 
-echo -n "Kicking off map generation... "
-server_execute "/opt/minecrab/scripts/map.sh"
-if [[ $? -ne 0 ]]; then
-    fatal "Failed to kick off map generation.  Server is still running."
+if [[ $RENDER_MAP -ne 0 ]] ; then
+	echo -n "Kicking off map generation... "
+	server_execute "/opt/minecrab/scripts/map.sh"
+	if [[ $? -ne 0 ]]; then
+		fatal "Failed to kick off map generation.  Server is still running."
+	fi
+	echo "$RESULT"
 fi
-echo "$RESULT"
 
 echo -n "Disabling the minecraft server... "
 server_execute "svcadm disable -s minecraft"
