@@ -20,7 +20,7 @@ SERVERS_LOCATION="$MANTA_LOCATION/servers"
 ME_LOCATION=$(dirname $(dirname ${BASH_SOURCE[0]}))
 
 function fatal {
-    echo "$(basename $0): fatal error: $*" >&2
+    echo -e "$(basename $0): fatal error: $*" >&2
     exit 1
 }
 
@@ -82,6 +82,19 @@ function server_execute {
         fatal "Failed to execute $COMMAND on $IP"
     fi
 }
+
+function server_execute_nofatal {
+    local COMMAND=$1
+    if [ -z "$IP" ]; then
+	fatal "No ip address.  Did you find_server?"
+    fi
+    #Since these will start and stop a lot, there's the possibility that we'll
+    # get the same ip address with multiple launches and shutdowns.
+    RESULT=$(ssh -o LogLevel=quiet -o StrictHostKeyChecking=no -o \
+       UserKnownHostsFile=/dev/null -A root@$IP $COMMAND)
+	return $?
+}
+
 
 #http://stackoverflow.com/questions/3685970/bash-check-if-an-array-contains-a-value
 function contains {
