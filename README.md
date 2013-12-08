@@ -24,11 +24,13 @@ Minecrab saves your world to [Manta](http://www.joyent.com/products/manta).
 Next time you want to play, just have Minecrab provision your server again.
 Your world will be there, just as you left it.
 
-From the time that you [launch](#minecrab-launch) a server
-to the time that you [shut it down](#minecrab-shutdown),
-your account will be charged $0.128 per hour.
-Learn more about [what it costs](#what-it-costs) to run a Minecraft server
-this way.
+When you [launch](#minecrab-launch) a server
+Joyent will start billing your account.
+When you [shut it down](#minecrab-shutdown),
+billing stops.
+
+See [What it costs](#what-it-costs) later in this README
+to find out more about charges.
 
 
 
@@ -357,6 +359,14 @@ see Steve Freidl's
 
 ## What it costs
 
+Using Minecrab incurs three kinds of charges:
+
+* Compute time charges while a Minecraft server is running on an instance
+* Storage charges for your Minecraft world when it's offline
+* Job charges for rendering a map of your world
+
+### Compute charges
+
 When you [launch](#minecrab-launch) a server
 Minecrab provisions a SmartOS instance
 using the [base64 13.2.1](http://wiki.joyent.com/wiki/display/jpc2/SmartMachine+Base#SmartMachineBase-13.2.1)
@@ -371,8 +381,16 @@ the Minecraft server stops,
 the instance that is hosting the Minecraft server is deleted,
 and billing for the instance ends.
 
-Storage for the servers on Manta is [billed at $0.086 per GB per month](http://www.joyent.com/products/manta/pricing).
-Most servers are less than 100 MB.
+As long as you remember to shut down your instance,
+you won't pay for an idle server.
+
+### Storage charges
+
+Storage for your Minecraft world on Manta
+is [billed at $0.086 per GB per month](http://www.joyent.com/products/manta/pricing).
+Most Minecraft worlds are less than 100 MB.
+
+### Job charges
 
 Map rendering takes place on Manta using a 4 GB job.
 This job is [billed](http://www.joyent.com/products/manta/pricing) at
@@ -383,6 +401,9 @@ For example: <br />
 * A 15-minute job costs $0.144.
 * A two-hour job costs $1.152.
 
+If you don't want to pay for map rendering,
+use the `-M` option
+in [minecrab-shutdown](#minecrab-shutdown).
 
 ## Troubleshooting
 
