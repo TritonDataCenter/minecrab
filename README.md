@@ -100,19 +100,31 @@ These are command-line commands you use to manage your server.
 ### minecrab-launch
 
 ```
-minecrab-launch <server-name> [player-name]
+minecrab-launch [-p first-player] [-f flavor] <server-name>
 ```
 
 Create or restore the server named `server-name`.
-If provided `player-name` is added to the white list.
+
+If provided `first-player` is added to the white list.
 This is useful when launching a server for this first time.
+
+`flavor` lets you specify a Minecraft distribution.
+Possible values are minecraft, craftbukkit, ftb_ultimate, and voltz.
 
 ### minecrab-shutdown
 
 ```
-minecrab-shutdown <server-name>
+minecrab-shutdown [-M] [-W] <server-name>
 ```
-Saves the world to Manta and tears down the Minecraft server.
+Saves the world to Manta,
+tears down the Minecraft server,
+and starts generating a map.
+
+`-W` shuts down without saving the world to Manta.
+This is useful if you're shutting down and [annihilating](#minecrab-annihilate).
+
+`-M` shuts down without generating a map.
+This is useful if you you do not want to incur [job charges](#what-it-costs ).
 
 
 ### minecrab-add-friend
