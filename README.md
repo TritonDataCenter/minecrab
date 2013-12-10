@@ -38,7 +38,8 @@ to find out more about charges.
 ## Getting started
 
 1. Get a Minecraft account: [minecraft.net](http://minecraft.net)
-1. Get a Joyent Cloud account: [my.joyentcloud.com](http://my.joyentcloud.com)
+1. Get a [Joyent Cloud](http://my.joyentcloud.com) account.<br />
+You can sign up for a [free trial](https://my.joyentcloud.com/landing/signup/70180000000ShEu).
 1. Install [Node](http://nodejs.org/)
 1. Install [Manta](http://apidocs.joyent.com/manta/#getting-started)
 1. Install [CloudAPI](http://apidocs.joyent.com/cloudapi/#getting-started)
@@ -428,6 +429,7 @@ use `ssh-add`:
 $ ssh-add -L
 ssh-rsa AAAAB3N ... so much text ... PQ== /Users/yourname/.ssh/id_rsa
 ```
+
 If you don't see your key,
 you may need to add it like this:
 
