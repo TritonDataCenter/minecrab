@@ -56,18 +56,18 @@ IMAGEID=17c98640-1fdb-11e3-bf51-3708ce78e75a
 #        "urn": "sdc:sdc:base64:13.2.1"
 #    }
 
-PACKAGENAME=g3-standard-4-smartos-image-creation
+PACKAGENAME=g3-standard-4-smartos
 #    {
-#        "name": "g3-standard-4-smartos-image-creation",
+#        "name": "g3-standard-4-smartos",
 #        "memory": 4096,
 #        "disk": 134144,
 #        "swap": 8192,
 #        "vcpus": 0,
 #        "default": "false",
-#        "id": "9c1948c0-0c37-11e3-be34-5780f9789210",
+#        "id": "b295d278-83f6-41bc-875d-a1b2a75c3af9",
 #        "version": "1.0.0",
-#        "description": "4GB RAM, 1 CPUs and bursting, and 131GB Disk. Required for Image Creation.",
-#        "group": "Image Creation"
+#        "description": "Standard 4 GB RAM 1 vCPU and bursting 131 GB Disk",
+#        "group": "Standard"
 #    }
 
 # Check if $SERVER_NAME already exists
