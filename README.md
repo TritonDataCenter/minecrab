@@ -1,4 +1,4 @@
-![minecrab-banner](https://raw.github.com/joyent/minecrab/master/images/minecrab-banner.png)
+![minecrab-banner](images/minecrab-banner.png)
 
 - [What it does](#what-it-does)
 - [Getting started](#getting-started)
