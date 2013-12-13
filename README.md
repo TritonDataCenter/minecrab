@@ -39,10 +39,12 @@ to find out more about charges.
 You can sign up for a [free trial](https://my.joyentcloud.com/landing/signup/70180000000ShEu).
 
 Then, if you have Mac OS X:
+
 1. Install node, npm, node-manta and smartdc tools using the (Mac OS X Installer)[https://us-east.manta.joyent.com/manta/public/sdks/joyent-node-latest.pkg].
 1. Install the jsontool `sudo npm install jsontool -g`
 
 Otherwise (and this has yet to be confirmed working on other platforms):
+
 1. Install [Node](http://nodejs.org/)
 1. Install [Manta](http://apidocs.joyent.com/manta/#getting-started)
 1. Install [CloudAPI](http://apidocs.joyent.com/cloudapi/#getting-started)
