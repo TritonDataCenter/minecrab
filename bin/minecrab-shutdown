@@ -39,8 +39,8 @@ fi
 
 echo -n "Finding server... "
 find_server $SERVER_NAME
-if [ -z "$SERVER_NAME" ]; then
-    fatal "Unable to find $SERVER_NAME server."
+if [ "$STATUS" != "online" ]; then
+    fatal "$SERVER_NAME doesn't exist or isn't running."
 fi
 echo "Found $SERVER_NAME ($IP)!"
 

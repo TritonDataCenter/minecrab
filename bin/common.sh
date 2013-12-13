@@ -14,9 +14,15 @@ set -o pipefail
 : ${SDC_ACCOUNT:?"SDC_ACCOUNT environment variable is missing"}
 : ${SDC_KEY_ID:?"SDC_KEY_ID environment variable is missing"}
 
+#Remove any trailing slash from manta url
+case "${MANTA_URL}" in
+    */) MANTA_URL=${MANTA_URL%/};;
+esac
+
 MINECRAB_LOCATION="/opt/minecrab/server"
 MANTA_LOCATION="/$MANTA_USER/public/minecrab"
 SERVERS_LOCATION="$MANTA_LOCATION/servers"
+STATUS_LOCATION="$MANTA_URL$MANTA_LOCATION/index.html"
 ME_LOCATION=$(dirname $(dirname ${BASH_SOURCE[0]}))
 
 function fatal {

@@ -103,7 +103,7 @@ if [[ $? -ne 0 ]]; then
         fatal "Destroyed ${SERVER_ID}.\nTry again later or in a different datacenter."
 fi
 # If we've SSH in once, assume we can do it again.
-server_execute "echo -e \"export MANTA_USER=$MANTA_USER\nexport MANTA_KEY_ID=$MANTA_KEY_ID\nexport MANTA_URL=https://us-east.manta.joyent.com\" >> ~/.bashrc"
+server_execute "echo -e \"export MANTA_USER=$MANTA_USER\nexport MANTA_KEY_ID=$MANTA_KEY_ID\nexport MANTA_URL=$MANTA_URL\" >> ~/.bashrc"
 echo "Installing git..."
 server_execute "pkgin -y in scmgit"
 echo "Cloning repo..."
@@ -126,3 +126,5 @@ if [ ! -z "$ME" ]; then
 fi
 
 echo "Connect to server at ${IP}!"
+echo
+echo "Status Website: ${STATUS_LOCATION}"

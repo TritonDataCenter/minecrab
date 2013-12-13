@@ -10,3 +10,5 @@ echo "Uploading website to $MANTA_LOCATION"
 upload_website
 
 echo "Done!"
+echo
+echo "URL: ${STATUS_LOCATION}"
