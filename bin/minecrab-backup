@@ -18,7 +18,7 @@ echo "Finding server..."
 find_server $SERVER_NAME
 
 if [ -z "$IP" ]; then
-    fatal "Unable to find running $SERVER_NAME server (may be shut down?)."
+    fatal "Unable to find running $SERVER_NAME server (is it shut down?)."
 fi
 
 echo "Backing up server.  Please be patient..."
