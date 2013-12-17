@@ -13,77 +13,95 @@
     <![endif]-->
   </head>
   <body>
-    <a id="top">
-    <div class="top-bar">
-      <div class="top-bar-title">Minecrab</div>
-      <div class="top-bar-link"><a href="#top">Home</a></div>
-      <div class="top-bar-link"><a href="#top">How It Works</a></div>
-      <div class="top-bar-link"><a href="#top">How Much?</a></div>
-      <div class="top-bar-link"><a href="#top">Get Started</a></div>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Minecrab</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">How It Works</a></li>
+            <li><a href="#">How Much?</a></li>
+            <li><a href="#">Get Started</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
     </div>
-    <div class="top-graphic">
-      <img src="top-graphic.png">
+
+    <div class="container">
+      <div class="top-graphic">
+        <img src="top-graphic.png">
+      </div>
+      <div class="grey-section">
+
+        <div class="what-is-minecrab">
+	  <h2>What is Minecrab?</h2>
+	  <p>Minecrab aims to solve the problems around Minecraft server hosting
+	  by creating a reasonably priced, high-performance, accessible and
+	  dynamic cloud environment.</p>
+        </div>
+
+        <div class="minecrab-get-started">
+	  <img src="minecrab-getting-started.png">
+        </div>
+
+        <div class="benefits-of-minecrab">
+	  <div class="orange-header">Benefits of Minecrab</div>
+	  <ul>
+	    <li>Eliminate the expense of leaving your Minecraft servers running
+                when no one is playing.</li>
+            <li>Friends having a difficult time knowing where to connect.</li>
+            <li>Minecraft server software updates.</li>
+            <li>Keeping a backup of your world, either as a save point or as
+	        protection from server crashing.</li>
+            <li>Migrating your world to bigger servers if server resources
+	        become exhausted.</li>
+            <li>Sharing your Minecraft creations with your family and
+	        friends.</li>
+	  </ul>
+        </div>
+
+      </div> <!-- grey-section -->
+
+      <div class="how-it-works-section">
+        <h2>How it works</h2>
+        <div class="how-it-works-section-left">
+	  <p>The Minecrab software is a <a href="">set of command line tools</a>
+            that run on your local computer along with a set of management scripts
+            that run on a remote, virtual server. For example,
+            the <span style="command">minecrab-launch</span> command will launch a
+            virtual computer on <a href="">Joyent’s cloud</a> and set it to
+            download the latest <b>Minecraft</b>, <b>Feed the Beast
+            Ultimate</b>, <b>Bukkit</b> or
+            <b>Voltz</b> server, install it, and start it up.</p>
+	  <p>The first time your server starts it will generate a new world. You
+            can then whitelist those that you want to play with, and send them a
+            link to your personal Minecrab Status Page, where they can discover
+            server status and connection information.</p>
+        </div>
+
+        <div class="how-it-works-section-right">
+	  <p>At any time you can issue a command to backup your server data to
+	    Joyent’s Manta or kick off a job to <b>generate a Google-maps style
+	    overview of your world</b>. If maps are generated, a thumbnail will show
+	    up on your Minecrab Status Page.</p>
+	  <p>When you’re done playing and issue the shutdown command, Minecrab
+	    will <b>automatically backup your world data</b>, kick off a job to
+	    regenerate the map and shut the server down. When you’re ready to play
+	    again, use the same launch command you used originally and your world
+	    will <b>be restored where you left off!</b></p>
+        </div>
+      </div> <!-- how-it-works-section -->
+
     </div>
-    <div class="grey-section">
-
-      <div class="what-is-minecrab">
-	<h2>What is Minecrab?</h2>
-	<p>Minecrab aims to solve the problems around Minecraft server hosting
-	by creating a reasonably priced, high-performance, accessible and
-	dynamic cloud environment.</p>
-      </div>
-
-      <div class="minecrab-get-started">
-	<img src="minecrab-getting-started.png">
-      </div>
-
-      <div class="benefits-of-minecrab">
-	<div class="orange-header">Benefits of Minecrab</div>
-	<ul>
-	  <li>Eliminate the expense of leaving your Minecraft servers running
-              when no one is playing.</li>
-          <li>Friends having a difficult time knowing where to connect.</li>
-          <li>Minecraft server software updates.</li>
-          <li>Keeping a backup of your world, either as a save point or as
-	      protection from server crashing.</li>
-          <li>Migrating your world to bigger servers if server resources
-	      become exhausted.</li>
-          <li>Sharing your Minecraft creations with your family and
-	      friends.</li>
-	</ul>
-      </div>
-
-    </div> <!-- grey-section -->
-
-    <div class="how-it-works-section">
-      <h2>How it works</h2>
-      <div class="how-it-works-section-left">
-	<p>The Minecrab software is a <a href="">set of command line tools</a>
-          that run on your local computer along with a set of management scripts
-          that run on a remote, virtual server. For example,
-          the <span style="command">minecrab-launch</span> command will launch a
-          virtual computer on <a href="">Joyent’s cloud</a> and set it to
-          download the latest <b>Minecraft</b>, <b>Feed the Beast
-          Ultimate</b>, <b>Bukkit</b> or
-          <b>Voltz</b> server, install it, and start it up.</p>
-	<p>The first time your server starts it will generate a new world. You
-          can then whitelist those that you want to play with, and send them a
-          link to your personal Minecrab Status Page, where they can discover
-          server status and connection information.</p>
-      </div>
-
-      <div class="how-it-works-section-right">
-	<p>At any time you can issue a command to backup your server data to
-	  Joyent’s Manta or kick off a job to <b>generate a Google-maps style
-	  overview of your world</b>. If maps are generated, a thumbnail will show
-	  up on your Minecrab Status Page.</p>
-	<p>When you’re done playing and issue the shutdown command, Minecrab
-	  will <b>automatically backup your world data</b>, kick off a job to
-	  regenerate the map and shut the server down. When you’re ready to play
-	  again, use the same launch command you used originally and your world
-	  will <b>be restored where you left off!</b></p>
-      </div>
-    </div> <!-- how-it-works-section -->
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
