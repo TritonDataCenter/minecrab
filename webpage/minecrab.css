@@ -3,10 +3,7 @@
 @import url(https://fonts.googleapis.com/css?family=Antic+Slab);
 
 html {
-  background-image: url("bg.png");
-  background-position: center bottom;
-  background-attachment: fixed;
-  background-size: cover;
+  background-color: #000000;
   height: 100%;
   font-size: 100%;
 }

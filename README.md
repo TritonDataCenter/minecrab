@@ -507,8 +507,6 @@ Object is Gone (410)
 * [Minecraft Overviewer](https://github.com/overviewer/Minecraft-Overviewer) - The renderer we use.
 * [aboron/minecraft-smartos-smf](https://github.com/aboron/minecraft-smartos-smf) - Used as the basis for running
   the minecraft server.
-* To the unknown creator of the creeper background:  If you self-identify, we're
-  happy to give you credit here, or remove it entirely.
 
 
 ## Notes
