@@ -8,47 +8,53 @@
 - [What it costs](#what-it-costs)
 - [Troubleshooting](#troubleshooting)
 - [Notes](#notes)
+- [License](#license)
 
 
 
 ## What it does
 
-Minecrab provisions a fully configured Minecraft server
-on a Joyent SmartOS instance. You can play on the server, invite friends,
-build stuff, and so on. When you're finished playing and shut down the server,
-Minecrab saves your world to [Manta](http://www.joyent.com/products/manta).
+Minecrab provisions a fully configured Minecraft server on a SmartOS
+instance. You can play on the server, invite friends, build stuff, and
+so on. When you're finished playing and shut down the server, Minecrab
+saves your world to the cloud
+[Joyent Manta Storage Service](http://www.joyent.com/products/manta).
 
 Next time you want to play, just have Minecrab provision your server again.
 Your world will be there, just as you left it.
 
-When you [launch](#minecrab-launch) a server
-Joyent will start billing your account.
-When you [shut it down](#minecrab-shutdown),
-billing stops.
+We don't make any money off of the Minecrab software directly, and you
+can run it in other compatible clouds (e.g. Telefonica or
+private instances.)
 
-See [What it costs](#what-it-costs) later in this README
-to find out more about charges.
+If you do choose to use it on our public virtual machine service, we
+do charge users for our normal cloud hosting and storage costs.
 
-
+See [What it costs](#what-it-costs) later in this README to find out
+more about our virtual machine and storage charges.
 
 
 ## Getting started
 
 1. Get a Minecraft account: [minecraft.net](http://minecraft.net)
-1. Get a [Joyent Cloud](http://my.joyentcloud.com) account.<br />
-You can sign up for a [free trial](https://my.joyentcloud.com/landing/signup/70180000000ShEu).
+1. Get a [Joyent Cloud](http://my.joyentcloud.com) or compatible account.<br />
+You can sign up for a [free trial](https://my.joyentcloud.com/landing/signup/70180000000ShEu). 
+(The rest of this guide assumes that you're using a Joyent Cloud account.)
 
 Then, if you have Mac OS X:
 
 1. Install node, npm, node-manta and smartdc tools using the (Mac OS X Installer)[https://us-east.manta.joyent.com/manta/public/sdks/joyent-node-latest.pkg].
 1. Install the jsontool `sudo npm install jsontool -g`
+1. Install git[http://git-scm.com]
 
-Otherwise (and this has yet to be confirmed working on other platforms):
+Otherwise (Tested on Ubuntu 13.10, this has yet to be confirmed working on other platforms):
 
 1. Install [Node](http://nodejs.org/)
 1. Install [Manta](http://apidocs.joyent.com/manta/#getting-started)
 1. Install [CloudAPI](http://apidocs.joyent.com/cloudapi/#getting-started)
 1. Install the jsontool `sudo npm install jsontool -g`
+1. Install [git](http://git-scm.com)
+1. Make sure [ssh-agent](#problems-with-ssh-agent) is running and has access to your ssh key and password.
 
 
 ### Set up your CloudAPI and Manta environment variables:
@@ -56,10 +62,10 @@ Otherwise (and this has yet to be confirmed working on other platforms):
 ```
 export MANTA_USER=<your Joyent Cloud name>
 export MANTA_URL=https://us-east.manta.joyent.com
-export MANTA_KEY_ID=<the fingerprint of one of your SSH keys in Joyent Cloud>
+export MANTA_KEY_ID=`ssh-keygen -l -f ~/.ssh/id_rsa.pub | awk '{print $2}' | tr -d '\n'` # <the fingerprint of one of your SSH keys in Joyent Cloud>
 export SDC_URL=<URL of a Joyent Cloud datacenter> (see below)
 export SDC_ACCOUNT=<your Joyent Cloud name>
-export SDC_KEY_ID=<the fingerprint of one of your SSH keys in Joyent Cloud
+export SDC_KEY_ID=`ssh-keygen -l -f ~/.ssh/id_rsa.pub | awk '{print $2}' | tr -d '\n'` #<the fingerprint of one of your SSH keys in Joyent Cloud>
 ```
 
 Use the `MANTA_URL` as given. For `SDC_URL` choose the closest datacenter:
@@ -82,10 +88,16 @@ git clone git@github.com:joyent/minecrab.git
 
 ```
 cd minecrab
-bin/minecrab-launch <server name> <minecrab name>
+bin/minecrab-launch <new server name>
 ```
 
-Play minecraft.
+### Add players
+
+```
+bin/minecrab-add-friends <server name> <minecraft friend name>
+```
+
+### Play minecraft
 
 ### Put your minecrab server away
 
@@ -378,7 +390,7 @@ see Steve Freidl's
 
 ## What it costs
 
-Using Minecrab incurs three kinds of charges:
+Using Minecrab on the Joyent Cloud service incurs three kinds of charges:
 
 * Compute time charges while a Minecraft server is running on an instance
 * Storage charges for your Minecraft world when it's offline
@@ -392,7 +404,7 @@ using the [base64 13.2.1](http://wiki.joyent.com/wiki/display/jpc2/SmartMachine+
 image
 with 4 GB of RAM and 131 GB of disk space.
 
-This instance size is [billed](http://www.joyent.com/products/compute-service/pricing)
+This virtual machine instance size is [billed](http://www.joyent.com/products/compute-service/pricing)
 at $0.128 per hour.
 
 When you run [minecrab-shutdown](#minecrab-shutdown),
@@ -407,7 +419,7 @@ you won't pay for an idle server.
 
 Storage for your Minecraft world on Manta
 is [billed at $0.086 per GB per month](http://www.joyent.com/products/manta/pricing).
-Most Minecraft worlds are less than 100 MB.
+Most Minecraft worlds are less than 100 MB, which would be less than a penny a month.
 
 ### Job charges
 
@@ -423,6 +435,8 @@ For example: <br />
 If you don't want to pay for map rendering,
 use the `-M` option
 in [minecrab-shutdown](#minecrab-shutdown).
+
+Note that all prices are as of the writing of this guide.
 
 ## Troubleshooting
 
@@ -507,7 +521,7 @@ Object is Gone (410)
 * [Minecraft Overviewer](https://github.com/overviewer/Minecraft-Overviewer) - The renderer we use.
 * [aboron/minecraft-smartos-smf](https://github.com/aboron/minecraft-smartos-smf) - Used as the basis for running
   the minecraft server.
-
+* [Minecraft](https://minecraft.net) is a lovingly used registered trademark of and is Copyright 2009-2013 by Mojang / Notch
 
 ## Notes
 
@@ -519,8 +533,11 @@ is benign.
 * The error `socket hang up` means that
 we were unable to provision an instance for your server.
 Try the command again.
-
+* On Ubuntu 13 (and probably other Linuxes) there were Node.js build
+EACCES warnings that were safe to ignore.
 
 ## License
 
-MIT, see LICENSE.
+The code for Minecrab is MIT, see LICENSE.
+
+
