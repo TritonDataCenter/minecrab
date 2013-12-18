@@ -1,121 +1,139 @@
-
-@import url(https://fonts.googleapis.com/css?family=Megrim&text=Mminecraft);
-@import url(https://fonts.googleapis.com/css?family=Antic+Slab);
-
 html {
-  background-color: #000000;
-  height: 100%;
-  font-size: 100%;
+    background-color: white;
 }
 
 body {
-  margin: 0;
+    margin: 0;
+    font-family: "Helvetica", Roman, serif;
 }
 
-.glass {
-  position: relative;
-  padding: 10px 0;
-  border-bottom: 1px solid;
-  border-bottom-color: #ccc;
-  border-bottom-color: rgba(255, 255, 255, 0.2);
-  background-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  height: 180px;
+.clear-floats {
+    clear: both;
 }
 
-.glass::before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-  background-position: center bottom;
-  background-attachment: fixed;
-  background-size: cover;
-  content: "";
+.page {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
 }
 
-.glass .legacy-ie-fix {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #fff;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=20)";
+.header {
+    background-image: url('header.png');
+    height: 174px;
 }
 
-.glass h1 {
-  position: relative;
-  margin: 0;
-  color: #fff;
-  color: rgba(255, 255, 255, 0.3);
-  font-size: 180px;
-  font-weight: normal;
-  font-family: "Megrim", sans-serif;
-  line-height: 1;
-  text-align: center;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=50)";
+.header-image {
+    float: left;
+    padding-top: 22;
+    padding-left: 80;
 }
 
-.glass h3 {
-  position: relative;
-  margin: 0;
-  color: #fff;
-  color: rgba(255, 255, 255, 0.3);
-  font-size: 100px;
-  font-weight: normal;
-  font-family: "Megrim", sans-serif;
-  line-height: 1;
-  text-align: center;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=50)";
+#header-name {
+    float: left;
+    font-size: 55px;
+    padding-top: 93px;
+    padding-left: 5px;
 }
 
-.games {
-  position: relative;
-}
-.games ul {
-  margin: 0px;
-  padding: 0px;
-}
-.games ul li {
-  position: relative;
-  margin-top: 10px;
-  padding: 10px 0;
-  border-bottom: 1px solid;
-  border-bottom-color: #ccc;
-  border-bottom-color: rgba(255, 255, 255, 0.2);
-  background-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  height: 250px;
-}
-.games li div {
-  position: relative;
-  margin: 0;
-  color: #fff;
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 18px;
-  font-weight: normal;
-  font-family: "Antic Slab", sans-serif;
-  line-height: 1;
-  text-align: center;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=50)";
-}
-.games div.map {
-  position: relative;
-  background-repeat: no-repeat;
-  background-position: center bottom;
-  left: -60px;
-  top: 0;
-  height: 90%;
-}
-.games div.title {
-  font-size: 34px;
+#http://stackoverflow.com/questions/266015/css-floats-how-do-i-keep-them-on-one-line
+.middle {
+    white-space: nowrap;
+    min-width:100px;
+    width: auto !important;
+    width: 100px;
 }
 
-@media only screen {
-  .glass h1 {
-    -ms-filter: "none";
-  }
+.worlds {
+    display:inline-block;
+    float: left;
+    width: 75%;
+    padding: 20px;
+    margin-top: 15px;
 }
+
+hr {
+    background-color: lightgray;
+    height: 1;
+    border: 0;
+}
+
+.world-status-image {
+    float: left;
+    padding: 15px;
+}
+
+.world-details {
+    float: left;
+    padding: 15px;
+}
+
+.world-map-thumbnail {
+    float: right;
+    padding: 15px;
+}
+
+.world-map-thumbnail p {
+    margin: 0px;
+}
+
+.world-detail-bold {
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.world-detail-orange {
+    font-weight: bold;
+    font-size: 22px;
+    color: #FF6600;
+}
+
+.world-detail {
+    font-size: 18px;
+}
+
+.world-detail-minecraft-version {
+    font-size: 12px;
+}
+
+.right-box {
+    display:inline-block;
+    float: right;
+    background-color: #F5F5F5;
+    margin-top: 40px;
+    padding: 20px;
+    border-radius: 5px;
+    width: 15%;
+    margin-right: 30px;
+}
+
+.right-box a {
+    color: #FF6600;
+    font-weight: bold;
+    text-decoration:none;
+}
+
+.copyright-text p {
+    color: #969696;
+    font-size: 12;
+}
+
+.copyright-text {
+    float: left;
+    padding: 20px;
+    padding-left: 40px;
+}
+
+.joyent-logo {
+    float: right;
+    padding: 20px;
+    padding-right: 40px;
+}
+
+.footer-separator {
+    height: 30px;
+}
+
+.footer {
+    background-color: #2B2B2B;
+}
+
