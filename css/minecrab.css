@@ -79,7 +79,7 @@ h3 {
 .row.get-started-row .container {
     background-color: #f5f5f5;
     margin-top: 20px;
-    padding: 10px 15px 10px 15px;
+    padding: 10px 0 10px 15px;
 }
 
 .col-sm-6.what-is-minecrab {
@@ -91,17 +91,9 @@ h3 {
     padding-left: 10%;
 }
 
-#how-it-works {
-    margin: 20px;
-}
-
 .col-sm-6.benefits-of-minecrab ul {
     list-style-image: url('../images/minecrab-list-point.png');
-}
-
-.separator {
-    background-image: url('../images/separator.png');
-    height: 21px;
+    padding-left: 17px;
 }
 
 .row.command-line {
