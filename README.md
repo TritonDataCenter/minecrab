@@ -25,7 +25,7 @@ Your world will be there, just as you left it.
 
 Note that we don't make any money off of the Minecrab software
 directly, and you can run it in any compatible cloud (e.g. Telefonica
-or private instances.)
+or private instances).
 
 If you do choose to use it on our public virtual machine service, we
 do charge users for our normal cloud hosting and storage costs.
@@ -36,9 +36,11 @@ more about our virtual machine and storage charges.
 
 ## Getting started
 
-1. Get a Minecraft account: [minecraft.net](http://minecraft.net)
+1. Get the Minecraft software: [minecraft.net](http://minecraft.net)<br />
+Minecrab makes it easy to run servers.
+To play in them, you need to buy the software from Mojang.
 1. Get a [Joyent Cloud](http://my.joyentcloud.com) or compatible account.<br />
-You can sign up for a [free trial](https://my.joyentcloud.com/landing/signup/70180000000ShEu). 
+You can sign up for a [free trial](https://my.joyentcloud.com/landing/signup/70180000000ShEu).
 (The rest of this guide assumes that you're using a Joyent Cloud account.)
 
 Then, if you have Mac OS X:
@@ -58,7 +60,11 @@ Otherwise (Tested on Ubuntu 13.10. It will probably work on other platforms):
 
 
 ### Set up your CloudAPI and Manta environment variables:
-Run these commands in a Terminal window (pro-tip: save them in a file for later use and "source <filename>" to run them as needed or put them in your .bash_profile)
+Run these commands in a Terminal window.
+(Pro-tip: save them in a file for later use,
+ and `source <filename>` to run them as needed,
+ or put them in your `.bash_profile`.)
+
 ```
 export MANTA_USER=<your Joyent Cloud name>
 export MANTA_URL=https://us-east.manta.joyent.com
