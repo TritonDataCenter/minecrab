@@ -23,9 +23,9 @@ saves your world to the cloud
 Next time you want to play, just have Minecrab provision your server again.
 Your world will be there, just as you left it.
 
-We don't make any money off of the Minecrab software directly, and you
-can run it in other compatible clouds (e.g. Telefonica or
-private instances.)
+Note that we don't make any money off of the Minecrab software
+directly, and you can run it in any compatible cloud (e.g. Telefonica
+or private instances.)
 
 If you do choose to use it on our public virtual machine service, we
 do charge users for our normal cloud hosting and storage costs.
@@ -45,7 +45,7 @@ Then, if you have Mac OS X:
 
 1. Install node, npm, node-manta and smartdc tools using the (Mac OS X Installer)[https://us-east.manta.joyent.com/manta/public/sdks/joyent-node-latest.pkg].
 1. Install the jsontool `sudo npm install jsontool -g`
-1. Install git[http://git-scm.com]
+1. Install [git](http://git-scm.com)
 
 Otherwise (Tested on Ubuntu 13.10, this has yet to be confirmed working on other platforms):
 
@@ -58,7 +58,7 @@ Otherwise (Tested on Ubuntu 13.10, this has yet to be confirmed working on other
 
 
 ### Set up your CloudAPI and Manta environment variables:
-
+Run these commands in a Terminal window (pro-tip: save them in a file for later use and "source <filename>" to run them as needed or put them in your .bash_profile)
 ```
 export MANTA_USER=<your Joyent Cloud name>
 export MANTA_URL=https://us-east.manta.joyent.com
