@@ -41,11 +41,6 @@ a:hover {
   line-height: 2.1428571435;
 }
 
-.minecrab-get-started-image {
-    padding-left: 10%;
-    padding-top: 20px;
-}
-
 @media (min-width: 768px) {
   .jumbotron {
     height: 220px;
@@ -68,10 +63,6 @@ h3 {
     font-size: 35px;
 }
 
-.container-narrow > hr {
-  margin: 30px 0;
-}
-
 .row.get-started-row {
   background: white;
 }
@@ -86,7 +77,7 @@ h3 {
     font-size: 25px;
 }
 
-.minecrab-get-started-image {
+.minecrab-get-started-image img {
     padding-top: 30px;
     padding-left: 10%;
 }
