@@ -77,7 +77,7 @@
           that run on your local computer along with a set of management scripts
           that run on a remote, virtual server. For example,
           the <span style="command">minecrab-launch</span> command will launch a
-          virtual computer on <a href="">Joyent’s cloud</a> and set it to
+          virtual computer on <a href="">Joyent's cloud</a> and set it to
           download the latest <b>Minecraft</b>, <b>Feed the Beast
           Ultimate</b>, <b>Bukkit</b> or
           <b>Voltz</b> server, install it, and start it up.</p>
@@ -89,18 +89,119 @@
 
       <div class="col-lg-6 how-it-works-section-right">
         <p>At any time you can issue a command to backup your server data to
-          Joyent’s Manta or kick off a job to <b>generate a Google-maps style
+          Joyent's Manta or kick off a job to <b>generate a Google-maps style
           overview of your world</b>. If maps are generated, a thumbnail will show
           up on your Minecrab Status Page.</p>
-        <p>When you’re done playing and issue the shutdown command, Minecrab
+        <p>When you're done playing and issue the shutdown command, Minecrab
           will <b>automatically backup your world data</b>, kick off a job to
           regenerate the map and shut the server down. When you’re ready to play
           again, use the same launch command you used originally and your world
           will <b>be restored where you left off!</b></p>
       </div>
-    </div> <!-- how-it-works-section -->
-
     </div>
+
+    <hr>
+
+    <div class="row command-line">     
+      <div class="col-lg-12">
+        <h2>View from the command line</h2>
+        <p>What does that actually look like from the command line? Here we already have a server that's offline, named "salt":</p>
+        <pre>
+# Most of the command output redacted for clarity...
+
+$ minecrab-list                   # List all online/offline worlds
+IP              STATE      NAME
+n/a             offline    salt
+
+$ minecrab-launch pepper          # Launch a the server called "pepper"
+Status Website: https://us-east.manta.joyent.com/Joyent_Dev/public/minecrab/index.html
+
+$ minecrab-list                   # List all online/offline worlds
+IP              STATE      NAME
+165.225.149.134 running    pepper
+n/a             offline    salt
+
+$ minecrab-add-friend pepper bob  # Allow bob to play on pepper
+$ minecrab-backup pepper          # Backup your server data to Manta
+$ minecrab-map pepper             # Kick off a job to generate a map
+$ minecrab-shutdown -M pepper     # Backup and shut down, but don't map
+
+$ minecrab-list                   # List all online/offline worlds
+IP              STATE      NAME
+n/a             offline    pepper
+n/a             offline    salt
+
+$ minecrab-launch pepper          # Restore
+        </pre>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="row how-much-does-it-cost">
+      <div class="col-lg-12">
+        <h2>How much does it cost?</h2>
+      </div>
+      <div class="col-lg-6">
+	<p>Minecrab currently launches a virtual server with 4 GB of RAM, 131 GB
+	  of disk space and 1 virtual CPU. This costs about $0.13 per hour per
+	  running server.</p>
+	<p>Once you backup your world, there's storage cost at a rate of about
+	  $0.09 per GB per month. Most worlds are less than 100 MB.</p>
+	<p>Hosting and generating maps is actually the most expensive part of
+	  Minecrab. New worlds take about 5 minutes to render. Large maps can take
+	  hours. Time spent generating the world is billed at about $0.58 per hour
+	  and the resulting Manta storage can end up in multi-GB range for a
+	  medium-size world.</p>
+	<p>Note that this doesn't take into account the bandwidth charges for
+	  accessing your maps or server status page, though the first GB of
+	  bandwidth out of Manta is free and then up to 10 TB is only $0.12 per
+	  GB, so unless viewing your world goes viral, it shouldn't factor into
+	  the cost.</p>
+      </div>
+      <div class="col-lg-6">
+	<p>As an example, say that you have a single, medium size world that you
+	keep running for one night a week for about 3 hours). You only generate
+	the map once at the end of the month. Here's the approximate cost
+	breakdown:</p>
+
+	<pre class="cost-breakdown">
+World backup storage, 50 MB:   $0.09 x 0.05 GB    < $0.01
+Server running time:           $0.13 x 15 hours     $1.95
+World map rendering time:      $0.58 x 2 hours      $1.16
+Map storage, 2 GB:             $0.09 x 2 GB         $0.18
+----------------------------   ----------------
+Total:                                              $3.30
+	</pre>
+
+	<p>Even with map generation, this is still significantly cheaper than a
+	  dedicated 24x7 Minecraft server hosting elsewhere. And if you want to
+	  live without a map, it'll cost you less than a $1.00 a month per
+	  Minecraft server!</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="row started-contribute-section">
+      <div class="col-lg-6">
+        <h2>Wow. How do I get started?</h2>
+	<p>Check out the <a href="">getting started section of the
+	  README</a>. All the details are there.</p>
+	<p>Found bugs? <a href="">File an issue</a>!</p>
+      </div>
+      <div class="col-lg-6 started-contribute-right">
+	<h2>Want to contribute?</h2>
+	<p>We'll gladly accept code contributions! The only monetary cost you'll
+	  incur are the charges outlined above. Hooray for open source!</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <footer>Copyright 2013 Joyent</footer>
+    </div>
+  
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
