@@ -2,8 +2,28 @@
 body {
   padding-top: 50px;
   padding-bottom: 20px;
+  font-size: 18px;
 }
-a.anchor{display: block; position: relative; top: -50px; visibility: hidden;}
+
+a.anchor {
+    display: block;
+    position: relative;
+    top: -50px;
+    visibility: hidden;
+}
+
+a {
+    color: #FF6600;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #FF6600;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
 .jumbotron {
   position: relative;
   background: none;
@@ -15,10 +35,15 @@ a.anchor{display: block; position: relative; top: -50px; visibility: hidden;}
   font-weight: 200;
   line-height: 2.1428571435;
 }
+
+.minecrab-get-started-image {
+    padding-left: 10%;
+    padding-top: 20px;
+}
+
 .jumbotron:after {
   content:"";
   background: url("../images/top-graphic.png");
-/* background: url("../images/minecrab-background-tile.png"); */
   background-size: contain;
   background-repeat: no-repeat;
   max-width: 100%;
@@ -31,6 +56,7 @@ a.anchor{display: block; position: relative; top: -50px; visibility: hidden;}
   position: absolute;
   z-index: -1;
 }
+
 @media (min-width: 768px) {
   .container {
     max-width: 730px;
@@ -42,6 +68,7 @@ a.anchor{display: block; position: relative; top: -50px; visibility: hidden;}
     background-size: 90%;
   }
 }
+
 @media (min-width: 992px) {
   .container {
     max-width: 960px;
@@ -53,6 +80,7 @@ a.anchor{display: block; position: relative; top: -50px; visibility: hidden;}
     background-size: 97%;
   }
 }
+
 @media (min-width: 1200px) {
   .container {
     max-width: 1100px;
@@ -64,6 +92,51 @@ a.anchor{display: block; position: relative; top: -50px; visibility: hidden;}
     background-size: 100%;
   }
 }
+
+h3 {
+    font-size: 35px;
+}
+
 .container-narrow > hr {
   margin: 30px 0;
+}
+
+.row.get-started-row {
+    background-color: #f5f5f5;
+    margin: 20px;
+}
+
+.col-sm-6.what-is-minecrab {
+    font-size: 25px;
+}
+
+.minecrab-get-started-image {
+    padding-top: 30px;
+    padding-left: 10%;
+}
+
+#how-it-works {
+    margin: 20px;
+}
+
+.col-sm-6.benefits-of-minecrab ul {
+    list-style-image: url('../images/minecrab-list-point.png');
+}
+
+.separator {
+    background-image: url('../images/separator.png');
+    height: 21px;
+}
+
+.row.command-line {
+    padding: 20px;
+}
+
+.view-from-command-line pre {
+    padding-right: 10px;
+    padding-left: 10px;
+    color: lightgray;
+    background-color: #404040;
+    margin-right: 20px;
+    margin-left: 20px;
 }
