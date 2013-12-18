@@ -47,7 +47,7 @@ Then, if you have Mac OS X:
 1. Install the jsontool `sudo npm install jsontool -g`
 1. Install [git](http://git-scm.com)
 
-Otherwise (Tested on Ubuntu 13.10, this has yet to be confirmed working on other platforms):
+Otherwise (Tested on Ubuntu 13.10. It will probably work on other platforms):
 
 1. Install [Node](http://nodejs.org/)
 1. Install [Manta](http://apidocs.joyent.com/manta/#getting-started)
@@ -62,10 +62,10 @@ Run these commands in a Terminal window (pro-tip: save them in a file for later 
 ```
 export MANTA_USER=<your Joyent Cloud name>
 export MANTA_URL=https://us-east.manta.joyent.com
-export MANTA_KEY_ID=`ssh-keygen -l -f ~/.ssh/id_rsa.pub | awk '{print $2}' | tr -d '\n'` # <the fingerprint of one of your SSH keys in Joyent Cloud>
+export MANTA_KEY_ID=$(ssh-keygen -l -f ~/.ssh/id_rsa.pub | awk '{print $2}' | tr -d '\n') # <the fingerprint of one of your SSH keys in Joyent Cloud>
 export SDC_URL=<URL of a Joyent Cloud datacenter> (see below)
 export SDC_ACCOUNT=<your Joyent Cloud name>
-export SDC_KEY_ID=`ssh-keygen -l -f ~/.ssh/id_rsa.pub | awk '{print $2}' | tr -d '\n'` #<the fingerprint of one of your SSH keys in Joyent Cloud>
+export SDC_KEY_ID=$(ssh-keygen -l -f ~/.ssh/id_rsa.pub | awk '{print $2}' | tr -d '\n') #<the fingerprint of one of your SSH keys in Joyent Cloud>
 ```
 
 Use the `MANTA_URL` as given. For `SDC_URL` choose the closest datacenter:
@@ -371,7 +371,7 @@ Logs in as root to the instance hosting `server-name`.
 
 ## How it works
 
-Minecraft uses SSH agent forwarding to give the instances it creates
+Minecrab uses SSH agent forwarding to give the instances it creates
 access to your authorization.
 If you look at the code in the `bin` directory,
 you'll see that all calls to `ssh` use the `-A` switch.
@@ -521,7 +521,7 @@ Object is Gone (410)
 * [Minecraft Overviewer](https://github.com/overviewer/Minecraft-Overviewer) - The renderer we use.
 * [aboron/minecraft-smartos-smf](https://github.com/aboron/minecraft-smartos-smf) - Used as the basis for running
   the minecraft server.
-* [Minecraft](https://minecraft.net) is a lovingly used registered trademark of and is Copyright 2009-2013 by Mojang / Notch
+* [Minecraft](https://minecraft.net) Minecraft ®/TM & © 2009-2013 Mojang / Notch
 
 ## Notes
 
