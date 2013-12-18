@@ -6,7 +6,7 @@ body {
   background: url(/images/minecrab-background-tile.svg) repeat-x 0 0;
 }
 
-.container {
+.command-line .container {
   padding-left: 0;
   padding-right: 0;
 }
@@ -50,26 +50,17 @@ a:hover {
   .jumbotron {
     height: 220px;
   }
-  .jumbotron:after {
-    background-size: 90%;
-  }
 }
 
 @media (min-width: 992px) {
   .jumbotron {
     height: 290px;
   }
-  .jumbotron:after {
-    background-size: 97%;
-  }
 }
 
 @media (min-width: 1200px) {
   .jumbotron {
     height: 350px;
-  }
-  .jumbotron:after {
-    background-size: 100%;
   }
 }
 
