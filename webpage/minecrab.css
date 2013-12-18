@@ -137,3 +137,37 @@ hr {
     background-color: #2B2B2B;
 }
 
+# http://cssdemos.tupence.co.uk/image-popup.htm
+.thumbnail {
+    width: 90;
+    height: 90;
+}
+
+.thumbnail img {
+    background-color:#FFFFFF;
+    padding: 6px;
+}
+
+.thumbnail span {
+    position:absolute;
+    left: -9999px;
+    background-color:#FFFFFF;
+    padding: 10px;
+    color: #FFFFFF;
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0, .75));
+    -moz-box-shadow: 0 0 10px rgba(0,0,0, .75);
+    box-shadow: 0 0 10px rgba(0,0,0, .75);
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius:2px;
+}
+
+.thumbnail:hover {
+    z-index: 50;
+    cursor:pointer;
+}
+
+.thumbnail span img {
+    padding:2px;
+    background:#FFFFFF;
+}

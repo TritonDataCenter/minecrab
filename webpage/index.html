@@ -175,6 +175,19 @@
           $('#header-name')[0].innerHTML = '/' + user;
       }
 
+      function displayBig(name) {
+          var little = $('#' + name + '-thumbnail')[0];
+          var big = $('#' + name + '-span')[0];
+          big.style.top = little.offsetTop - (big.offsetWidth / 3);
+          big.style.left = little.offsetLeft - big.offsetWidth - 10;
+      }
+
+      function displayNoMore(name) {
+          var big = $('#' + name + '-span')[0];
+          big.style.top = null;
+          big.style.left = null;
+      }
+
       $(function() {
           replaceUser();
           onLoad();
@@ -203,8 +216,11 @@
         </div>
         <div class="world-map-thumbnail">
           <a href="{{map_index}}">
-            <img width="100" height="100" src="{{thumbnail}}"
-                 onerror="this.style.display='none';">
+            <div class="thumbnail" id="{{name}}-thumbnail">
+              <img src="{{thumbnail}}" width="90" height="90" onerror="this.style.display='none';"
+                   onmouseover="displayBig('{{name}}')" onmouseout="displayNoMore('{{name}}')">
+              <span id="{{name}}-span"><img src="{{thumbnail}}" onerror="this.style.display='none';"></span>
+            </div>
           </a>
         </div>
         <div class="clear-floats"></div>
