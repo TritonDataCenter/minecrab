@@ -4,19 +4,12 @@ body {
   padding-bottom: 20px;
 }
 a.anchor{display: block; position: relative; top: -50px; visibility: hidden;}
-/*
-get-started-minecrab.png
-joyent-logo.png
-minecrab-background-tile.png
-minecrab-logo.png
-minecrab-top-image.png
-separator.png
-*/
 .jumbotron {
   position: relative;
   background: none;
   padding: 5px;
-  height: 467px;
+  height: 150px;
+  max-width: 100%;
   margin-bottom: 5px;
   font-size: 10px;
   font-weight: 200;
@@ -25,6 +18,11 @@ separator.png
 .jumbotron:after {
   content:"";
   background: url("../images/top-graphic.png");
+/* background: url("../images/minecrab-background-tile.png"); */
+  background-size: contain;
+  background-repeat: no-repeat;
+  max-width: 100%;
+  height: auto;
   opacity: 1.0;
   top: 0;
   left: 0;
@@ -33,20 +31,37 @@ separator.png
   position: absolute;
   z-index: -1;
 }
-/* Customize container */
 @media (min-width: 768px) {
   .container {
     max-width: 730px;
+  }
+  .jumbotron {
+    height: 220px;
+  }
+  .jumbotron:after {
+    background-size: 90%;
   }
 }
 @media (min-width: 992px) {
   .container {
     max-width: 960px;
   }
+  .jumbotron {
+    height: 290px;
+  }
+  .jumbotron:after {
+    background-size: 97%;
+  }
 }
 @media (min-width: 1200px) {
   .container {
     max-width: 1100px;
+  }
+  .jumbotron {
+    height: 350px;
+  }
+  .jumbotron:after {
+    background-size: 100%;
   }
 }
 .container-narrow > hr {
