@@ -7,6 +7,10 @@ body {
     font-family: "Helvetica", Roman, serif;
 }
 
+.clear-floats {
+    clear: both;
+}
+
 .page {
     margin-left: auto;
     margin-right: auto;
@@ -91,7 +95,6 @@ hr {
     font-size: 12px;
 }
 
-
 .right-box {
     display:inline-block;
     float: right;
@@ -100,6 +103,7 @@ hr {
     padding: 20px;
     border-radius: 5px;
     width: 15%;
+    margin-right: 30px;
 }
 
 .right-box a {
@@ -108,8 +112,21 @@ hr {
     text-decoration:none;
 }
 
-.clear-floats {
-    clear: both;
+.copyright-text p {
+    color: #969696;
+    font-size: 12;
+}
+
+.copyright-text {
+    float: left;
+    padding: 20px;
+    padding-left: 40px;
+}
+
+.joyent-logo {
+    float: right;
+    padding: 20px;
+    padding-right: 40px;
 }
 
 .footer {
