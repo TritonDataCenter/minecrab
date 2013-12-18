@@ -11,12 +11,6 @@ body {
     clear: both;
 }
 
-.page {
-    margin-left: auto;
-    margin-right: auto;
-    width: 80%;
-}
-
 .header {
     background-image: url('header.png');
     height: 174px;
@@ -41,6 +35,10 @@ body {
     min-width:100px;
     width: auto !important;
     width: 100px;
+}
+
+.world {
+    line-height: 150%;
 }
 
 .worlds {
@@ -97,13 +95,13 @@ hr {
 
 .right-box {
     display:inline-block;
-    float: right;
+    float: left;
     background-color: #F5F5F5;
     margin-top: 40px;
     padding: 20px;
     border-radius: 5px;
     width: 15%;
-    margin-right: 30px;
+    line-height: 130%;
 }
 
 .right-box a {
