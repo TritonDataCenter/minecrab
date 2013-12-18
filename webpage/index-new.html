@@ -1,6 +1,219 @@
 <html>
   <head>
     <link href='minecrab-new.css' rel='stylesheet' type='text/css'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.1.2/handlebars.min.js"></script>
+    <script type="text/javascript">
+      //var manta = document.location.protocol + '//' + document.location.hostname;
+      //var page = document.location.pathname;
+
+      var manta = 'http://us-east.manta.joyent.com';
+      var page = '/Joyent_Dev/public/minecrab/index.html';
+
+      var user = page.split('/')[1];
+      var servers_loc = manta + '/' + user + '/public/minecrab/servers/';
+      var difficulty = ['Peaceful', 'Easy', 'Normal', 'Hard']
+      var gamemode = ['Survival', 'Creative', 'Adventure']
+
+      function findIp(name, cb) {
+          var user = page.split('/')[1];
+          var url = servers_loc + name + '/ip';
+          $.ajax({
+              'url': url,
+              'success': cb,
+              'error': function () {
+                  cb(null);
+              }
+          });
+      }
+
+      function parseProperties(propData) {
+          var props = {};
+          if (propData === null) {
+              return (props);
+          }
+          var propLines = propData.split('\n');
+          propData.split('\n').forEach(function (dl) {
+              if (dl === null || dl === '' || dl.slice(0, 1) === '#') {
+                  return;
+              }
+              var parts = dl.split('=');
+              parts[1] = parts[1].replace(/"/g, '');  //" Fixes syntax highlighting
+              props[parts[0]] = parts[1];
+          });
+          return (props);
+      }
+
+      function findConfig(name, cb) {
+          var user = page.split('/')[1];
+          var url = servers_loc + name + '/server/server.config';
+          function onSuccess(data) {
+              cb(parseProperties(data));
+          }
+          $.ajax({
+              'url': url,
+              'success': onSuccess,
+              'error': function () {
+                  cb(null);
+              }
+          });
+      }
+
+      function findProperties(name, cb) {
+          var user = page.split('/')[1];
+          var url = servers_loc + name + '/server/server.properties';
+          function onSuccess(data) {
+              cb(parseProperties(data));
+          }
+          $.ajax({
+              'url': url,
+              'success': onSuccess,
+              'error': function () {
+                  cb(null);
+              }
+          });
+      }
+
+      function worldDetails(name, cb) {
+          var res = {};
+          findIp(name, function (ip) {
+              findConfig(name, function (cfg) {
+                  findProperties(name, function (props) {
+                      var status = ip ? 'Online' : 'Offline';
+                      var params = {
+                          name: name,
+                          ip: ip,
+                          status: status,
+                          map_index: servers_loc + name + '/map/view/index.html',
+                          thumbnail: servers_loc + name + '/map/view/render1/base.png',
+                          version: cfg === null ? 'unknown' : cfg['MINECRAFT_VERSION'],
+                          type: cfg === null ? 'unknown' : cfg['SERVER_PREFERRED'],
+                          difficulty: props === null ?
+                              'unknown' : difficulty[props.difficulty],
+                          gamemode: props === null ?
+                              'unknown' : gamemode[props.gamemode]
+                      };
+                      cb(params);
+                  });
+              });
+          });
+      }
+
+      function loadWorldData(cb) {
+          function onError(jqXHR, textStatus, errorThrown) {
+              console.log(textStatus, errorThrown);
+          }
+
+          function onSuccess(data, status) {
+              var worlds = [];
+
+              console.log(data);
+              console.log(status);
+              if (status !== "success") {
+                  console.log(status, 'failed retrieving machines');
+                  return;
+              }
+
+              data.split("\n").forEach(function(line) {
+                  if (line.length > 0) {
+                      console.log("line", line)
+                      var server = JSON.parse(line);
+                      if (server.type === "directory") {
+                          worlds.push(server.name);
+                      }
+                  }
+              });
+
+              var res = {};
+              function tryEnd() {
+                  if (Object.keys(res).length === worlds.length) {
+                      cb(null, res);
+                  }
+              }
+
+              worlds.forEach(function(world) {
+                  worldDetails(world, function (params) {
+                      res[world] = params;
+                      tryEnd();
+                  });
+              });
+          }
+
+          $.ajax({
+              'url': servers_loc,
+              'cache': false,
+              'dataType': "text",
+              'error': onError,
+              'success': onSuccess
+          })
+
+      }
+
+      console.log(servers_loc);
+
+      function onLoad() {
+          var source   = $("#world-loading").html();
+          var template = Handlebars.compile(source);
+          var html = template({});
+          $('.worlds').append(html);
+          loadWorldData(function (err, worlds) {
+              console.log(worlds);
+
+              //Remove the loading thing...
+              var div = $('.worlds')[0];
+              div.innerHTML = '<hr>';
+
+              //Now put in a pane for each world
+              source = $("#world-template").html();
+              template = Handlebars.compile(source);
+              Object.keys(worlds).sort().forEach(function (name) {
+                  params = worlds[name];
+                  html = template(params);
+                  $('.worlds').append(html);
+              });
+          });
+      }
+
+      function replaceUser() {
+          $('#header-name')[0].innerHTML = '/' + user;
+      }
+
+      $(function() {
+          replaceUser();
+          onLoad();
+          console.log('dom ready');
+      });
+    </script>
+    <script id="world-loading" type="text/x-handlebars-template">
+      <hr>
+      <div class="world">
+        <h3>Loading worlds...</h3>
+        <hr>
+      </div>
+    </script>
+    <script id="world-template" type="text/x-handlebars-template">
+      <div class="world">
+        <div class="world-status-image">
+          <img src="minecrab-{{status}}.png">
+        </div>
+        <div class="world-details">
+          <span class="world-detail-bold">{{name}}</span><br>
+          <span class="world-detail-bold">{{status}}</span>
+          {{#if ip}} at <span class="world-detail-orange">{{ip}}</span>{{/if}}
+          <br>
+          <span class="world-detail">{{gamemode}}, {{difficulty}}</span><br>
+          <span class="world-detail-minecraft-version">{{type}} {{version}}</span>
+        </div>
+        <div class="world-map-thumbnail">
+          <a href="{{map_index}}">
+            <img width="100" height="100" src="{{thumbnail}}"
+                 onerror="this.style.display='none';">
+          </a>
+        </div>
+        <div class="clear-floats"></div>
+        <hr>
+      </div> <!-- world -->
+    </script>
   </head>
   <body>
     <div class="page">
@@ -8,65 +221,31 @@
         <div class="header-image">
           <img src="minecrab-top-graphic.png">
         </div>
-        <div id="header-name" class="header-name">/[NAME]
-        </div>
+        <div id="header-name" class="header-name">/[NAME]</div>
       </div> <!-- header -->
 
       <div class="middle">
 
         <div class="worlds">
-          <hr>
-          <div class="world">
-            <div class="world-status-image">
-              <img src="minecrab-off.png">
-            </div>
-            <div class="world-details">
-              <span class="world-detail-bold">joyent-before</span><br>
-              <span class="world-detail-bold">Offline</span><br>
-              <span class="world-detail">Survival, Easy</span><br>
-              <span class="world-detail-minecraft-version">1.7.4</span>
-            </div>
-            <div class="world-map-thumbnail">
-              <a href="#">
-                <img src="#">
-              </a>
-            </div>
-            <div class="clear-floats"></div>
-            <hr>
-          </div> <!-- world -->
-          <div class="world">
-            <div class="world-status-image">
-              <img src="minecrab-on.png">
-            </div>
-            <div class="world-details">
-              <span class="world-detail-bold">joyent-after</span><br>
-              <span class="world-detail-bold">Online at</span> <span class="world-detail-orange">165.255.149.144</span><br>
-              <span class="world-detail">Survival, Easy</span><br>
-              <span class="world-detail-minecraft-version">1.7.4</span><br>
-            </div>
-            <div class="world-map-thumbnail">
-              <a href="#">
-                <img src="#">
-              </a>
-            </div>
-            <div class="clear-floats"></div>
-            <hr>
-          </div> <!-- world -->
         </div> <!-- worlds -->
 
         <div class="right-box">
           <p><b>What is Minecrab?</b><br>
             Personal, High Performance Minecraft Hosting<br>
             <a href="">Learn More</a></p>
+          <!--
           <p><b>Command Line Reference</b><br>
           minecrab-add-friend<br>
           minecrab-map<br>
           minecrab-launch<br></p>
+          -->
         </div> <!-- right-box -->
 
         <div class="clear-floats"></div>
 
       </div> <!-- middle -->
+
+      <div class="footer-separator"></div>
 
       <div class="footer">
         <div class="copyright-text">

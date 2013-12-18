@@ -129,6 +129,10 @@ hr {
     padding-right: 40px;
 }
 
+.footer-separator {
+    height: 30px;
+}
+
 .footer {
     background-color: #2B2B2B;
 }
