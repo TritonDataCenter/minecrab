@@ -4,11 +4,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.1.2/handlebars.min.js"></script>
     <script type="text/javascript">
-      //var manta = document.location.protocol + '//' + document.location.hostname;
-      //var page = document.location.pathname;
-
-      var manta = 'http://us-east.manta.joyent.com';
-      var page = '/Joyent_Dev/public/minecrab/index.html';
+      var manta = document.location.protocol + '//' + document.location.hostname;
+      var page = document.location.pathname;
 
       var user = page.split('/')[1];
       var servers_loc = manta + '/' + user + '/public/minecrab/servers/';
