@@ -37,86 +37,99 @@ Also see [minecrab.io](http://minecrab.io).
 
 ## Getting started
 
+First you need to get your gear together.
+This is the hardest part of the whole operation.
+Then you can play.
+
+### Get your gear together
+
+
 1. Get the Minecraft software: [minecraft.net](http://minecraft.net)<br />
 Minecrab makes it easy to run servers.
 To play in them, you need to buy the software from Mojang.
 1. Get a [Joyent Cloud](http://my.joyentcloud.com) or compatible account.<br />
 You can sign up for a [free trial](https://my.joyentcloud.com/landing/signup/70180000000ShEu).
 (The rest of this guide assumes that you're using a Joyent Cloud account.)
+1. If you are on Mac OS X:
+<br />
+    1. Install node, npm, node-manta and smartdc tools using the [Mac OS X Installer](https://us-east.manta.joyent.com/manta/public/sdks/joyent-node-latest.pkg).
+    1. Install the jsontool `sudo npm install jsontool -g`
+    1. Install [git](http://git-scm.com)
+2. Otherwise:
+(Tested on Ubuntu 13.10. It will probably work on other platforms):
+<br />
+    1. Install [Node](http://nodejs.org/)
+    1. Install [Manta](http://apidocs.joyent.com/manta/#getting-started)
+    1. Install [CloudAPI](http://apidocs.joyent.com/cloudapi/#getting-started)
+    1. Install the jsontool `sudo npm install jsontool -g`
+    1. Install [git](http://git-scm.com)
+    1. Make sure [ssh-agent](#problems-with-ssh-agent) is running and has access to your ssh key and password.
+1. Set up your CloudAPI and Manta environment variables:
+   Run these commands in a Terminal window.
+   (Pro-tip: save them in a file for later use,
+   and `source <filename>` to run them as needed,
+   or put them in your `.bash_profile`.)
 
-Then, if you have Mac OS X:
+   ```
+   export MANTA_USER=<your Joyent Cloud name>
+   export MANTA_URL=https://us-east.manta.joyent.com
+   export MANTA_KEY_ID=$(ssh-keygen -l -f ~/.ssh/id_rsa.pub | awk '{print $2}' | tr -d '\n')
+   
+   export SDC_URL=<URL of a Joyent Cloud datacenter> (see below)
+   export SDC_ACCOUNT=<your Joyent Cloud name>
+   export SDC_KEY_ID=$(ssh-keygen -l -f ~/.ssh/id_rsa.pub | awk '{print $2}' | tr -d '\n')
+   ```
 
-1. Install node, npm, node-manta and smartdc tools using the [Mac OS X Installer](https://us-east.manta.joyent.com/manta/public/sdks/joyent-node-latest.pkg).
-1. Install the jsontool `sudo npm install jsontool -g`
-1. Install [git](http://git-scm.com)
+   Use the `MANTA_URL` as given. For `SDC_URL` choose the closest datacenter:
 
-Otherwise (Tested on Ubuntu 13.10. It will probably work on other platforms):
+   ```
+   https://us-east-1.api.joyentcloud.com
+   https://us-west-1.api.joyentcloud.com
+   https://us-sw-1.api.joyentcloud.com
+   https://eu-ams-1.api.joyentcloud.com
+   ```
+   
+   `MANTA_KEY_ID` and `SDC_KEY_ID` are fingerprints of one of your SSH keys in the Joyent Cloud.
+   The `ssh-keygen` command just makes it easier to get your fingerprints.
 
-1. Install [Node](http://nodejs.org/)
-1. Install [Manta](http://apidocs.joyent.com/manta/#getting-started)
-1. Install [CloudAPI](http://apidocs.joyent.com/cloudapi/#getting-started)
-1. Install the jsontool `sudo npm install jsontool -g`
-1. Install [git](http://git-scm.com)
-1. Make sure [ssh-agent](#problems-with-ssh-agent) is running and has access to your ssh key and password.
+1. Clone this repo
 
+   ```
+   git clone git@github.com:joyent/minecrab.git
+   ```
 
-### Set up your CloudAPI and Manta environment variables:
-Run these commands in a Terminal window.
-(Pro-tip: save them in a file for later use,
- and `source <filename>` to run them as needed,
- or put them in your `.bash_profile`.)
-
-```
-export MANTA_USER=<your Joyent Cloud name>
-export MANTA_URL=https://us-east.manta.joyent.com
-export MANTA_KEY_ID=$(ssh-keygen -l -f ~/.ssh/id_rsa.pub | awk '{print $2}' | tr -d '\n') # <the fingerprint of one of your SSH keys in Joyent Cloud>
-export SDC_URL=<URL of a Joyent Cloud datacenter> (see below)
-export SDC_ACCOUNT=<your Joyent Cloud name>
-export SDC_KEY_ID=$(ssh-keygen -l -f ~/.ssh/id_rsa.pub | awk '{print $2}' | tr -d '\n') #<the fingerprint of one of your SSH keys in Joyent Cloud>
-```
-
-Use the `MANTA_URL` as given. For `SDC_URL` choose the closest datacenter:
-
-```
-https://us-east-1.api.joyentcloud.com
-https://us-west-1.api.joyentcloud.com
-https://us-sw-1.api.joyentcloud.com
-https://eu-ams-1.api.joyentcloud.com
-```
+### Now you can play
 
 
-### Clone this repo
+1. Create your first server
 
-```
-git clone git@github.com:joyent/minecrab.git
-```
+   ```
+   cd minecrab
+   bin/minecrab-launch <new server name>
+   ```
 
-### Create your first server
+1. Add players
 
-```
-cd minecrab
-bin/minecrab-launch <new server name>
-```
+   ```
+   bin/minecrab-add-friends <server name> <minecraft friend name>
+   ```
 
-### Add players
+1. Play minecraft
 
-```
-bin/minecrab-add-friends <server name> <minecraft friend name>
-```
+1. Put your server away
 
-### Play minecraft
+   ```
+   bin/minecrab-shutdown <server name>
+   ```
 
-### Put your minecrab server away
+1. Time passes
 
-```
-bin/minecrab-shutdown <server name>
-```
+1. Restore your minecrab server to play again
 
-### Restore your minecrab server to play again
+   ```
+   bin/minecrab-launch <server name>
+   ```
 
-```
-bin/minecrab-launch <server name>
-```
 
 ## Basic commands
 
