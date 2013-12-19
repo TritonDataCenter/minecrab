@@ -114,7 +114,7 @@ You can sign up for a [free trial](https://my.joyentcloud.com/landing/signup/701
    bin/minecrab-add-friends <server name> <minecraft friend name>
    ```
 
-1. Play minecraft
+1. Play Minecraft
 
 1. Put your server away
 
@@ -124,10 +124,10 @@ You can sign up for a [free trial](https://my.joyentcloud.com/landing/signup/701
 
 1. Time passes
 
-1. Restore your minecrab server to play again
+1. Restore your server to play again
 
    ```
-   bin/minecrab-launch <server name>
+   bin/minecrab-launch <old server name>
    ```
 
 
