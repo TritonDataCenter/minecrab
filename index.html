@@ -31,6 +31,7 @@
           <ul class="nav navbar-nav">
             <li class="xactive"><a href="#get-started">Get Started</a></li>
             <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#status-website">Status Page</a></li>
             <li><a href="#command-line">Commands</a></li>
             <li><a href="#how-much">How Much?</a></li>
           </ul>
@@ -110,12 +111,31 @@
       </div>
 
       <hr class="container">
+      <a class="anchor" id="status-website"></a>
+      <div class="row status-website">
+        <div class="container">
+        <div class="col-sm-12 view-from-status-website">
+          <h2>Did you say a personal Minecrab status page?</h2>
+          <p>Each time you launch a server, a personal minecrab status page is
+            created for you in Joyent's Manta, allowing you to easily share
+            connection information, server status, and maps!.  You can find a
+            live example <a href="http://us-east.manta.joyent.com/Joyent_Dev/public/minecrab/index.html">here</a>.
+            </p>
+          <div class="status-screenshot">
+            <img src="images/minecrab-personal-screenshot.png" class="img-responsive">
+          </div>
+        </div>
+        </div>
+      </div>
+
+      <hr class="container">
       <a class="anchor" id="command-line"></a>
       <div class="row command-line">
         <div class="container">
         <div class="col-sm-12 view-from-command-line">
           <h2>View from the command line</h2>
-          <p>What does that actually look like from the command line? Here we already have a server that's offline, named "salt":</p>
+          <p>What does that actually look like from the command line? Here we
+            already have a server that's offline, named "salt":</p>
           <pre>
   # Most of the command output redacted for clarity...
 
@@ -216,7 +236,13 @@
     <hr class="container">
 
     <div class="container">
-    <footer>Copyright 2013 Joyent</footer>
+      <footer>
+        <p>Minecraft content and materials are trademarks and copyrights of
+          Mojang and its licensors. All rights reserved.<br>
+          This site is a part of Minecrab, brought to you by Joyent, Inc. and is
+          not affiliated with Mojang.</p>
+        <p>&copy; 2013 Joyent</p>
+      </footer>
     </div>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
