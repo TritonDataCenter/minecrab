@@ -33,6 +33,7 @@ do charge users for our normal cloud hosting and storage costs.
 See [What it costs](#what-it-costs) later in this README to find out
 more about our virtual machine and storage charges.
 
+Also see [minecrab.io](http://minecrab.io).
 
 ## Getting started
 
