@@ -14,11 +14,12 @@
 
 ## What it does
 
-Minecrab provisions a fully configured Minecraft server on a SmartOS
-instance. You can play on the server, invite friends, build stuff, and
-so on. When you're finished playing and shut down the server, Minecrab
-saves your world to the cloud
-[Joyent Manta Storage Service](http://www.joyent.com/products/manta).
+Minecrab provisions a fully configured Minecraft server on a [Joyent's Public
+Cloud](http://www.joyent.com/products/compute-service), specifically on a
+SmartOS virtual machine.  You can play on the server, invite friends, build
+stuff, and so on. When you're finished playing and shut down the server,
+Minecrab saves your world to the cloud [Joyent Manta Storage
+Service](http://www.joyent.com/products/manta).
 
 Next time you want to play, just have Minecrab provision your server again.
 Your world will be there, just as you left it.
