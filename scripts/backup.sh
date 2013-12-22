@@ -17,7 +17,7 @@ tar -czf $BACKUP_FILE . \
     --exclude=coremods \
     --exclude=logs \
     --exclude=mods \
-    --exclude=*.jar
+    --exclude-from <(find . -maxdepth 1 -type f -path "*.jar")
 console "save-on"
 echo "Putting $BACKUP_FILE to $REMOTE_FILE"
 mmkdir -p $(dirname $REMOTE_FILE)
