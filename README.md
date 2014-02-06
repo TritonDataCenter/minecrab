@@ -75,7 +75,7 @@ You can sign up for a [free trial](https://my.joyentcloud.com/landing/signup/701
    export MANTA_USER=<your Joyent Cloud name>
    export MANTA_URL=https://us-east.manta.joyent.com
    export MANTA_KEY_ID=$(ssh-keygen -l -f ~/.ssh/id_rsa.pub | awk '{print $2}' | tr -d '\n')
-   
+
    export SDC_URL=<URL of a Joyent Cloud datacenter> (see below)
    export SDC_ACCOUNT=<your Joyent Cloud name>
    export SDC_KEY_ID=$(ssh-keygen -l -f ~/.ssh/id_rsa.pub | awk '{print $2}' | tr -d '\n')
@@ -89,14 +89,14 @@ You can sign up for a [free trial](https://my.joyentcloud.com/landing/signup/701
    https://us-sw-1.api.joyentcloud.com
    https://eu-ams-1.api.joyentcloud.com
    ```
-   
+
    `MANTA_KEY_ID` and `SDC_KEY_ID` are fingerprints of one of your SSH keys in the Joyent Cloud.
    The `ssh-keygen` command just makes it easier to get your fingerprints.
 
 1. Clone this repo
 
    ```
-   git clone git@github.com:joyent/minecrab.git
+   git clone https://github.com/joyent/minecrab.git
    ```
 
 ### Now you can play
