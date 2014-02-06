@@ -28,9 +28,7 @@ function runjob {
   if [ -z "$world" ]; then
     fatal "Missing server name (REMOTE_FILE)"
   fi
-  #TODO: Change back once the repo is public...
-  #init_script="https://raw.github.com/joyent/minecrab/master/scripts/prepare_render.sh"
-  init_script="https://us-east.manta.joyent.com/Joyent_Dev/public/minecrab_scripts/prepare_render.sh"
+  init_script="https://raw.github.com/joyent/minecrab/master/scripts/prepare_render.sh"
   #   --asset $map \
   echo "Kicking off job..."
   manta_req_uuid=$(\
