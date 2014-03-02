@@ -154,11 +154,14 @@ Possible values are minecraft, craftbukkit, ftb_ultimate, and voltz.
 ### minecrab-shutdown
 
 ```
-minecrab-shutdown [-M] [-W] <server-name>
+minecrab-shutdown [-Y] [-M] [-W] <server-name>
 ```
 Saves the world to Manta,
 tears down the Minecraft server,
 and starts generating a map.
+
+`-Y` shuts down without asking for confirmation.
+This is useful if you're scripting the shutdown process.
 
 `-W` shuts down without saving the world to Manta.
 This is useful if you're shutting down and [annihilating](#minecrab-annihilate).
