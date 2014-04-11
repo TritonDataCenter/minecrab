@@ -24,4 +24,12 @@ mmkdir -p $(dirname $REMOTE_FILE)
 mput -f $BACKUP_FILE $REMOTE_FILE
 mput -f $MINECRAB_LOCATION/server.properties $REMOTE_LOCATION/server.properties
 mput -f $MINECRAB_LOCATION/server.config $REMOTE_LOCATION/server.config
-mput -f $MINECRAB_LOCATION/white-list.txt $REMOTE_LOCATION/white-list.txt
+if [[ -f $MINECRAB_LOCATION/white-list.txt ]]; then
+    mput -f $MINECRAB_LOCATION/white-list.txt $REMOTE_LOCATION/white-list.txt
+fi
+if [[ -f $MINECRAB_LOCATION/white-list.txt.converted ]]; then
+    mput -f $MINECRAB_LOCATION/white-list.txt.converted $REMOTE_LOCATION/white-list.txt.converted
+fi
+if [[ -f $MINECRAB_LOCATION/whitelist.json ]]; then
+    mput -f $MINECRAB_LOCATION/whitelist.json $REMOTE_LOCATION/whitelist.json
+fi
