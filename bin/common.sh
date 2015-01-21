@@ -96,11 +96,13 @@ function server_execute_nofatal {
     fi
     #Since these will start and stop a lot, there's the possibility that we'll
     # get the same ip address with multiple launches and shutdowns.
-    RESULT=$(ssh -o LogLevel=quiet -o StrictHostKeyChecking=no -o \
-       UserKnownHostsFile=/dev/null -A root@$IP $COMMAND)
+    RESULT=$(ssh -o LogLevel=quiet \
+             -o StrictHostKeyChecking=no \
+             -o UserKnownHostsFile=/dev/null \
+             -o ConnectTimeout=5 \
+             -A root@$IP $COMMAND)
     return $?
 }
-
 
 #http://stackoverflow.com/questions/3685970/bash-check-if-an-array-contains-a-value
 function contains {
