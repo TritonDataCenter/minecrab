@@ -24,6 +24,10 @@ MANTA_LOCATION="/$MANTA_USER/public/minecrab"
 SERVERS_LOCATION="$MANTA_LOCATION/servers"
 STATUS_LOCATION="$MANTA_URL$MANTA_LOCATION/index.html"
 ME_LOCATION=$(dirname $(dirname ${BASH_SOURCE[0]}))
+GITHUB_REPO=$(cd $ME_LOCATION && git config --get remote.origin.url)
+if [[ -z $GITHUB_REPO ]]; then
+    GITHUB_REPO="git@github.com:joyent/minecrab.git"
+fi
 
 function fatal {
     echo -e "$(basename $0): fatal error: $*" >&2
