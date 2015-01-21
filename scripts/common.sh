@@ -24,6 +24,10 @@ REMOTE_LOCATION="$SERVER_LOCATION/server"
 REMOTE_FILE="$REMOTE_LOCATION/world.tar.gz"
 MAP_BASE="$SERVER_LOCATION/map/view"
 SERVER_FLAVOR=${SERVER_PREFERRED:-minecraft}
+GITHUB_REPO=$(cd /opt/minecrab && git config --get remote.origin.url)
+if [[ -z $GITHUB_REPO ]]; then
+    GITHUB_REPO="git@github.com:joyent/minecrab.git"
+fi
 : ${JAVA_OPTS:=-d64 -Xincgc -Djava.security.egd=/dev/./urandom -XX:-UseVMInterruptibleIO -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalPacing -XX:ParallelGCThreads=4 -XX:+AggressiveOpts}
 
 case ${SERVER_FLAVOR} in

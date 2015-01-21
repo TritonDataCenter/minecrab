@@ -28,8 +28,13 @@ function runjob {
   if [ -z "$world" ]; then
     fatal "Missing server name (REMOTE_FILE)"
   fi
-  init_script="https://raw.github.com/joyent/minecrab/master/scripts/prepare_render.sh"
-  #   --asset $map \
+  #TODO: This is pretty horrible...
+  github_r=$(echo $GITHUB_REPO | cut -d ':' -f 2)
+  github_path_part=${github_r%.*}
+  if [ -z "$github_path_part" ]; then
+      fatal "Couldn't determine github path"
+  fi
+  init_script="https://raw.github.com/${github_path_part}/master/scripts/prepare_render.sh"
   echo "Kicking off job..."
   manta_req_uuid=$(\
     echo "$world" | mjob create \

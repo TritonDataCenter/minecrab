@@ -83,16 +83,18 @@ if [[ $RENDER_MAP -ne 0 ]] ; then
 fi
 
 echo -n "Disabling the minecraft server... "
-server_execute "svcadm disable -s minecraft"
-if [[ $? -ne 0 ]]; then
-    fatal "Failed to disable minecraft.  Server is still running."
-fi
+#If the world is saved, this is just a "nice" thing to do.  So don't fatal if
+# it fails.
+server_execute_nofatal "svcadm disable -s minecraft"
 echo "Success!"
 
 echo -n "Removing ip address from Manta... "
-mrm $SERVERS_LOCATION/$SERVER_NAME/ip
-if [[ $? -ne 0 ]]; then
-    fatal "Failed to remove ip address.  Server is still running."
+mls $SERVERS_LOCATION/$SERVER_NAME/ip >/dev/null
+if [[ $? -eq 0 ]]; then
+    mrm $SERVERS_LOCATION/$SERVER_NAME/ip
+    if [[ $? -ne 0 ]]; then
+        fatal "Failed to remove ip address.  Server is still running."
+    fi
 fi
 echo "Success!"
 

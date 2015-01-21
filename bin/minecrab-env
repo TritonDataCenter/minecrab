@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# -*- mode: shell-script; fill-column: 80; -*-
+#
+# Copyright (c) 2013 Joyent Inc., All rights reserved.
+#
+
+
+source $(dirname $0)/common.sh
+usage() {
+    echo "Usage: $0" 1>&2;
+    exit 1;
+}
+
+while getopts ":f:p:" o; do
+    case "${o}" in
+        *)
+            usage
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+set -o posix ; set
