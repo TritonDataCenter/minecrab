@@ -8,6 +8,13 @@ source $(dirname $0)/common.sh
 
 BACKUP_FILE='/var/tmp/minecrab-backup.tar.gz'
 
+function up {
+    mput -f $1 $2
+    if [[ $? -ne 0 ]]; then
+        fatal "Failed to upload $1 to $2"
+    fi
+}
+
 rm $BACKUP_FILE
 cd $MINECRAB_LOCATION
 echo "Bundling $SERVER_NAME..."
@@ -21,15 +28,15 @@ tar -czf $BACKUP_FILE . \
 console "save-on"
 echo "Putting $BACKUP_FILE to $REMOTE_FILE"
 mmkdir -p $(dirname $REMOTE_FILE)
-mput -f $BACKUP_FILE $REMOTE_FILE
-mput -f $MINECRAB_LOCATION/server.properties $REMOTE_LOCATION/server.properties
-mput -f $MINECRAB_LOCATION/server.config $REMOTE_LOCATION/server.config
+up $BACKUP_FILE $REMOTE_FILE
+up $MINECRAB_LOCATION/server.properties $REMOTE_LOCATION/server.properties
+up $MINECRAB_LOCATION/server.config $REMOTE_LOCATION/server.config
 if [[ -f $MINECRAB_LOCATION/white-list.txt ]]; then
-    mput -f $MINECRAB_LOCATION/white-list.txt $REMOTE_LOCATION/white-list.txt
+    up $MINECRAB_LOCATION/white-list.txt $REMOTE_LOCATION/white-list.txt
 fi
 if [[ -f $MINECRAB_LOCATION/white-list.txt.converted ]]; then
-    mput -f $MINECRAB_LOCATION/white-list.txt.converted $REMOTE_LOCATION/white-list.txt.converted
+    up $MINECRAB_LOCATION/white-list.txt.converted $REMOTE_LOCATION/white-list.txt.converted
 fi
 if [[ -f $MINECRAB_LOCATION/whitelist.json ]]; then
-    mput -f $MINECRAB_LOCATION/whitelist.json $REMOTE_LOCATION/whitelist.json
+    up $MINECRAB_LOCATION/whitelist.json $REMOTE_LOCATION/whitelist.json
 fi
