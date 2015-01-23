@@ -564,4 +564,10 @@ EACCES warnings that were safe to ignore.
 
 The code for Minecrab is MIT, see LICENSE.
 
+## Minecraft EULA
 
+Minecrab will automatically agree to the Minecraft EULA on your behalf.  By
+using Minecrab you are implicitly agreeing to the Minecraft EULA.  That can be
+found here:
+
+https://account.mojang.com/documents/minecraft_eula
