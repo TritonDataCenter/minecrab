@@ -39,7 +39,7 @@ function runjob {
   manta_req_uuid=$(\
     echo "$world" | mjob create \
       --memory=4096 \
-      --init "curl $init_script | sh | tee /init.log" \
+      --init "curl -L $init_script | sh | tee /init.log" \
       --name "$JOB_NAME" \
       -m '/render.sh | tee /render.log' \
   )
