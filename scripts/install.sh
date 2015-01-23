@@ -97,6 +97,13 @@ SERVER_JAR="${SERVER_JAR}"
 JAVA_OPTS="${JAVA_OPTS}"
 EOF
 
+if [[ ! -e ${MINECRAB_LOCATION}/eula.txt ]]; then
+    echo "Writing out EULA..."
+    cat - >${MINECRAB_LOCATION}/eula.txt <<EOF
+eula=true
+EOF
+fi
+
 echo "Starting server for the first time..."
 svcadm enable -s minecraft
 
