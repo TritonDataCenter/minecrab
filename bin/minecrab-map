@@ -64,7 +64,7 @@ echo "Kicking off job..."
 MANTA_REQ_UUID=$(\
     echo "$MANTA_OBJECT" | mjob create \
     --memory=4096 \
-    --init "curl $INIT_SCRIPT | sh | tee /init.log" \
+    --init "curl -L $INIT_SCRIPT | sh | tee /init.log" \
     --name "$JOB_NAME" \
     -m '/render.sh | tee /render.log' \
     )

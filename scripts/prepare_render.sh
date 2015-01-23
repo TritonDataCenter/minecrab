@@ -8,7 +8,8 @@ set -o errexit
 
 
 OS=$(uname -s)
-MINECRAFT_VERSION="1.7.2"
+# TODO: Pick the version for the minecraft world...
+MINECRAFT_VERSION="1.8.1"
 
 echo $OS
 case $(uname -s) in
