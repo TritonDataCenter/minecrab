@@ -36,6 +36,8 @@ if [ ! -d "$DEST" ]; then
   wget --no-check-certificate https://s3.amazonaws.com/Minecraft.Download/versions/${MINECRAFT_VERSION}/${MINECRAFT_VERSION}.jar -P $DEST
 fi
 
+npm install -g manta-sync
+
 git clone git://github.com/overviewer/Minecraft-Overviewer.git overviewer
 
 cd overviewer
@@ -106,29 +108,6 @@ WORLD=\$(echo \$MANTA_INPUT_FILE | cut -f 7 -d/)
 UPLOAD_PATH="/\$USER/public/minecrab/servers/\$WORLD/map/view"
 
 echo starting upload to \$UPLOAD_PATH
-./mputr ./minecraft/render/world1 "\${UPLOAD_PATH}"
+manta-sync -d ./minecraft/render/world1 "\${UPLOAD_PATH}"
 EOF
 chmod 755 ./render.sh
-
-cat > ./mputr <<EOF
-set -o errexit
-mputr () {
-  owd=\$(pwd)
-  local=\$1
-  remote=\$2
-  if [ -z "\$remote" ]; then
-    echo "[ERROR] \$0: missing required options"
-    exit 1
-  fi
-  cd "\$local"
-  mmkdir -p "\$remote"
-  # directories
-  find . -type d | sort | xargs -n 1 -I {} mmkdir \$remote/{} || return 1
-  # files
-  find . -type f | xargs -n 1 -I {} mput -q \$remote/{} -f {} || return 1
-  cd "\$owd"
-  return 0
-}
-mputr \$1 \$2
-EOF
-chmod 755 ./mputr
